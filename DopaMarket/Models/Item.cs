@@ -6,15 +6,20 @@ using System.Web;
 
 namespace DopaMarket.Models
 {
-    public class SaleArticle
+    public class Item
     {
         public int Id { get; set; }
 
-        public int ArticleId { get; set; }
-
-        public int Count { get; set; }
+        [Required]
+        public string Name { get; set; }
 
         [DataType("decimal(16 ,3")]
         public decimal CurrentPrice { get; set; }
+
+        public int StockCount { get; set; }
+
+        public DateTime InsertDate { get; set; }
+
+        public bool OnSale { get; set; }
     }
 }

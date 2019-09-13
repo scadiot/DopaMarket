@@ -5,10 +5,11 @@ using System.Web;
 
 namespace DopaMarket.Models
 {
-    public class ArticleKeyword
+    public class ItemKeyword
     {
         public int Id { get; set; }
 
-        public int ArticleId { get; set; }
+        public int ItemId { get; set; }
+        public int KeywordId { get; set; }
     }
 }

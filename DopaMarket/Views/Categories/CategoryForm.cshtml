@@ -1,0 +1,45 @@
+﻿@model DopaMarket.ViewModels.CategoryFormViewModel
+
+@{
+    /**/
+
+    ViewBag.Title = "CategoryForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Category Form</h2>
+
+@foreach (var category in Model.Breadcrumb)
+{
+    <span>@Html.ActionLink((string)category.Name, "Edit", "Categories", new { id = category.Id }, null) ></span>
+}
+
+<hr />
+
+@using (Html.BeginForm("Save", "Categories"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Category.Name)
+        @Html.TextBoxFor(m => m.Category.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Category.Name)
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+
+    @Html.Hidden("Category.Id", Model.Category.Id);
+}
+
+<hr />
+
+@using (Html.BeginForm("Save", "Categories"))
+{
+    <div class="form-group">
+        @Html.TextBox("Category.Name", "")
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+
+    @Html.Hidden("Category.Id", 0);
+    @Html.Hidden("Category.ParentCategoryId", Model.Category.Id);
+}

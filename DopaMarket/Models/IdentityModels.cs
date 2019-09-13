@@ -20,6 +20,17 @@ namespace DopaMarket.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Item> Items { get; set; }
+        public DbSet<ItemBasket> ItemBaskets { get; set; }
+        public DbSet<ItemCategory> ItemCategories { get; set; }
+        public DbSet<ItemKeyword> ItemKeywords { get; set; }
+        public DbSet<ItemPrice> ItemPrices { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<Keyword> Keywords { get; set; }
+        public DbSet<Sale> Sales { get; set; }
+        public DbSet<SaleItem> SaleItems { get; set; }
+        public DbSet<ItemImage> ItemImages { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

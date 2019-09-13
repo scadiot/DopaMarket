@@ -5,14 +5,14 @@ using System.Web;
 
 namespace DopaMarket.Models
 {
-    public class Category
+    public class ItemBasket
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public int ItemId { get; set; }
 
-        public int? ParentCategoryId { get; set; }
+        public int ClientId { get; set; }
 
-        public Category Parent { get; set; }
+        public int Count { get; set; }
     }
 }
