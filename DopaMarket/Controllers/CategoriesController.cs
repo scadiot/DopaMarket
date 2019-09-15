@@ -64,6 +64,9 @@ namespace DopaMarket.Controllers
         {
             var category = _context.Categories.Single<Category>(c => c.Id == id);
 
+            var linksToRemove = _context.ItemCategories.Where(ic => ic.CategoryId == id);
+            _context.ItemCategories.RemoveRange(linksToRemove);
+
             _context.Categories.Remove(category);
             _context.SaveChanges();
 

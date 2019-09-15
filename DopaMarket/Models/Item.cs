@@ -13,6 +13,9 @@ namespace DopaMarket.Models
         [Required]
         public string Name { get; set; }
 
+        [Required]
+        public string LinkName { get; set; }
+
         [DataType("decimal(16 ,3")]
         public decimal CurrentPrice { get; set; }
 

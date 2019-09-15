@@ -23,23 +23,22 @@
         @Html.ValidationMessageFor(m => m.Item.Name)
     </div>
 
-    @*
-        <div class="form-group">
-            @Html.LabelFor(m => m.Movie.GenreId)
-            @Html.DropDownListFor(m => m.Item.GenreId, new SelectList(Model.Genres, "Id", "Name"), "-- Select Genre --", new { @class = "form-control" })
-        </div>
-    *@
-
     <div class="form-group">
-        @Html.LabelFor(m => m.Item.OnSale)
-        @Html.CheckBoxFor(m => m.Item.OnSale)
-        @Html.ValidationMessageFor(m => m.Item.OnSale)
+        @Html.LabelFor(i => i.Item.LinkName)
+        @Html.TextBoxFor(i => i.Item.LinkName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(i => i.Item.LinkName)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Item.InsertDate)
-        @Html.EditorFor(m => m.Item.InsertDate)
-        @Html.ValidationMessageFor(m => m.Item.InsertDate)
+        @Html.LabelFor(i => i.Item.OnSale)
+        @Html.CheckBoxFor(i => i.Item.OnSale)
+        @Html.ValidationMessageFor(i => i.Item.OnSale)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(i => i.Item.InsertDate)
+        @Html.EditorFor(i => i.Item.InsertDate)
+        @Html.ValidationMessageFor(i => i.Item.InsertDate)
     </div>
 
     <div class="form-group">
@@ -48,18 +47,35 @@
         @Html.ValidationMessageFor(m => m.Item.CurrentPrice)
     </div>
 
-    @Html.ListBoxFor(x => x.SelectedCategoryIds, Model.Categories, new { @class = "categories-selector" })
-
     <div class="form-group">
-        @Html.EditorFor(m => m.Keywords)
+        @Html.LabelFor(i => i.Keywords)
+        @Html.ListBoxFor(i => i.SelectedCategoryIds, Model.Categories, new { @class = "categories-selector" })
     </div>
 
-    <input type="file" name="UploadImage" multiple="multiple" />
+    <div class="form-group">
+        @Html.LabelFor(i => i.Keywords)
+        @Html.EditorFor(i => i.Keywords)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(i => i.Images)
+        @foreach (var image in Model.Images)
+        {
+            <span>
+                <img src="@image.Path" style="object-fit: cover;width:200px;height:200px" />
+                <button class="btn btn-default" onClick="removeImage(this)" data-image-id='@image.Id' type="button"></button>
+            </span>
+        }
+    </div>
+
+    <div class="form-group">
+        <input type="file" name="UploadImages" multiple="multiple" />
+    </div>
 
     <button type="submit" class="btn btn-primary">Save</button>
 
     @Html.Hidden("Item.Id", Model.Item.Id);
-}
+ }
 
 
 
@@ -78,8 +94,18 @@
                 enableFiltering: true,
                 enableCaseInsensitiveFiltering: true
             });
-
         });
+
+        function removeImage(button) {
+            let imageId = button.getAttribute('data-image-id');
+
+            $.ajax({
+                url: "/Items/RemoveImage/" + imageId,
+            });
+
+            var imageContainer = button.parentNode;
+            imageContainer.parentNode.removeChild(imageContainer);
+        }
 
     </script>
 }

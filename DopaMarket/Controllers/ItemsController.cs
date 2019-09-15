@@ -29,9 +29,10 @@ namespace DopaMarket.Controllers
             var viewModel = new ItemFormViewModel();
             viewModel.Item = new Item();
             viewModel.Item.InsertDate = DateTime.Now;
-            viewModel.Categories = _context.Categories.Select(c => new SelectListItem() { Text = c.Name, Value = c.ToString() }).ToList();
+            viewModel.Categories = _context.Categories.Select(c => new SelectListItem() { Text = c.Name, Value = c.Id.ToString() }).ToList();
             viewModel.Keywords = "";
             viewModel.SelectedCategoryIds = new int[0];
+            viewModel.Images = new ItemImage[0];
 
             return View("ItemForm", viewModel);
         }
@@ -46,6 +47,7 @@ namespace DopaMarket.Controllers
             viewModel.Item = item;
             viewModel.Categories = _context.Categories.Select(c => new SelectListItem() { Text = c.Name, Value = c.Id.ToString()}).ToList();
             viewModel.SelectedCategoryIds = _context.ItemCategories.Where(ic => ic.ItemId == id).Select(ic => ic.CategoryId).ToArray();
+            viewModel.Images = _context.ItemImages.Where(ii => ii.ItemId == id).ToList();
 
             var keywordsList = (from ik in _context.ItemKeywords
                                 join k in _context.Keywords on ik.KeywordId equals k.Id
@@ -69,7 +71,9 @@ namespace DopaMarket.Controllers
             {
                 var itemInDB = _context.Items.Single<Item>(m => m.Id == itemFormViewModel.Item.Id);
                 itemInDB.Name = itemFormViewModel.Item.Name;
+                itemInDB.LinkName = itemFormViewModel.Item.LinkName;
                 itemInDB.OnSale = itemFormViewModel.Item.OnSale;
+                itemInDB.CurrentPrice = itemFormViewModel.Item.CurrentPrice;
                 itemInDB.InsertDate = itemFormViewModel.Item.InsertDate;
             }
             else
@@ -78,18 +82,9 @@ namespace DopaMarket.Controllers
             _context.SaveChanges();
 
             UpdateLinkItemCategories(itemFormViewModel.Item, itemFormViewModel.SelectedCategoryIds);
+            UpdateLinkItemKeywords(itemFormViewModel.Item, itemFormViewModel.Keywords);
 
-            var keywords = itemFormViewModel.Keywords.Split(',').ToList().Select(k => k.Trim().ToLower()).ToArray();
-            UpdateLinkItemKeywords(itemFormViewModel.Item, keywords);
-
-            var file = Request.Files[0];
-
-            if (file != null && file.ContentLength > 0)
-            {
-                var fileName = Path.GetFileName(file.FileName);
-                var path = Path.Combine(Server.MapPath("~/Images/"), fileName);
-                file.SaveAs(path);
-            }
+            UpdateItemImage(itemFormViewModel.Item, itemFormViewModel.UploadImages);
 
             return RedirectToAction("Index", "Items");
         }
@@ -114,9 +109,16 @@ namespace DopaMarket.Controllers
             _context.SaveChanges();
         }
 
-        public void UpdateLinkItemKeywords(Item item, string[] keywords)
+        public void UpdateLinkItemKeywords(Item item, string keywordsData)
         {
-            foreach(var keyword in keywords)
+            if(keywordsData == null)
+            {
+                return;
+            }
+
+            var keywords = keywordsData.Split(',').ToList().Select(k => k.Trim().ToLower()).ToArray();
+
+            foreach (var keyword in keywords)
             {
                 if (!_context.Keywords.Any(k => k.Word == keyword))
                 {
@@ -149,14 +151,53 @@ namespace DopaMarket.Controllers
             _context.SaveChanges();
         }
 
+        public void UpdateItemImage(Item item, HttpPostedFileBase[] uploadImages)
+        {
+            foreach(var image in uploadImages)
+            {
+                if(image == null)
+                {
+                    continue;
+                }
+
+                var itemImage = new ItemImage();
+                itemImage.ItemId = item.Id;
+                _context.ItemImages.Add(itemImage);
+                _context.SaveChanges();
+
+                itemImage.Name = item.LinkName + "_" + itemImage.Id + ".jpg";
+                itemImage.Path = "\\Content\\ItemsImages\\" + itemImage.Name;
+                _context.SaveChanges();
+
+                image.SaveAs(Server.MapPath("~\\Content\\ItemsImages") + "\\" + itemImage.Name);
+            }
+        }
+
         public ActionResult Delete(int id)
         {
-            var category = _context.Items.Single<Item>(c => c.Id == id);
-        
-            _context.Items.Remove(category);
+            var keywordLinksToRemove = _context.ItemKeywords.Where(ik => ik.ItemId == id);
+            _context.ItemKeywords.RemoveRange(keywordLinksToRemove);
+
+            var categoryLinksToRemove = _context.ItemCategories.Where(ic => ic.ItemId == id);
+            _context.ItemCategories.RemoveRange(categoryLinksToRemove);
+
+            var item = _context.Items.Single<Item>(c => c.Id == id);
+            _context.Items.Remove(item);
+
             _context.SaveChanges();
         
             return RedirectToAction("Index", "Items");
         }
+
+        public ActionResult RemoveImage(int id)
+        {
+            var itemImage = _context.ItemImages.SingleOrDefault(i => i.Id == id);
+            _context.ItemImages.Remove(itemImage);
+            _context.SaveChanges();
+
+            System.IO.File.Delete(Server.MapPath("~\\Content\\ItemsImages") + "\\" + itemImage.Name);
+
+            return Content("image removed");
+        } 
     }
 }
