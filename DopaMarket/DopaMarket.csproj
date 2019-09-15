@@ -210,7 +210,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
-    <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Controllers\AdminItemsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -339,8 +339,8 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Items\Index.cshtml" />
-    <Content Include="Views\Items\ItemForm.cshtml" />
+    <Content Include="Views\AdminItems\Index.cshtml" />
+    <Content Include="Views\AdminItems\ItemForm.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Categories\CategoryForm.cshtml" />
     <Content Include="Views\Client\ClientForm.cshtml" />

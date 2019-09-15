@@ -9,11 +9,11 @@ using System.Web.Mvc;
 
 namespace DopaMarket.Controllers
 {
-    public class ItemsController : Controller
+    public class AdminItemsController : Controller
     {
         ApplicationDbContext _context;
 
-        public ItemsController()
+        public AdminItemsController()
         {
             _context = new ApplicationDbContext();
         }
@@ -86,7 +86,7 @@ namespace DopaMarket.Controllers
 
             UpdateItemImage(itemFormViewModel.Item, itemFormViewModel.UploadImages);
 
-            return RedirectToAction("Index", "Items");
+            return RedirectToAction("Index", "AdminItems");
         }
         
         public void UpdateLinkItemCategories(Item item, int[] categoriesId)
@@ -186,7 +186,7 @@ namespace DopaMarket.Controllers
 
             _context.SaveChanges();
         
-            return RedirectToAction("Index", "Items");
+            return RedirectToAction("Index", "AdminItems");
         }
 
         public ActionResult RemoveImage(int id)

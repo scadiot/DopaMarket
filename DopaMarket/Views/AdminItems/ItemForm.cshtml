@@ -15,7 +15,7 @@
 
 <h2>Category Form</h2>
 
-@using (Html.BeginForm("Save", "Items", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Save", "AdminItems", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Item.Name)
@@ -100,7 +100,7 @@
             let imageId = button.getAttribute('data-image-id');
 
             $.ajax({
-                url: "/Items/RemoveImage/" + imageId,
+                url: "/AdminItems/RemoveImage/" + imageId,
             });
 
             var imageContainer = button.parentNode;

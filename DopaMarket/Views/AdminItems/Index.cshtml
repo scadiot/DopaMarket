@@ -5,7 +5,7 @@
 }
 
 <h2>Index</h2>
-@Html.ActionLink("New", "New", "Items")
+@Html.ActionLink("New", "New", "AdminItems")
 
 <table class="table">
     <thead>
@@ -16,7 +16,7 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>@Html.ActionLink((string)item.Name, "Edit", "Items", new { id = item.Id }, null) - @Html.ActionLink("Delete", "Delete", "Movies", new { id = item.Id }, null)</td>
+            <td>@Html.ActionLink((string)item.Name, "Edit", "AdminItems", new { id = item.Id }, null) - @Html.ActionLink("Delete", "Delete", "AdminItems", new { id = item.Id }, null)</td>
         </tr>
     }
 </table>
