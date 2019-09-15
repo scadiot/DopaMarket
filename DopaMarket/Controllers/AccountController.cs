@@ -17,9 +17,11 @@ namespace DopaMarket.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext _context;
 
         public AccountController()
         {
+            _context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -49,6 +51,18 @@ namespace DopaMarket.Controllers
             private set
             {
                 _userManager = value;
+            }
+        }
+
+        public ApplicationDbContext DbContext
+        {
+            get
+            {
+                return _context ?? new ApplicationDbContext();
+            }
+            private set
+            {
+                _context = value;
             }
         }
 
@@ -156,14 +170,22 @@ namespace DopaMarket.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // Pour plus d'informations sur l'activation de la confirmation de compte et de la réinitialisation de mot de passe, visitez https://go.microsoft.com/fwlink/?LinkID=320771
                     // Envoyer un message électronique avec ce lien
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirmez votre compte", "Confirmez votre compte en cliquant <a href=\"" + callbackUrl + "\">ici</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    var client = new Client();
+                    client.IdentityUserId = user.Id;
+                    client.Name = model.Name;
+                    client.AddressId = null;
+
+                    DbContext.Clients.Add(client);
+                    DbContext.SaveChanges();
+
+                    return RedirectToAction("Edit", "Client");
                 }
                 AddErrors(result);
             }

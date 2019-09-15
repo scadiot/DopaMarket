@@ -12,5 +12,14 @@ namespace DopaMarket.Models
 
         [Required]
         public string IdentityUserId { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
+        public DateTime? Birthday { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public int? AddressId { get; set; }
     }
 }

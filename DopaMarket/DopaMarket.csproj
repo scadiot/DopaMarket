@@ -209,6 +209,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -239,8 +240,25 @@
     <Compile Include="Migrations\201909150624404_AddItemLinkName.Designer.cs">
       <DependentUpon>201909150624404_AddItemLinkName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909151106077_AddClientName.cs" />
+    <Compile Include="Migrations\201909151106077_AddClientName.Designer.cs">
+      <DependentUpon>201909151106077_AddClientName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909151312294_AddClientPhoneAndAddress.cs" />
+    <Compile Include="Migrations\201909151312294_AddClientPhoneAndAddress.Designer.cs">
+      <DependentUpon>201909151312294_AddClientPhoneAndAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909151313334_AddAddressTable.cs" />
+    <Compile Include="Migrations\201909151313334_AddAddressTable.Designer.cs">
+      <DependentUpon>201909151313334_AddAddressTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909151328584_NullableAddressId.cs" />
+    <Compile Include="Migrations\201909151328584_NullableAddressId.Designer.cs">
+      <DependentUpon>201909151328584_NullableAddressId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemBasket.cs" />
     <Compile Include="Models\ItemCategory.cs" />
@@ -256,6 +274,7 @@
     <Compile Include="Models\SaleItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ClientFormViewModel.cs" />
     <Compile Include="ViewModels\ItemFormViewModel.cs" />
     <Compile Include="ViewModels\CategoryFormViewModel.cs" />
   </ItemGroup>
@@ -324,6 +343,8 @@
     <Content Include="Views\Items\ItemForm.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Categories\CategoryForm.cshtml" />
+    <Content Include="Views\Client\ClientForm.cshtml" />
+    <Content Include="Views\Client\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -359,6 +380,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909150624404_AddItemLinkName.resx">
       <DependentUpon>201909150624404_AddItemLinkName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909151106077_AddClientName.resx">
+      <DependentUpon>201909151106077_AddClientName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909151312294_AddClientPhoneAndAddress.resx">
+      <DependentUpon>201909151312294_AddClientPhoneAndAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909151313334_AddAddressTable.resx">
+      <DependentUpon>201909151313334_AddAddressTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909151328584_NullableAddressId.resx">
+      <DependentUpon>201909151328584_NullableAddressId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

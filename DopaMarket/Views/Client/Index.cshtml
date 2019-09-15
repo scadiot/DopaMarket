@@ -1,0 +1,36 @@
+﻿@model DopaMarket.ViewModels.ClientFormViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index Client</h2>
+
+<div>
+    Nom : @Model.Client.Name
+</div>
+<div>
+    Phone Number : @Model.Client.PhoneNumber
+</div>
+<div>
+    Birthday : @Model.Client.Birthday
+</div>
+<hr />
+<div>
+    Adresse 1 : @Model.Address.Street
+</div>
+<div>
+    Adresse 2 : @Model.Address.Street2
+</div>
+<div>
+    Code Postal : @Model.Address.PostalCode
+</div>
+<div>
+    Ville : @Model.Address.City
+</div>
+<div>
+    Pays : @Model.Address.Country
+</div>
+<hr />
+@Html.ActionLink("Edit", "Edit", "Client")
