@@ -22,3 +22,20 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.search-row {
+    border-top: 2px solid gray;
+    margin: 10px;
+    padding:10px;
+}
+
+
+.search-option-column {
+    border-right: 2px solid gray;
+    margin-top: 10px;
+    padding: 5px;
+}
+
+.search-result-column {
+
+}

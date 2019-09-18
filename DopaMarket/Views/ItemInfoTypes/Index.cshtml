@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Item Info Types</h2>
+@Html.ActionLink("New", "New", "ItemInfoTypes")
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+    @foreach (var itemInfoType in Model)
+    {
+        <tr>
+            <td>@Html.ActionLink((string)itemInfoType.Name, "Edit", "ItemInfoTypes", new { id = itemInfoType.Id }, null) - @Html.ActionLink("Delete", "Delete", "ItemInfoTypes", new { id = itemInfoType.Id }, null)</td>
+        </tr>
+    }
+</table>

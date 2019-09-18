@@ -1,0 +1,50 @@
+﻿@model DopaMarket.ViewModels.BasketViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+
+@foreach (var item in Model.Items)
+{
+<div>
+    @Html.ActionLink((string)item.Item.Name, item.Item.LinkName, "Item") -
+    @item.Quantity
+    <button class="btn btn-default" onClick="buyItem(this)" data-item-id='@item.Item.Id' data-item-count='@(item.Item.StockCount + 1)' type="button">+</button>
+</div>
+}
+
+<script type="text/javascript">
+
+    function buyItem(button) {
+        let itemId = button.getAttribute('data-item-id');
+        let count = button.getAttribute('data - item - count');
+        $.ajax({
+            url: "/Basket/AddItem/" + itemId + "?count=" + count,
+        }).done(function (response) {
+            if (response.result === "added") {
+                bootbox.dialog({
+                    title: 'Article ajouté au panier',
+                    message: "<p>Voulez vous voire le contenu de votre panier.</p>",
+                    buttons: {
+                        cancel: {
+                            label: "Revenir à l'article!",
+                            className: 'btn-danger',
+                        },
+                        ok: {
+                            label: "I'm an OK button!",
+                            className: 'btn-info',
+                            callback: function () {
+                                window.location.href = '/Basket';
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+</script>

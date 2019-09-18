@@ -20,9 +20,9 @@
 @using (Html.BeginForm("Save", "Categories"))
 {
     <div class="form-group">
-        @Html.LabelFor(m => m.Category.Name)
-        @Html.TextBoxFor(m => m.Category.Name, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Category.Name)
+        @Html.LabelFor(model => model.Category.Name)
+        @Html.TextBoxFor(model => model.Category.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Category.Name)
     </div>
 
     <button type="submit" class="btn btn-primary">Save</button>

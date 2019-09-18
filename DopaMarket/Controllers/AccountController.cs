@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DopaMarket.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DopaMarket.Controllers
 {
@@ -176,6 +177,18 @@ namespace DopaMarket.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirmez votre compte", "Confirmez votre compte en cliquant <a href=\"" + callbackUrl + "\">ici</a>");
+
+                    var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+                    await roleManager.CreateAsync(new IdentityRole("Administrator"));
+                    await roleManager.CreateAsync(new IdentityRole("CanManageItems"));
+                    await roleManager.CreateAsync(new IdentityRole("CanManageSales"));
+
+
+                    await UserManager.AddToRoleAsync(user.Id, "Administrator");
+                    await UserManager.AddToRoleAsync(user.Id, "CanManageItems");
+                    await UserManager.AddToRoleAsync(user.Id, "CanManageSales");
+
 
                     var client = new Client();
                     client.IdentityUserId = user.Id;

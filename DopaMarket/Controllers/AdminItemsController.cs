@@ -2,6 +2,7 @@
 using DopaMarket.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -56,9 +57,39 @@ namespace DopaMarket.Controllers
 
             viewModel.Keywords = string.Join(",", keywordsList);
 
+            viewModel.ItemInfosData = SerializeItemInfos(item);
+
             return View("ItemForm", viewModel);
         }
-        
+
+        public string SerializeItemInfos(Item item)
+        {
+            var itemInfos = _context.ItemInfos.Where(ii => ii.ItemId == item.Id).Include(ii => ii.ItemInfoType);
+
+            string result = "";
+            foreach(var itemInfo in itemInfos)
+            {
+                result += itemInfo.ItemInfoType.Name + ":";
+                switch (itemInfo.ItemInfoType.Type)
+                {
+                    case ItemInfoValueType.Boolean:
+                        result += itemInfo.BooleanValue;
+                        break;
+                    case ItemInfoValueType.Interger:
+                        result += itemInfo.IntegerValue;
+                        break;
+                    case ItemInfoValueType.String:
+                        result += itemInfo.StringValue;
+                        break;
+                    case ItemInfoValueType.Decimal:
+                        result += itemInfo.DecimalValue;
+                        break;
+                }
+                result += "\n";
+            }
+            return result;
+        }
+
         [HttpPost]
         public ActionResult Save(ItemFormViewModel itemFormViewModel)
         {
@@ -85,6 +116,7 @@ namespace DopaMarket.Controllers
             UpdateLinkItemKeywords(itemFormViewModel.Item, itemFormViewModel.Keywords);
 
             UpdateItemImage(itemFormViewModel.Item, itemFormViewModel.UploadImages);
+            UpdateItemInfos(itemFormViewModel.Item, itemFormViewModel.ItemInfosData);
 
             return RedirectToAction("Index", "AdminItems");
         }
@@ -173,6 +205,48 @@ namespace DopaMarket.Controllers
             }
         }
 
+        public void UpdateItemInfos(Item item, string itemInfosData)
+        {
+            if(itemInfosData == null)
+                itemInfosData = "";
+
+            var currentItemInfos = _context.ItemInfos.Where(ii => ii.ItemId == item.Id).ToList();
+            _context.ItemInfos.RemoveRange(currentItemInfos);
+
+            var itemInfoTypes = _context.ItemInfoTypes.ToList();
+
+            var itemInfoData = itemInfosData.Split('\n');
+            foreach(var itemInfoSplited in itemInfoData)
+            {
+                var intemInfoType = itemInfoTypes.SingleOrDefault(iit => iit.Name == itemInfoSplited.Split(':')[0]);
+                if (intemInfoType == null)
+                    continue;
+
+                var itemInfo = new ItemInfo();
+                itemInfo.ItemId = item.Id;
+                itemInfo.ItemInfoTypeId = intemInfoType.Id;
+
+                string value = itemInfoSplited.Split(':')[1];
+                switch (intemInfoType.Type)
+                {
+                    case ItemInfoValueType.Boolean:
+                        itemInfo.BooleanValue = bool.Parse(value);
+                        break;
+                    case ItemInfoValueType.Interger:
+                        itemInfo.IntegerValue = int.Parse(value);
+                        break;
+                    case ItemInfoValueType.String:
+                        itemInfo.StringValue = value;
+                        break;
+                    case ItemInfoValueType.Decimal:
+                        itemInfo.DecimalValue = decimal.Parse(value);
+                        break;
+                }
+                _context.ItemInfos.Add(itemInfo);
+            }
+            _context.SaveChanges();
+        }
+
         public ActionResult Delete(int id)
         {
             var keywordLinksToRemove = _context.ItemKeywords.Where(ik => ik.ItemId == id);
@@ -198,6 +272,6 @@ namespace DopaMarket.Controllers
             System.IO.File.Delete(Server.MapPath("~\\Content\\ItemsImages") + "\\" + itemImage.Name);
 
             return Content("image removed");
-        } 
+        }
     }
 }

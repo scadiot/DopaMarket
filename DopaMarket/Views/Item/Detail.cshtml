@@ -1,0 +1,62 @@
+﻿@model DopaMarket.ViewModels.ItemDetailModel
+
+@{
+    ViewBag.Title = "Item";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Item view</h2>
+
+@Model.Item.Name
+<button class="btn btn-default" onClick="buyItem(this)" data-item-id='@Model.Item.Id' type="button">Ajouter au panier</button>
+
+<table>
+    @foreach (var itemInfo in Model.ItemInfos)
+    {
+    <tr>
+        <td>@itemInfo.Name</td>
+        <td>@itemInfo.Value @itemInfo.Unity</td>
+    </tr>
+    }
+</table>
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+@section scripts
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js">
+    </script>
+
+    <script type="text/javascript">
+
+        function buyItem(button) {
+            let itemId = button.getAttribute('data-item-id');
+
+            $.ajax({
+                url: "/Basket/AddItem/" + itemId,
+            }).done(function (response) {
+                if (response.result === "added") {
+                    bootbox.dialog({
+                        title: 'Article ajouté au panier',
+                        message: "<p>Voulez vous voire le contenu de votre panier.</p>",
+                        buttons: {
+                            cancel: {
+                                label: "Revenir à l'article!",
+                                className: 'btn-danger',
+                            },
+                            ok: {
+                                label: "I'm an OK button!",
+                                className: 'btn-info',
+                                callback: function () {
+                                    window.location.href = '/Basket';
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+    </script>
+}

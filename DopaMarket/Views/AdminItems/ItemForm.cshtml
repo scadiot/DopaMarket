@@ -18,47 +18,47 @@
 @using (Html.BeginForm("Save", "AdminItems", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-group">
-        @Html.LabelFor(m => m.Item.Name)
-        @Html.TextBoxFor(m => m.Item.Name, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Item.Name)
+        @Html.LabelFor(model => model.Item.Name)
+        @Html.TextBoxFor(model => model.Item.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Item.Name)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(i => i.Item.LinkName)
-        @Html.TextBoxFor(i => i.Item.LinkName, new { @class = "form-control" })
-        @Html.ValidationMessageFor(i => i.Item.LinkName)
+        @Html.LabelFor(model => model.Item.LinkName)
+        @Html.TextBoxFor(model => model.Item.LinkName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Item.LinkName)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(i => i.Item.OnSale)
-        @Html.CheckBoxFor(i => i.Item.OnSale)
-        @Html.ValidationMessageFor(i => i.Item.OnSale)
+        @Html.LabelFor(model => model.Item.OnSale)
+        @Html.CheckBoxFor(model => model.Item.OnSale)
+        @Html.ValidationMessageFor(model => model.Item.OnSale)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(i => i.Item.InsertDate)
-        @Html.EditorFor(i => i.Item.InsertDate)
-        @Html.ValidationMessageFor(i => i.Item.InsertDate)
+        @Html.LabelFor(model => model.Item.InsertDate)
+        @Html.EditorFor(model => model.Item.InsertDate)
+        @Html.ValidationMessageFor(model => model.Item.InsertDate)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Item.CurrentPrice)
-        @Html.EditorFor(m => m.Item.CurrentPrice)
-        @Html.ValidationMessageFor(m => m.Item.CurrentPrice)
+        @Html.LabelFor(model => model.Item.CurrentPrice)
+        @Html.EditorFor(model => model.Item.CurrentPrice)
+        @Html.ValidationMessageFor(model => model.Item.CurrentPrice)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(i => i.Keywords)
-        @Html.ListBoxFor(i => i.SelectedCategoryIds, Model.Categories, new { @class = "categories-selector" })
+        @Html.LabelFor(model => model.Keywords)
+        @Html.ListBoxFor(model => model.SelectedCategoryIds, Model.Categories, new { @class = "categories-selector" })
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(i => i.Keywords)
-        @Html.EditorFor(i => i.Keywords)
+        @Html.LabelFor(model => model.Keywords)
+        @Html.EditorFor(model => model.Keywords)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(i => i.Images)
+        @Html.LabelFor(model => model.Images)
         @foreach (var image in Model.Images)
         {
             <span>
@@ -69,13 +69,18 @@
     </div>
 
     <div class="form-group">
+        @Html.LabelFor(model => model.Keywords)
+        @Html.EditorFor(model => model.ItemInfosData)
+    </div>
+
+    <div class="form-group">
         <input type="file" name="UploadImages" multiple="multiple" />
     </div>
 
     <button type="submit" class="btn btn-primary">Save</button>
 
-    @Html.Hidden("Item.Id", Model.Item.Id);
- }
+@Html.Hidden("Item.Id", Model.Item.Id);
+}
 
 
 
