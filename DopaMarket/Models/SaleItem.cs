@@ -10,11 +10,17 @@ namespace DopaMarket.Models
     {
         public int Id { get; set; }
 
+        public int SaleId { get; set; }
+
+        public Sale Sale { get; set; }
+
         public int ItemId { get; set; }
+
+        public Item Item { get; set; }
 
         public int Count { get; set; }
 
         [DataType("decimal(16 ,3")]
-        public decimal CurrentPrice { get; set; }
+        public decimal Price { get; set; }
     }
 }

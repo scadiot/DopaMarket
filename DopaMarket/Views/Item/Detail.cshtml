@@ -13,13 +13,38 @@
 <table>
     @foreach (var itemInfo in Model.ItemInfos)
     {
-    <tr>
-        <td>@itemInfo.Name</td>
-        <td>@itemInfo.Value @itemInfo.Unity</td>
-    </tr>
+        <tr>
+            <td>@itemInfo.Name</td>
+            <td>@itemInfo.Value @itemInfo.Unity</td>
+        </tr>
     }
 </table>
 
+<hr />
+
+<div>
+    @foreach (var review in Model.Reviews)
+    {
+        <div><span>@review.Client.Name</span><span>@review.Note</span></div>
+        <div>@review.Text</div>
+    }
+</div>
+
+
+@using (Html.BeginForm("PushReview", "ItemAction", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        @Html.TextBox("note")
+    </div>
+
+    <div class="form-group">
+        @Html.TextBox("text")
+    </div>
+
+    @Html.Hidden("itemId", Model.Item.Id);
+
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+}
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 

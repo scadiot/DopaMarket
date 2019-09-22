@@ -21,5 +21,6 @@ namespace DopaMarket.Models
         public string PhoneNumber { get; set; }
 
         public int? AddressId { get; set; }
+        public Address Address { get; set; }
     }
 }

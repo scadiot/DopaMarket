@@ -9,6 +9,7 @@ namespace DopaMarket.Models
     {
         public int Id { get; set; }
         public int ItemId { get; set; }
+        public Item Item { get; set; }
         public int ItemInfoTypeId { get; set; }
         public ItemInfoType ItemInfoType { get; set; }
         public int IntegerValue { get; set; }

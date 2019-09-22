@@ -10,13 +10,15 @@
 
 @foreach (var item in Model.Items)
 {
-<div>
-    @Html.ActionLink((string)item.Item.Name, item.Item.LinkName, "Item") -
-    <span class="item-quantity" data-item-id='@item.Item.Id'>@item.Quantity</span>
-    <button class="btn btn-default btn-change-increment" onClick="changeCount(this)" data-item-id='@item.Item.Id' data-item-count='1' type="button">+</button>
-    <button class="btn btn-default btn-change-decrement" onClick="changeCount(this)" data-item-id='@item.Item.Id' data-item-count='-1' type="button">-</button>
-</div>
+    <div>
+        @Html.ActionLink((string)item.Item.Name, item.Item.LinkName, "Item") -
+        <span class="item-quantity" data-item-id='@item.Item.Id'>@item.Quantity</span>
+        <button class="btn btn-default btn-change-increment" onClick="changeCount(this)" data-item-id='@item.Item.Id' data-item-count='1' type="button">+</button>
+        <button class="btn btn-default btn-change-decrement" onClick="changeCount(this)" data-item-id='@item.Item.Id' data-item-count='-1' type="button">-</button>
+    </div>
 }
+
+@Html.ActionLink("Passer la commande", "Create", "Sales")
 
 <script type="text/javascript">
 

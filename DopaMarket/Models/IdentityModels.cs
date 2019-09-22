@@ -34,6 +34,7 @@ namespace DopaMarket.Models
         public DbSet<Address> Address { get; set; }
         public DbSet<ItemInfoType> ItemInfoTypes { get; set; }
         public DbSet<ItemInfo> ItemInfos { get; set; }
+        public DbSet<ItemReview> ItemReviews { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

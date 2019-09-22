@@ -14,7 +14,12 @@ namespace DopaMarket
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name : "ItemDetail",
+                name: "ItemPushReview",
+                url: "ItemAction/PushReview",
+                defaults: new { controller = "Item", action = "PushReview" });
+
+            routes.MapRoute(
+                name: "ItemDetail",
                 url: "Item/{linkName}",
                 defaults: new { controller = "Item", action = "Detail" });
 

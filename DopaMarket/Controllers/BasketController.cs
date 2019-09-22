@@ -73,8 +73,8 @@ namespace DopaMarket.Controllers
 
         public JsonResult ChangeCountItem(int id, int count)
         {
-            var userId = User.Identity.GetUserId().ToString();
-            var client = _context.Clients.SingleOrDefault(c => c.IdentityUserId == userId);
+                var userId = User.Identity.GetUserId().ToString();
+                var client = _context.Clients.SingleOrDefault(c => c.IdentityUserId == userId);
 
             var itemInBasket = _context.ItemBaskets.SingleOrDefault(ib => ib.ClientId == client.Id && ib.ItemId == id);
             if (itemInBasket == null)

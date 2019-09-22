@@ -1,5 +1,6 @@
 ﻿using DopaMarket.Models;
 using DopaMarket.ViewModels;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -30,6 +31,11 @@ namespace DopaMarket.Controllers
             var itemDetailModel = new ItemDetailModel();
             itemDetailModel.Item = item;
             itemDetailModel.ItemInfos = getItemDetailItemInfoModel(item);
+            itemDetailModel.Reviews = _context.ItemReviews
+                                              .Where(ir => ir.ItemId == item.Id)
+                                              .Include(ir => ir.Client)
+                                              .OrderBy(ir => ir.Date)
+                                              .ToArray();
 
             return View("Detail", itemDetailModel);
         }
@@ -66,6 +72,34 @@ namespace DopaMarket.Controllers
                 result.Add(ItemDetailItemInfoModel);
             }
             return result.ToArray();
+        }
+
+        [HttpPost]
+        public ActionResult PushReview(int itemId, int note, string text)
+        {
+            var userId = User.Identity.GetUserId().ToString();
+            var client = _context.Clients.SingleOrDefault(c => c.IdentityUserId == userId);
+            var item = _context.Items.SingleOrDefault(i => i.Id == itemId);
+
+            var itemReview = _context.ItemReviews.SingleOrDefault(ir => ir.ItemId == itemId && ir.ClientId == client.Id);
+            if(itemReview == null)
+            {
+                itemReview = new ItemReview();
+                itemReview.ClientId = client.Id;
+                itemReview.ItemId = itemId;
+                itemReview.Note = note;
+                itemReview.Text = text;
+                itemReview.Date = DateTime.Now;
+                _context.ItemReviews.Add(itemReview);
+            }
+            else
+            {
+                itemReview.Note = note;
+                itemReview.Text = text;
+                itemReview.Date = DateTime.Now;
+            }
+            _context.SaveChanges();
+            return RedirectToAction(item.LinkName, "Item");
         }
     }
 }

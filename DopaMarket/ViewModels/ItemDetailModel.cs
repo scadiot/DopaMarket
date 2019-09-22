@@ -15,6 +15,7 @@ namespace DopaMarket.ViewModels
     public class ItemDetailModel
     {
         public Models.Item Item { get; set; }
-        public ItemDetailItemInfoModel[] ItemInfos { get; set; }
+        public IEnumerable<ItemDetailItemInfoModel> ItemInfos { get; set; }
+        public IEnumerable<Models.ItemReview> Reviews { get; set; }
     }
 }

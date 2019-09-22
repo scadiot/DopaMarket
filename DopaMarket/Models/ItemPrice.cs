@@ -11,6 +11,7 @@ namespace DopaMarket.Models
         public int Id { get; set; }
 
         public int ItemId { get; set; }
+        public Item Item { get; set; }
 
         [DataType("decimal(16 ,3")]
         public decimal CurrentPrice { get; set; }

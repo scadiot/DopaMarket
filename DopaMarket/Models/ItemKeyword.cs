@@ -10,6 +10,9 @@ namespace DopaMarket.Models
         public int Id { get; set; }
 
         public int ItemId { get; set; }
+        public Item Item { get; set; }
+
         public int KeywordId { get; set; }
+        public Keyword Keyword { get; set; }
     }
 }

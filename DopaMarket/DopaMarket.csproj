@@ -219,6 +219,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -283,12 +284,33 @@
     <Compile Include="Migrations\201909190523589_AddLinkNameOnCategories.Designer.cs">
       <DependentUpon>201909190523589_AddLinkNameOnCategories.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909221013466_AddItemReview.cs" />
+    <Compile Include="Migrations\201909221013466_AddItemReview.Designer.cs">
+      <DependentUpon>201909221013466_AddItemReview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909221610002_UpdateSaleModel.cs" />
+    <Compile Include="Migrations\201909221610002_UpdateSaleModel.Designer.cs">
+      <DependentUpon>201909221610002_UpdateSaleModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909221616027_UpdateBasketModel.cs" />
+    <Compile Include="Migrations\201909221616027_UpdateBasketModel.Designer.cs">
+      <DependentUpon>201909221616027_UpdateBasketModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909221618187_UpdateItemCategoryForeignKey.cs" />
+    <Compile Include="Migrations\201909221618187_UpdateItemCategoryForeignKey.Designer.cs">
+      <DependentUpon>201909221618187_UpdateItemCategoryForeignKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909221621095_AddForeignKey.cs" />
+    <Compile Include="Migrations\201909221621095_AddForeignKey.Designer.cs">
+      <DependentUpon>201909221621095_AddForeignKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemBasket.cs" />
     <Compile Include="Models\ItemCategory.cs" />
+    <Compile Include="Models\ItemComment.cs" />
     <Compile Include="Models\ItemImage.cs" />
     <Compile Include="Models\ItemInfo.cs" />
     <Compile Include="Models\ItemInfoType.cs" />
@@ -394,6 +416,7 @@
     <Content Include="Views\Shared\_HeaderNavBar.cshtml" />
     <Content Include="Views\ItemInfoTypes\Index.cshtml" />
     <Content Include="Views\ItemInfoTypes\ItemInfoTypeForm.cshtml" />
+    <Content Include="Views\Sales\Confirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -448,6 +471,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909190523589_AddLinkNameOnCategories.resx">
       <DependentUpon>201909190523589_AddLinkNameOnCategories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909221013466_AddItemReview.resx">
+      <DependentUpon>201909221013466_AddItemReview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909221610002_UpdateSaleModel.resx">
+      <DependentUpon>201909221610002_UpdateSaleModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909221616027_UpdateBasketModel.resx">
+      <DependentUpon>201909221616027_UpdateBasketModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909221618187_UpdateItemCategoryForeignKey.resx">
+      <DependentUpon>201909221618187_UpdateItemCategoryForeignKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909221621095_AddForeignKey.resx">
+      <DependentUpon>201909221621095_AddForeignKey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
