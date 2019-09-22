@@ -12,39 +12,38 @@
 {
 <div>
     @Html.ActionLink((string)item.Item.Name, item.Item.LinkName, "Item") -
-    @item.Quantity
-    <button class="btn btn-default" onClick="buyItem(this)" data-item-id='@item.Item.Id' data-item-count='@(item.Item.StockCount + 1)' type="button">+</button>
+    <span class="item-quantity" data-item-id='@item.Item.Id'>@item.Quantity</span>
+    <button class="btn btn-default btn-change-increment" onClick="changeCount(this)" data-item-id='@item.Item.Id' data-item-count='1' type="button">+</button>
+    <button class="btn btn-default btn-change-decrement" onClick="changeCount(this)" data-item-id='@item.Item.Id' data-item-count='-1' type="button">-</button>
 </div>
 }
 
 <script type="text/javascript">
 
-    function buyItem(button) {
+    function changeCount(button) {
         let itemId = button.getAttribute('data-item-id');
-        let count = button.getAttribute('data - item - count');
+        let count = parseInt($(".item-quantity[data-item-id='" + itemId + "']").text());
+        let increment = parseInt(button.getAttribute('data-item-count'));
         $.ajax({
-            url: "/Basket/AddItem/" + itemId + "?count=" + count,
+            url: "/Basket/ChangeCountItem/" + itemId + "?count=" + (count + increment),
         }).done(function (response) {
-            if (response.result === "added") {
-                bootbox.dialog({
-                    title: 'Article ajouté au panier',
-                    message: "<p>Voulez vous voire le contenu de votre panier.</p>",
-                    buttons: {
-                        cancel: {
-                            label: "Revenir à l'article!",
-                            className: 'btn-danger',
-                        },
-                        ok: {
-                            label: "I'm an OK button!",
-                            className: 'btn-info',
-                            callback: function () {
-                                window.location.href = '/Basket';
-                            }
-                        }
-                    }
-                });
+            if (response.result === "count_changed") {
+                $(".item-quantity[data-item-id='" + itemId + "']").text(response.count);
+                if (response.count == 1) {
+                    $(".btn-change-decrement[data-item-id='" + itemId + "']").attr("disabled", true);
+                } else {
+                    $(".btn-change-decrement[data-item-id='" + itemId + "']").attr("disabled", false);
+                }
             }
         });
     }
+
+    window.onload = function () {
+        if (response.count == 1) {
+            $(".btn-change-decrement[data-item-id='" + itemId + "']").attr("disabled", true);
+        } else {
+            $(".btn-change-decrement[data-item-id='" + itemId + "']").attr("disabled", false);
+        }
+    };
 
 </script>

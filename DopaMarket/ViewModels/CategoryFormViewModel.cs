@@ -8,7 +8,7 @@ namespace DopaMarket.ViewModels
     public class CategoryFormViewModel
     {
         public Models.Category Category { get; set; }
-        public List<Models.Item> Items { get; set; }
-        public List<Models.Category> Breadcrumb { get; set; }
+        public IEnumerable<Models.Item> Items { get; set; }
+        public IEnumerable<Models.Category> Breadcrumb { get; set; }
     }
 }

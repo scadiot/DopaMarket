@@ -6,22 +6,56 @@
 }
 
 <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-10"><h2>Results</h2></div>
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-10">
+        @Model.TotalCount articles
+        @if (Model.Query != "")
+        {
+            @Html.Raw("pour la recherche \"" + Model.Query + "\"");
+        }
+        @if (Model.Category != "")
+        {
+            @Html.Raw("dans la categorie " + Model.Category);
+        }
+    </div>
 </div>
 
 <div class="row">
-    <div class="col-md-2 search-option-column">
-        sqdsqdsqdsq<br />
-        sqdsqdsqd<br />
-        sqdqsdsqdsqdsq<br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-    </div>
+    @if (Model.ChildrenCategories != null)
+    {
+        <div class="col-md-2 search-option-column">
+            <div>Catégories enfants</div>
+            @foreach (var category in Model.ChildrenCategories)
+            {
+                <div>
+                    <a href="/search?c=@category.Category.LinkName">
+                        @category.Category.Name
+                    </a>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="col-md-2 search-option-column">
+            <div>Catégories en lien avec la recherche</div>
+            @foreach (var category in Model.Categories)
+            {
+                <div>
+                    <a href="/search?c=@category.Category.LinkName">
+                        @foreach (var parentCategory in category.Breadcrumb)
+                        {
+                            @parentCategory.Name
+                            @Html.Raw(" &gt ");
+                        }
+                        @category.Category.Name
+                    </a>
+                </div>
+            }
+        </div>
+    }
+
 
     <div class="col-md-10 search-result-column">
         @foreach (var item in Model.Items)
@@ -36,5 +70,19 @@
                 </div>
             </div>
         }
+        <div>
+            @for (var i = 0; i < Model.PageCount; i++)
+            {
+                if (i != Model.PageNumber)
+                {
+                    <span><a class="btn btn-default" href="/search?@(Model.UrlParameters)&page=@i.ToString()">@((i + 1).ToString())</a></span>
+                }
+                else
+                {
+                    <span>@((i + 1).ToString())</span>
+                }
+            }
+        </div>
     </div>
 </div>
+

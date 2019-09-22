@@ -26,7 +26,7 @@ namespace DopaMarket.Controllers
             var items = (from i in _context.Items
                          join ib in _context.ItemBaskets on i.Id equals ib.ItemId
                          where ib.ClientId == client.Id
-                         select new BasketItemViewModel() { Item = i, Quantity = 1 }).ToArray();
+                         select new BasketItemViewModel() { Item = i, Quantity = ib.Count }).ToArray();
 
             var basketViewModel = new BasketViewModel();
             basketViewModel.Items = items;
@@ -82,10 +82,15 @@ namespace DopaMarket.Controllers
                 return Json(new { result = "error", message = "not in bascket" }, JsonRequestBehavior.AllowGet);
             }
 
+            if (count < 1)
+            {
+                return Json(new { result = "error", message = "invalid request" }, JsonRequestBehavior.AllowGet);
+            }
+
             itemInBasket.Count = count;
             _context.SaveChanges();
 
-            return Json(new { result = "count_changed" }, JsonRequestBehavior.AllowGet);
+            return Json(new { result = "count_changed", count = count }, JsonRequestBehavior.AllowGet);
         }
     }
 }

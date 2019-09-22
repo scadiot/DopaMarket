@@ -25,6 +25,12 @@
         @Html.ValidationMessageFor(model => model.Category.Name)
     </div>
 
+    <div class="form-group">
+        @Html.LabelFor(model => model.Category.LinkName)
+        @Html.TextBoxFor(model => model.Category.LinkName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Category.LinkName)
+    </div>
+
     <button type="submit" class="btn btn-primary">Save</button>
 
     @Html.Hidden("Category.Id", Model.Category.Id);
@@ -36,6 +42,9 @@
 {
     <div class="form-group">
         @Html.TextBox("Category.Name", "")
+    </div>
+    <div class="form-group">
+        @Html.TextBox("Category.LinkName")
     </div>
 
     <button type="submit" class="btn btn-primary">Save</button>

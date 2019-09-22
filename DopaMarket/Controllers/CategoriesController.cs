@@ -30,7 +30,7 @@ namespace DopaMarket.Controllers
                 return HttpNotFound();
 
             var viewModel = new CategoryFormViewModel();
-            viewModel.Breadcrumb = getBreadcrumb(category);
+            viewModel.Breadcrumb = CategoriesTools.GetBreadcrumb(_context, category);
             viewModel.Category = category;
 
             return View("CategoryForm", viewModel);
@@ -42,7 +42,7 @@ namespace DopaMarket.Controllers
             if (!ModelState.IsValid)
             {
                 var viewModel = new CategoryFormViewModel();
-                viewModel.Breadcrumb = getBreadcrumb(category);
+                viewModel.Breadcrumb = CategoriesTools.GetBreadcrumb(_context, category);
                 viewModel.Category = category;
                 return View("CategoryForm", viewModel);
             }
@@ -71,19 +71,6 @@ namespace DopaMarket.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Categories");
-        }
-
-        public List<Category> getBreadcrumb(Category category)
-        {
-            var breadCrump = new List<Category>();
-            if(category.ParentCategoryId != null)
-            {
-                var parentCategory = _context.Categories.SingleOrDefault(c => c.Id == category.ParentCategoryId);
-                var parentBreadcrumb = getBreadcrumb(parentCategory);
-                breadCrump.AddRange(parentBreadcrumb);
-                breadCrump.Add(parentCategory);
-            }
-            return breadCrump;
         }
     }
 }
