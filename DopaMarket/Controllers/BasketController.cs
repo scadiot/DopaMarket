@@ -92,5 +92,21 @@ namespace DopaMarket.Controllers
 
             return Json(new { result = "count_changed", count = count }, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult ListItems()
+        {
+            var userId = User.Identity.GetUserId().ToString();
+            var client = _context.Clients.SingleOrDefault(c => c.IdentityUserId == userId);
+
+            var items = (from i in _context.Items
+                         join ib in _context.ItemBaskets on i.Id equals ib.ItemId
+                         where ib.ClientId == client.Id
+                         select new BasketItemViewModel() { Item = i, Quantity = ib.Count }).ToArray();
+
+            var basketViewModel = new BasketViewModel();
+            basketViewModel.Items = items;
+
+            return Json(basketViewModel, JsonRequestBehavior.AllowGet);
+        }
     }
 }
