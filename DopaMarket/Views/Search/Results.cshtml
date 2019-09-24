@@ -5,84 +5,90 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-10">
-        @Model.TotalCount articles
-        @if (Model.Query != "")
-        {
-            @Html.Raw("pour la recherche \"" + Model.Query + "\"");
-        }
-        @if (Model.Category != "")
-        {
-            @Html.Raw("dans la categorie " + Model.Category);
-        }
-    </div>
-</div>
-
-<div class="row">
-    @if (Model.ChildrenCategories != null)
-    {
-        <div class="col-md-2 search-option-column">
-            <div>Catégories enfants</div>
-            @foreach (var category in Model.ChildrenCategories)
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            @Model.TotalCount articles
+            @if (Model.Query != "")
             {
-                <div>
-                    <a href="/search?c=@category.Category.LinkName">
-                        @category.Category.Name
-                    </a>
-                </div>
+                @Html.Raw("pour la recherche \"" + Model.Query + "\"");
+            }
+            @if (Model.Category != "")
+            {
+                @Html.Raw("dans la categorie " + Model.Category);
             }
         </div>
-    }
-    else
-    {
-        <div class="col-md-2 search-option-column">
-            <div>Catégories en lien avec la recherche</div>
-            @foreach (var category in Model.Categories)
-            {
-                <div>
-                    <a href="/search?c=@category.Category.LinkName">
-                        @foreach (var parentCategory in category.Breadcrumb)
-                        {
-                            @parentCategory.Name
-                            @Html.Raw(" &gt ");
-                        }
-                        @category.Category.Name
-                    </a>
-                </div>
-            }
-        </div>
-    }
+    </div>
 
-
-    <div class="col-md-10 search-result-column">
-        @foreach (var item in Model.Items)
+    <div class="row">
+        @if (Model.ChildrenCategories != null)
         {
-            <div class="row search-row">
-                <div class="col-md-2">
-                    <img src="@(item.Image != null ? item.Image.Path : "")" style="object-fit: cover;width:200px;height:200px" />
-                </div>
-                <div class="col-md-6">
-                    <div>@Html.ActionLink((string)item.Item.Name, item.Item.LinkName, "Item")</div>
-                    <div>@item.Item.CurrentPrice</div>
-                </div>
+            <div class="col-md-2 search-option-column">
+                <div>Catégories enfants</div>
+                @foreach (var category in Model.ChildrenCategories)
+                {
+                    <div>
+                        <a href="/search?c=@category.Category.LinkName">
+                            @category.Category.Name
+                        </a>
+                    </div>
+                }
             </div>
         }
-        <div>
-            @for (var i = 0; i < Model.PageCount; i++)
-            {
-                if (i != Model.PageNumber)
+        else
+        {
+            <div class="col-md-2 search-option-column">
+                <div>Catégories en lien avec la recherche</div>
+                @foreach (var category in Model.Categories)
                 {
-                    <span><a class="btn btn-default" href="/search?@(Model.UrlParameters)&page=@i.ToString()">@((i + 1).ToString())</a></span>
+                    <div>
+                        <a href="/search?c=@category.Category.LinkName">
+                            @foreach (var parentCategory in category.Breadcrumb)
+                            {
+                                @parentCategory.Name
+                                @Html.Raw(" &gt ");
+                            }
+                            @category.Category.Name
+                        </a>
+                    </div>
                 }
-                else
+            </div>
+        }
+
+
+            <div class="col-md-10 search-result-column">
+                @foreach (var item in Model.Items)
                 {
-                    <span>@((i + 1).ToString())</span>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <a href="/Item/@item.Item.LinkName"><img class="card-img-top" src="@(item.Image != null ? item.Image.Path : "http://placehold.it/700x400")" alt=""></a>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <a href="/Item/@item.Item.LinkName">@item.Item.Name</a>
+                                </h4>
+                                <h5>@item.Item.CurrentPrice €</h5>
+                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">★ ★ ★ ★ ☆</small>
+                            </div>
+                        </div>
+                    </div>
                 }
-            }
-        </div>
+
+                <div>
+                    @for (var i = 0; i < Model.PageCount; i++)
+                    {
+                        if (i != Model.PageNumber)
+                        {
+                            <span><a class="btn btn-default" href="/search?@(Model.UrlParameters)&page=@i.ToString()">@((i + 1).ToString())</a></span>
+                        }
+                        else
+                        {
+                            <span>@((i + 1).ToString())</span>
+                        }
+                    }
+                </div>
+            </div>
     </div>
 </div>
-

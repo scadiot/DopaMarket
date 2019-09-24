@@ -21,7 +21,11 @@ namespace DopaMarket.Controllers
         {
             var homeViewModel = new HomeViewModel();
             homeViewModel.Categories = _context.Categories.Where(c => c.ParentCategoryId == null).ToArray();
-
+            homeViewModel.Items = _context.Items
+                                          .OrderBy(d => d.InsertDate)
+                                          .Take(20)
+                                          .Select(i => new SearchItemViewModel() { Item = i })
+                                          .ToArray();
             return View("index", homeViewModel);
         }
 

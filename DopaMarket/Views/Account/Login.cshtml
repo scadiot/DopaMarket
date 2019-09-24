@@ -4,59 +4,157 @@
     ViewBag.Title = "Connexion";
 }
 
-<h2>@ViewBag.Title.</h2>
-<div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
+<!-- Page Title-->
+<div class="page-title">
+    <div class="container">
+        <div class="column">
+            <h1>Login / Register Account</h1>
+        </div>
+        <div class="column">
+            <ul class="breadcrumbs">
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li class="separator">&nbsp;</li>
+                <li>
+                    <a href="account-orders.html">Account</a>
+                </li>
+                <li class="separator">&nbsp;</li>
+                <li>Login / Register</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Page Content-->
+<div class="container padding-bottom-3x mb-2">
+    <div class="row">
+        <div class="col-md-6">
+            <form class="card" method="post" action="/Account/Login">
                 @Html.AntiForgeryToken()
-                <h4>Utilisez un compte local pour vous connecter.</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                <div class="card-body">
+                    <h4 class="margin-bottom-1x">Or using form below</h4>
+                    <div class="form-group input-group">
+                        <input class="form-control" type="Email" placeholder="email" name="Email" required><span class="input-group-addon"><i class="icon-mail"></i></span>
+                    </div>
+                    <div class="form-group input-group">
+                        <input class="form-control" type="Password" placeholder="Password" name="Password" required><span class="input-group-addon"><i class="icon-lock"></i></span>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-between padding-bottom-1x">
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox" name="RememberMe" id="RememberMe" value="true" checked>
+                            <label class="custom-control-label" for="RememberMe">Remember me</label>
+                        </div><a class="navi-link" href="account-password-recovery.html">Forgot password?</a>
+                    </div>
+                    <div class="text-center text-sm-right">
+                        <button class="btn btn-primary margin-bottom-none" type="submit">Login</button>
                     </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </form>
+        </div>
+        <div class="col-md-6">
+            <div class="padding-top-3x hidden-md-up"></div>
+            <h3 class="margin-bottom-1x">No Account? Register</h3>
+            <p>Registration takes less than a minute but gives you full control over your orders.</p>
+            <form class="row" method="post">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="reg-fn">First Name</label>
+                        <input class="form-control" type="text" id="reg-fn" required>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="reg-ln">Last Name</label>
+                        <input class="form-control" type="text" id="reg-ln" required>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="reg-email">E-mail Address</label>
+                        <input class="form-control" type="email" id="reg-email" required>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="reg-phone">Phone Number</label>
+                        <input class="form-control" type="text" id="reg-phone" required>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="reg-pass">Password</label>
+                        <input class="form-control" type="password" id="reg-pass" required>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="reg-pass-confirm">Confirm Password</label>
+                        <input class="form-control" type="password" id="reg-pass-confirm" required>
+                    </div>
+                </div>
+                <div class="col-12 text-center text-sm-right">
+                    <button class="btn btn-primary margin-bottom-none" type="submit">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@*
+    <h2>@ViewBag.Title.</h2>
+    <div class="row">
+        <div class="col-md-8">
+            <section id="loginForm">
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <h4>Utilisez un compte local pour vous connecter.</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Connexion" class="btn btn-default" />
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
-                <p>
-                    @Html.ActionLink("S'inscrire comme nouvel utilisateur", "Register")
-                </p>
-                @* Activer ceci une fois que la confirmation de votre compte est activée pour la fonctionnalité de réinitialisation du mot de passe
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Connexion" class="btn btn-default" />
+                        </div>
+                    </div>
                     <p>
-                        @Html.ActionLink("Vous avez oublié votre mot de passe ?", "ForgotPassword")
-                    </p>*@
+                        @Html.ActionLink("S'inscrire comme nouvel utilisateur", "Register")
+                    </p>
+                    @* Activer ceci une fois que la confirmation de votre compte est activée pour la fonctionnalité de réinitialisation du mot de passe
+                        <p>
+                            @Html.ActionLink("Vous avez oublié votre mot de passe ?", "ForgotPassword")
+                        </p>*@@*
             }
         </section>
     </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
+<div class="col-md-4">
+    <section id="socialLoginForm">
+        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+    </section>
 </div>
+</div>
+*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

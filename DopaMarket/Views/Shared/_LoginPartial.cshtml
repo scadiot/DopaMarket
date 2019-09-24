@@ -5,47 +5,47 @@
     {
         @Html.AntiForgeryToken()
 
-<ul class="nav navbar-nav navbar-right">
-    <li class="nav-item dropdown">
-        <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="glyphicon glyphicon-user"></span>
-            Mon compte
-        </a>
-        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
-            <li class="dropdown-item"><a href="#">Mes commandes</a></li>
-            <li class="dropdown-divider"><hr /></li>
-            <li class="dropdown-item"><a href="/Client">Mes informations</a></li>
-            <li class="dropdown-item"><a href="#">Changer mon mot de passe</a></li>
-            <li class="dropdown-divider"><hr /></li>
-            <li class="dropdown-item"><a href="javascript:document.getElementById('logoutForm').submit()">Se déconnecter</a></li>
-        </ul>
-    </li>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="glyphicon glyphicon-user"></span>
+                    Mon compte
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
+                    <li class="dropdown-item"><a href="#">Mes commandes</a></li>
+                    <li class="dropdown-divider"><hr /></li>
+                    <li class="dropdown-item"><a href="/Client">Mes informations</a></li>
+                    <li class="dropdown-item"><a href="#">Changer mon mot de passe</a></li>
+                    <li class="dropdown-divider"><hr /></li>
+                    <li class="dropdown-item"><a href="javascript:document.getElementById('logoutForm').submit()">Se déconnecter</a></li>
+                </ul>
+            </li>
 
-    @if (Roles.IsUserInRole("Administrator"))
-    {
-        <li class="nav-item dropdown">
-            <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="glyphicon glyphicon-wrench"></span>
-                Administration
-            </a>
-            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
-                <li class="dropdown-item"><a href="/adminitems">Articles</a></li>
-                <li class="dropdown-item"><a href="/categories">Categories</a></li>
-            </ul>
-        </li>
-    }
-    <li class="nav-item">
-        <a class="nav-link" href="/basket">
-            <span class="glyphicon glyphicon-shopping-cart"></span> Panier
-        </a>
-    </li>
-</ul>
+            @if (Roles.IsUserInRole("Administrator"))
+            {
+                <li class="nav-item dropdown">
+                    <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-wrench"></span>
+                        Administration
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
+                        <li class="dropdown-item"><a href="/adminitems">Articles</a></li>
+                        <li class="dropdown-item"><a href="/categories">Categories</a></li>
+                    </ul>
+                </li>
+            }
+            <li class="nav-item">
+                <a class="nav-link" href="/basket">
+                    <span class="glyphicon glyphicon-shopping-cart"></span> Panier
+                </a>
+            </li>
+        </ul>
     }
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("S’inscrire", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Se connecter", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">@Html.ActionLink("S’inscrire", "Register", "Account", routeValues: null, htmlAttributes: new { @class = "nav-link", id = "registerLink" })</li>
+        <li class="nav-item">@Html.ActionLink("Se connecter", "Login", "Account", routeValues: null, htmlAttributes: new { @class="nav-link", id = "loginLink" })</li>
     </ul>
 }
