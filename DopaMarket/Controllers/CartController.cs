@@ -10,7 +10,7 @@ using System.Net;
 
 namespace DopaMarket.Controllers
 {
-    public class CartController : Controller
+    public class CartController : BaseController
     {
         ApplicationDbContext _context;
 

@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace DopaMarket.Controllers
 {
-    public class AdminItemsController : Controller
+    public class AdminItemsController : BaseController
     {
         ApplicationDbContext _context;
 

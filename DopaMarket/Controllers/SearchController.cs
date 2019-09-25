@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace DopaMarket.Controllers
 {
-    public class SearchController : Controller
+    public class SearchController : BaseController
     {
         const int ItemPerPage = 3;
 

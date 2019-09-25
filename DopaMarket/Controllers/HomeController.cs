@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace DopaMarket.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         ApplicationDbContext _context;
 

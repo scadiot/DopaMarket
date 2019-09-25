@@ -10,7 +10,7 @@ using DopaMarket.ViewModels;
 namespace DopaMarket.Controllers
 {
     [Authorize]
-    public class CustomerController : Controller
+    public class CustomerController : BaseController
     {
         ApplicationDbContext _context;
 
@@ -23,64 +23,42 @@ namespace DopaMarket.Controllers
         {
             var userId = User.Identity.GetUserId().ToString();
             var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
-            var address = _context.Address.SingleOrDefault(c => c.Id == customer.AddressId);
 
-            var customerFormViewModel = new CustomerFormViewModel();
+            var customerFormViewModel = new CustomerProfileViewModel();
             customerFormViewModel.Customer = customer;
-            customerFormViewModel.Address = address;
 
             return View(customerFormViewModel);
         }
 
-        public ActionResult Edit()
+        public ActionResult ProfileEdit()
         {
             var userId = User.Identity.GetUserId().ToString();
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
             var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
 
-            var customerFormViewModel = new CustomerFormViewModel();
-            customerFormViewModel.Customer  = customer;
-            if (customer.AddressId != null)
-                customerFormViewModel.Address = _context.Address.Single(a => a.Id == customer.AddressId);
-            else
-                customerFormViewModel.Address = new Address();
+            var customerProfilViewModel = new CustomerProfileViewModel();
+            customerProfilViewModel.Customer  = customer;
+            customerProfilViewModel.Email = user.Email;
 
-            return View("CustomerForm", customerFormViewModel);
+            return View("ProfileForm", customerProfilViewModel);
         }
 
         [HttpPost]
-        public ActionResult Save(CustomerFormViewModel customerFormViewModel)
+        public ActionResult ProfileSave(CustomerProfileViewModel customerFormViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return View("CustomerForm", customerFormViewModel);
             }
 
-            Address addressInDB;
-            if (customerFormViewModel.Address.Id != 0)
-                addressInDB = _context.Address.Single<Address>(a => a.Id == customerFormViewModel.Address.Id);
-            else
-                addressInDB = new Address();
-
-            addressInDB.Street     = customerFormViewModel.Address.Street;
-            addressInDB.Street2    = customerFormViewModel.Address.Street2;
-            addressInDB.City       = customerFormViewModel.Address.City;
-            addressInDB.State      = customerFormViewModel.Address.State;
-            addressInDB.PostalCode = customerFormViewModel.Address.PostalCode;
-            addressInDB.Country    = customerFormViewModel.Address.Country;
-
-            _context.Address.Add(addressInDB);
-            _context.SaveChanges();
-
             var customerInDB = _context.Customers.Single<Customer>(c => c.Id == customerFormViewModel.Customer.Id);
             customerInDB.FirstName = customerFormViewModel.Customer.FirstName;
             customerInDB.LastName = customerFormViewModel.Customer.LastName;
-            customerInDB.FirstName = customerFormViewModel.Customer.FirstName;
             customerInDB.PhoneNumber = customerFormViewModel.Customer.PhoneNumber;
-            customerInDB.AddressId = addressInDB.Id;
 
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Customer");
+            return RedirectToAction("ProfileEdit", "Customer");
         }
     }
 }

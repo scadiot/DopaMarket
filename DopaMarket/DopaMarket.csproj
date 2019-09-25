@@ -211,6 +211,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Administration\ItemInfoTypesController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CategoriesTools.cs" />
@@ -254,7 +255,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\BasketViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
-    <Compile Include="ViewModels\ClientFormViewModel.cs" />
+    <Compile Include="ViewModels\CustomerProfileViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\ItemFormViewModel.cs" />
     <Compile Include="ViewModels\CategoryFormViewModel.cs" />
@@ -324,7 +325,7 @@
     <Content Include="Views\AdminItems\ItemForm.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Categories\CategoryForm.cshtml" />
-    <Content Include="Views\Customer\ClientForm.cshtml" />
+    <Content Include="Views\Customer\ProfileForm.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Item\Detail.cshtml" />
     <Content Include="Views\Search\Results.cshtml" />
@@ -336,6 +337,8 @@
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Topbar.cshtml" />
     <Content Include="Views\Shared\_MobileMenu.cshtml" />
+    <Content Include="Views\Customer\_UserInfoMenu.cshtml" />
+    <Content Include="Views\Customer\AddressForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

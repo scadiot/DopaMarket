@@ -1,20 +1,20 @@
-﻿@model DopaMarket.ViewModels.ClientFormViewModel
+﻿@model DopaMarket.ViewModels.CustomerProfileViewModel
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index Client</h2>
+<h2>Index Customer</h2>
 
 <div>
-    Nom : @Model.Client.Name
+    Prénom : @Model.Customer.FirstName
 </div>
 <div>
-    Phone Number : @Model.Client.PhoneNumber
+    Nom : @Model.Customer.LastName
 </div>
 <div>
-    Birthday : @Model.Client.Birthday
+    Phone Number : @Model.Customer.PhoneNumber
 </div>
 <hr />
 <div>
@@ -33,4 +33,4 @@
     Pays : @Model.Address.Country
 </div>
 <hr />
-@Html.ActionLink("Edit", "Edit", "Client")
+@Html.ActionLink("Edit", "Edit", "Customer")

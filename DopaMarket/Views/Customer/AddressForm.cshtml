@@ -1,0 +1,164 @@
+﻿@model DopaMarket.ViewModels.CustomerProfileViewModel
+
+@{
+    ViewBag.Title = "CustomerForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Page Title-->
+<div class="page-title">
+    <div class="container">
+        <div class="column">
+            <h1>My Profile</h1>
+        </div>
+        <div class="column">
+            <ul class="breadcrumbs">
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li class="separator">&nbsp;</li>
+                <li>
+                    <a href="account-orders.html">Account</a>
+                </li>
+                <li class="separator">&nbsp;</li>
+                <li>My Profile</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Page Content-->
+<div class="container padding-bottom-3x mb-2">
+    <div class="row">
+
+        @{
+            Html.RenderPartial("_UserInfoMenu");
+        }
+
+        <div class="col-lg-8">
+            <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+            @using (Html.BeginForm("ProfileSave", "Customer", FormMethod.Post, new { @class = "row", enctype = "multipart/form-data" }))
+            {
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Customer.FirstName)
+                        @Html.TextBoxFor(m => m.Customer.FirstName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Customer.FirstName)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Customer.LastName)
+                        @Html.TextBoxFor(m => m.Customer.LastName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Customer.LastName)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="account-email">E-mail Address</label>
+                        <input class="form-control" type="email" id="account-email" value="@Model.Email" disabled>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Customer.PhoneNumber)
+                        @Html.TextBoxFor(m => m.Customer.PhoneNumber, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Customer.PhoneNumber)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="account-pass">New Password</label>
+                        <input class="form-control" type="password" id="account-pass" disabled>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="account-confirm-pass">Confirm Password</label>
+                        <input class="form-control" type="password" id="account-confirm-pass" disabled>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <hr class="mt-2 mb-3">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center">
+                        <div class="d-block">
+
+                        </div>
+                        <button class="btn btn-primary margin-right-none" type="submit">Update Profile</button>
+                    </div>
+                </div>
+
+                @Html.Hidden("Customer.AddressId", Model.Customer.AddressId);
+                @Html.Hidden("Customer.Id", Model.Customer.Id);
+                @Html.Hidden("Customer.IdentityUserId", Model.Customer.IdentityUserId);
+            }
+        </div>
+    </div>
+</div>
+@*
+    <h2>ClientForm</h2>
+
+    @using (Html.BeginForm("Save", "Customer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.Customer.FirstName)
+            @Html.TextBoxFor(m => m.Customer.FirstName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Customer.FirstName)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Customer.LastName)
+            @Html.TextBoxFor(m => m.Customer.LastName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Customer.LastName)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Customer.PhoneNumber)
+            @Html.TextBoxFor(m => m.Customer.PhoneNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Customer.PhoneNumber)
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Address.Street)
+            @Html.TextBoxFor(m => m.Address.Street, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Address.Street)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Address.Street2)
+            @Html.TextBoxFor(m => m.Address.Street2, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Address.Street2)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Address.City)
+            @Html.TextBoxFor(m => m.Address.City, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Address.City)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Address.State)
+            @Html.TextBoxFor(m => m.Address.State, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Address.State)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Address.PostalCode)
+            @Html.TextBoxFor(m => m.Address.PostalCode, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Address.PostalCode)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Address.Country)
+            @Html.TextBoxFor(m => m.Address.Country, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Address.Country)
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+
+        @Html.Hidden("Address.Id", Model.Address.Id);
+        @Html.Hidden("Customer.Id", Model.Customer.Id);
+        @Html.Hidden("Customer.IdentityUserId", Model.Customer.IdentityUserId);
+
+    }
+*@

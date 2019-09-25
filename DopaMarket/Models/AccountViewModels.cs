@@ -82,7 +82,11 @@ namespace DopaMarket.Models
 
         [Required]
         [Display(Name = "Nom")]
-        public string Name { get; set; }
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Prenom")]
+        public string FirstName { get; set; }
     }
 
     public class ResetPasswordViewModel
