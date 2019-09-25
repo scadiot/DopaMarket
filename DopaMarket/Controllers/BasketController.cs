@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using DopaMarket.ViewModels;
+using System.Net;
 
 namespace DopaMarket.Controllers
 {
@@ -93,8 +94,13 @@ namespace DopaMarket.Controllers
             return Json(new { result = "count_changed", count = count }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult ListItems()
+        public ActionResult ListItems()
         {
+            if(!User.Identity.IsAuthenticated)
+            {              
+                return Json( new { error = "authentication required" }, JsonRequestBehavior.AllowGet);
+            }
+
             var userId = User.Identity.GetUserId().ToString();
             var client = _context.Clients.SingleOrDefault(c => c.IdentityUserId == userId);
 

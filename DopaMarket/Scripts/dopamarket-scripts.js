@@ -17,6 +17,9 @@ jQuery(document).ready(function ($) {
         $.ajax({
             url: "/Basket/ListItems",
         }).done(function (response) {
+            if (response.error) {
+                return;
+            }
             $("#topbar-cart-count-label").text(response.Items.length);
             for (var i = response.Items.length - 1; i >= 0; i++) {
                 var item = response.Items[i];
