@@ -5,9 +5,9 @@ using System.Web;
 
 namespace DopaMarket.ViewModels
 {
-    public class ClientFormViewModel
+    public class CustomerFormViewModel
     {
-        public Models.Client Client { get; set; }
+        public Models.Customer Customer { get; set; }
         public Models.Address Address { get; set; }
     }
 }

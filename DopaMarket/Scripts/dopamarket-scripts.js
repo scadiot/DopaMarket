@@ -13,9 +13,9 @@ jQuery(document).ready(function ($) {
     var cartDropdownItem = $("#cart-dropdown-item");
     cartDropdownItem.remove();
 
-    function GetItemsInBasket() {
+    function GetItemsInCart() {
         $.ajax({
-            url: "/Basket/ListItems",
+            url: "/Cart/ListItems",
         }).done(function (response) {
             if (response.error) {
                 return;
@@ -30,5 +30,5 @@ jQuery(document).ready(function ($) {
             }
         });
     }
-    GetItemsInBasket();
+    GetItemsInCart();
 });

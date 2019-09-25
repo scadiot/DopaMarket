@@ -5,14 +5,14 @@ using System.Web;
 
 namespace DopaMarket.ViewModels
 {
-    public class BasketItemViewModel
+    public class CartItemViewModel
     {
         public Models.Item Item { get; set; }
         public int Quantity { get; set; }
     }
 
-    public class BasketViewModel
+    public class CartViewModel
     {
-        public IEnumerable<BasketItemViewModel> Items { get; set; }
+        public IEnumerable<CartItemViewModel> Items { get; set; }
     }
 }

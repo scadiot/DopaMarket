@@ -5,7 +5,7 @@ using System.Web;
 
 namespace DopaMarket.Models
 {
-    public class ItemReview
+    public class ItemPromotion
     {
         public int Id { get; set; }
 
@@ -13,14 +13,10 @@ namespace DopaMarket.Models
 
         public Item Item { get; set; }
 
-        public int CustomerId { get; set; }
+        public Decimal Value { get; set; }
 
-        public Customer Customer { get; set; }
+        public DateTime StartTime { get; set; }
 
-        public DateTime Date { get; set; }
-
-        public string Text { get; set; }
-
-        public int Note { get; set; }
+        public DateTime EndTime { get; set; }
     }
 }

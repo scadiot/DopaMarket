@@ -103,7 +103,7 @@ namespace DopaMarket.Controllers
                 var itemInDB = _context.Items.Single<Item>(m => m.Id == itemFormViewModel.Item.Id);
                 itemInDB.Name = itemFormViewModel.Item.Name;
                 itemInDB.LinkName = itemFormViewModel.Item.LinkName;
-                itemInDB.OnSale = itemFormViewModel.Item.OnSale;
+                itemInDB.ForSale = itemFormViewModel.Item.ForSale;
                 itemInDB.CurrentPrice = itemFormViewModel.Item.CurrentPrice;
                 itemInDB.InsertDate = itemFormViewModel.Item.InsertDate;
             }

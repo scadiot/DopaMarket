@@ -33,7 +33,7 @@ namespace DopaMarket.Controllers
             itemDetailModel.ItemInfos = getItemDetailItemInfoModel(item);
             itemDetailModel.Reviews = _context.ItemReviews
                                               .Where(ir => ir.ItemId == item.Id)
-                                              .Include(ir => ir.Client)
+                                              .Include(ir => ir.Customer)
                                               .OrderBy(ir => ir.Date)
                                               .ToArray();
 
@@ -78,14 +78,14 @@ namespace DopaMarket.Controllers
         public ActionResult PushReview(int itemId, int note, string text)
         {
             var userId = User.Identity.GetUserId().ToString();
-            var client = _context.Clients.SingleOrDefault(c => c.IdentityUserId == userId);
+            var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
             var item = _context.Items.SingleOrDefault(i => i.Id == itemId);
 
-            var itemReview = _context.ItemReviews.SingleOrDefault(ir => ir.ItemId == itemId && ir.ClientId == client.Id);
+            var itemReview = _context.ItemReviews.SingleOrDefault(ir => ir.ItemId == itemId && ir.CustomerId == customer.Id);
             if(itemReview == null)
             {
                 itemReview = new ItemReview();
-                itemReview.ClientId = client.Id;
+                itemReview.CustomerId = customer.Id;
                 itemReview.ItemId = itemId;
                 itemReview.Note = note;
                 itemReview.Text = text;

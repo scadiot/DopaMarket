@@ -7,19 +7,16 @@ using System.Web;
 
 namespace DopaMarket.Models
 {
-    public class Category
+    public class Brand
     {
         public int Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
         [Required]
         [StringLength(200)]
         [Index(IsUnique = true)]
         public string LinkName { get; set; }
-
-        public int? ParentCategoryId { get; set; }
-
-        public Category Parent { get; set; }
     }
 }

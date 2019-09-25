@@ -1,26 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace DopaMarket.Models
 {
-    public class ItemReview
+    public class ItemFeature
     {
         public int Id { get; set; }
 
         public int ItemId { get; set; }
-
         public Item Item { get; set; }
 
-        public int CustomerId { get; set; }
-
-        public Customer Customer { get; set; }
-
-        public DateTime Date { get; set; }
-
+        [Required]
         public string Text { get; set; }
-
-        public int Note { get; set; }
     }
 }

@@ -182,23 +182,24 @@ namespace DopaMarket.Controllers
                     var roleManager = new RoleManager<IdentityRole>(roleStore);
                     await roleManager.CreateAsync(new IdentityRole("Administrator"));
                     await roleManager.CreateAsync(new IdentityRole("CanManageItems"));
-                    await roleManager.CreateAsync(new IdentityRole("CanManageSales"));
+                    await roleManager.CreateAsync(new IdentityRole("CanManageOrders"));
 
 
                     await UserManager.AddToRoleAsync(user.Id, "Administrator");
                     await UserManager.AddToRoleAsync(user.Id, "CanManageItems");
-                    await UserManager.AddToRoleAsync(user.Id, "CanManageSales");
+                    await UserManager.AddToRoleAsync(user.Id, "CanManageOrders");
 
 
-                    var client = new Client();
-                    client.IdentityUserId = user.Id;
-                    client.Name = model.Name;
-                    client.AddressId = null;
+                    var customer = new Customer();
+                    customer.IdentityUserId = user.Id;
+                    //customer.FirstName = model.FirstName;
+                    //customer.LastName = model.LastName;
+                    customer.AddressId = null;
 
-                    DbContext.Clients.Add(client);
+                    DbContext.Customers.Add(customer);
                     DbContext.SaveChanges();
 
-                    return RedirectToAction("Edit", "Client");
+                    return RedirectToAction("Edit", "Customer");
                 }
                 AddErrors(result);
             }

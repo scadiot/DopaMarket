@@ -59,7 +59,7 @@
             let itemId = button.getAttribute('data-item-id');
 
             $.ajax({
-                url: "/Basket/AddItem/" + itemId,
+                url: "/Cart/AddItem/" + itemId,
             }).done(function (response) {
                 if (response.result === "added") {
                     bootbox.dialog({
@@ -71,10 +71,10 @@
                                 className: 'btn-danger',
                             },
                             ok: {
-                                label: "I'm an OK button!",
+                                label: "Aller au panier",
                                 className: 'btn-info',
                                 callback: function () {
-                                    window.location.href = '/Basket';
+                                    window.location.href = '/Cart';
                                 }
                             }
                         }
