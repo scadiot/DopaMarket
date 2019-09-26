@@ -1,0 +1,69 @@
+﻿@model DopaMarket.ViewModels.CustomerTicketsViewModel
+
+@{
+    ViewBag.Title = "Tickets";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Page Title-->
+<div class="page-title">
+    <div class="container">
+        <div class="column">
+            <h1>My Tickets</h1>
+        </div>
+        <div class="column">
+            <ul class="breadcrumbs">
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li class="separator">&nbsp;</li>
+                <li>
+                    <a href="account-orders.html">Account</a>
+                </li>
+                <li class="separator">&nbsp;</li>
+                <li>My Tickets</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Page Content-->
+<div class="container padding-bottom-3x mb-2">
+    <div class="row">
+
+        @{
+            Html.RenderPartial("_UserInfoMenu");
+        }
+
+        <div class="col-lg-8">
+            <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Ticket Subject</th>
+                            <th>Date Submitted | Updated</th>
+                            <th>Type</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ticket in Model.Tickets)
+                        {
+                            <tr>
+                                <td><a class="navi-link" href="account-single-ticket.html">@ticket.Subject</a></td>
+                                <td>@ticket.Date</td>
+                                <td>@ticket.Type</td>
+                                <td><span class="text-warning">@ticket.Priority</span></td>
+                                <td><span class="text-primary">@ticket.Status</span></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <hr class="mb-4">
+            <div class="text-right">
+                <button class="btn btn-primary margin-bottom-none" data-toggle="modal" data-target="/Customer/NewTicket">Submit New Ticket</button>
+            </div>
+        </div>
+    </div>
+</div>

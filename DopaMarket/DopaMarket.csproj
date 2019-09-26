@@ -210,6 +210,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Administration\BrandController.cs" />
     <Compile Include="Controllers\Administration\ItemInfoTypesController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CartController.cs" />
@@ -228,6 +229,18 @@
     <Compile Include="Migrations\201909250911430_Initial.cs" />
     <Compile Include="Migrations\201909250911430_Initial.Designer.cs">
       <DependentUpon>201909250911430_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909261018483_AddTickets.cs" />
+    <Compile Include="Migrations\201909261018483_AddTickets.Designer.cs">
+      <DependentUpon>201909261018483_AddTickets.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909261049583_AddSubjectToTicket.cs" />
+    <Compile Include="Migrations\201909261049583_AddSubjectToTicket.Designer.cs">
+      <DependentUpon>201909261049583_AddSubjectToTicket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909261153383_NullableMainCategoryId.cs" />
+    <Compile Include="Migrations\201909261153383_NullableMainCategoryId.Designer.cs">
+      <DependentUpon>201909261153383_NullableMainCategoryId.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -251,16 +264,21 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderItem.cs" />
+    <Compile Include="Models\Ticket.cs" />
+    <Compile Include="Models\TicketMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\BasketViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\CustomerAddressViewModel.cs" />
     <Compile Include="ViewModels\CustomerProfileViewModel.cs" />
+    <Compile Include="ViewModels\CustomerTicketsViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\ItemFormViewModel.cs" />
     <Compile Include="ViewModels\CategoryFormViewModel.cs" />
     <Compile Include="ViewModels\ItemDetailModel.cs" />
     <Compile Include="ViewModels\ItemInfoTypesFormViewModel.cs" />
+    <Compile Include="ViewModels\CostumerOrdersViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -333,15 +351,18 @@
     <Content Include="Views\Shared\_HeaderNavBar.cshtml" />
     <Content Include="Views\ItemInfoTypes\Index.cshtml" />
     <Content Include="Views\ItemInfoTypes\ItemInfoTypeForm.cshtml" />
-    <Content Include="Views\Sales\Confirmation.cshtml" />
+    <Content Include="Views\Orders\Confirmation.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Topbar.cshtml" />
     <Content Include="Views\Shared\_MobileMenu.cshtml" />
     <Content Include="Views\Customer\_UserInfoMenu.cshtml" />
     <Content Include="Views\Customer\AddressForm.cshtml" />
+    <Content Include="Views\Customer\Tickets.cshtml" />
+    <Content Include="Views\Customer\Orders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Brand\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -354,6 +375,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201909250911430_Initial.resx">
       <DependentUpon>201909250911430_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909261018483_AddTickets.resx">
+      <DependentUpon>201909261018483_AddTickets.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909261049583_AddSubjectToTicket.resx">
+      <DependentUpon>201909261049583_AddSubjectToTicket.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909261153383_NullableMainCategoryId.resx">
+      <DependentUpon>201909261153383_NullableMainCategoryId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

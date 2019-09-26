@@ -1,4 +1,5 @@
 ﻿using DopaMarket.Models;
+using DopaMarket.ViewModels;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,13 @@ namespace DopaMarket.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var userId = User.Identity.GetUserId().ToString();
+            var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
+
+            var costumerOrdersViewModel = new CostumerOrdersViewModel();
+            costumerOrdersViewModel.Orders = _context.Orders.Where(o => o.CustomerId == customer.Id).OrderBy(o => o.Date).ToArray();
+
+            return View("Index", costumerOrdersViewModel);
         }
 
         public ActionResult Create()

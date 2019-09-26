@@ -30,12 +30,11 @@ namespace DopaMarket.Controllers
                 category = _context.Categories.SingleOrDefault(cat => cat.LinkName == c);
             }
 
-            CategoryViewModel[] childrenCategories = null;
+            Category[] childrenCategories = null;
             if(c != string.Empty && q == string.Empty)
             {
                 childrenCategories = _context.Categories
                                              .Where(cat => cat.ParentCategoryId == category.Id)
-                                             .Select(cat => new CategoryViewModel() { Category = cat })
                                              .ToArray();
             }
 
@@ -77,7 +76,7 @@ namespace DopaMarket.Controllers
             searchViewModel.UrlParameters = urlParameters;
             searchViewModel.TotalCount = totalItems;
             searchViewModel.PageNumber = page;
-            searchViewModel.PageCount = totalItems / ItemPerPage;
+            searchViewModel.PageCount = (totalItems / ItemPerPage) + 1;
             searchViewModel.Categories = categories;
             searchViewModel.ChildrenCategories = childrenCategories;
 
@@ -91,21 +90,24 @@ namespace DopaMarket.Controllers
 
         CategoryViewModel[] GetCategories(IQueryable<Item> items)
         {
-            var categoriesInSearch = from item in items
-                                     join itemCategory in _context.ItemCategories on item.Id equals itemCategory.ItemId
-                                     group itemCategory by itemCategory.CategoryId into g
-                                     orderby g.Count()
-                                     select new { categoryId = g.Key, count = g.Count() };
+            var categories = _context.Categories.Where(c => c.ParentCategoryId == null).ToArray();
+            var categoriesIds = categories.Select(cat => cat.Id).ToArray();
+            var children = _context.Categories.Where(c => categoriesIds.Contains((int)c.ParentCategoryId)).ToArray();
 
-            var arrayCategoriesInSearch = categoriesInSearch.ToArray();
-
-            var result = new List<CategoryViewModel>();
-            foreach (var arrayCategoryInSearch in arrayCategoriesInSearch)
+            var CategoryViewModels = new List<CategoryViewModel>();
+            foreach (var category in categories)
             {
-                var category = _context.Categories.SingleOrDefault(c => c.Id == arrayCategoryInSearch.categoryId);
-                result.Add(CategoriesTools.GetCategoryViewModel(_context, category));
+                var categoryViewModel = new CategoryViewModel();
+                categoryViewModel.Category = category;
+
+                categoryViewModel.Children = children.Where(c => c.ParentCategoryId == category.Id)
+                                                     .Select(c => new CategoryViewModel() { Category = c})
+                                                     .ToArray();
+
+                CategoryViewModels.Add(categoryViewModel);
             }
-            return result.ToArray();
+
+            return CategoryViewModels.ToArray();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace DopaMarket.Models
         public string LinkName { get; set; }
 
         [Required]
-        public string tinyDescriptive { get; set; }
+        public string TinyDescriptive { get; set; }
 
         [Required]
         public string Descriptive { get; set; }
@@ -37,7 +37,7 @@ namespace DopaMarket.Models
 
         public Brand Brand { get; set; }
 
-        public int MainCategoryId { get; set; }
+        public int? MainCategoryId { get; set; }
 
         public Category MainCategory { get; set; }
 

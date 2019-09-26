@@ -5,32 +5,34 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index Customer</h2>
+<!-- Page Title-->
+<div class="page-title">
+    <div class="container">
+        <div class="column">
+            <h1>My Profile</h1>
+        </div>
+        <div class="column">
+            <ul class="breadcrumbs">
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li class="separator">&nbsp;</li>
+                <li>
+                    <a href="account-orders.html">Account</a>
+                </li>
+                <li class="separator">&nbsp;</li>
+                <li>My Profile</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Page Content-->
+<div class="container padding-bottom-3x mb-2">
+    <div class="row">
 
-<div>
-    Prénom : @Model.Customer.FirstName
+        @{
+            Html.RenderPartial("_UserInfoMenu");
+        }
+
+    </div>
 </div>
-<div>
-    Nom : @Model.Customer.LastName
-</div>
-<div>
-    Phone Number : @Model.Customer.PhoneNumber
-</div>
-<hr />
-<div>
-    Adresse 1 : @Model.Address.Street
-</div>
-<div>
-    Adresse 2 : @Model.Address.Street2
-</div>
-<div>
-    Code Postal : @Model.Address.PostalCode
-</div>
-<div>
-    Ville : @Model.Address.City
-</div>
-<div>
-    Pays : @Model.Address.Country
-</div>
-<hr />
-@Html.ActionLink("Edit", "Edit", "Customer")

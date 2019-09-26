@@ -123,6 +123,11 @@ namespace DopaMarket.Controllers
         
         public void UpdateLinkItemCategories(Item item, int[] categoriesId)
         {
+            if(categoriesId == null)
+            {
+                categoriesId = new int[0];
+            }
+
             var linkToRemove = _context.ItemCategories.Where(ic => ic.ItemId == item.Id && !categoriesId.Contains(ic.CategoryId));
             _context.ItemCategories.RemoveRange(linkToRemove);
 

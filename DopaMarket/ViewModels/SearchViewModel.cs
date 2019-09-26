@@ -22,6 +22,6 @@ namespace DopaMarket.ViewModels
         public int PageNumber { get; set; }
         public IEnumerable<SearchItemViewModel> Items { get; set; }
         public IEnumerable<CategoryViewModel> Categories { get; set; }
-        public IEnumerable<CategoryViewModel> ChildrenCategories { get; set; }
+        public IEnumerable<Category> ChildrenCategories { get; set; }
     }
 }
