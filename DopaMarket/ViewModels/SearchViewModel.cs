@@ -24,7 +24,6 @@ namespace DopaMarket.ViewModels
     {
         public string Query { get; set; }
         public string Category { get; set; }
-        public string UrlParameters { get; set; }
         public int TotalCount { get; set; }
         public int PageCount { get; set; }
         public int PageNumber { get; set; }

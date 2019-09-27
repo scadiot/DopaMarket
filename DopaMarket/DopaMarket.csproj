@@ -226,6 +226,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\PredicateBuilder.cs" />
     <Compile Include="Migrations\201909250911430_Initial.cs" />
     <Compile Include="Migrations\201909250911430_Initial.Designer.cs">
       <DependentUpon>201909250911430_Initial.cs</DependentUpon>

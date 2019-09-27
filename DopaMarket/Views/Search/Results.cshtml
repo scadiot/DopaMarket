@@ -4,6 +4,55 @@
     ViewBag.Title = "Results";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
+@functions {
+    public static string SearchUrlChangePage(DopaMarket.ViewModels.SearchViewModel model, int page)
+    {
+        return SearchUrl(model.Query, model.Category, generatePriceFiltersData(model), model.PriceRangeStart, model.PriceRangeEnd, "", "", page);
+    }
+
+    public static string SearchUrlPriceFilter(DopaMarket.ViewModels.SearchViewModel model, string filter)
+    {
+        var priceFilter = generatePriceFiltersData(model);
+        if(priceFilter == string.Empty)
+        {
+            priceFilter = filter;
+        }
+        else if(priceFilter.Contains(filter))
+        {
+             priceFilter = priceFilter.Replace("_" + filter, "");
+             priceFilter = priceFilter.Replace(filter + "_", "");
+             priceFilter = priceFilter.Replace(filter, "");
+        }
+        else
+        {
+            priceFilter += "_" + filter;
+        }
+        return SearchUrl(model.Query, model.Category, priceFilter, model.PriceRangeStart, model.PriceRangeEnd, "", "", 0);
+    }
+
+    public static string generatePriceFiltersData(DopaMarket.ViewModels.SearchViewModel model)
+    {
+        return string.Join("_",(model.PriceFilters.Where(pf => pf.Selected).Select(pf => pf.PriceStart + "-" + pf.PriceEnd)));
+    }
+
+    public static string SearchUrl(string query, string category, string priceFilters, decimal? minPrice, decimal? maxPrice, string brands, string order, int page)
+    {
+        string result = "/Search?";
+        result += (query != "" && query != null) ? "q=" + query + "&" : "";
+        result += (category != "" && category != null) ? "c=" + category + "&": "";
+        result += (priceFilters != "" && priceFilters != null) ? "pf=" + priceFilters + "&" : "";
+        result += (minPrice != null) ? "minp=" + minPrice + "&" : "";
+        result += (maxPrice != null) ? "maxp=" + maxPrice + "&" : "";
+        result += (brands != "" && brands != null) ? "b=" + brands + "&" : "";
+        result += (order != "" && order != null) ? "order=" + order + "&" : "";
+        result += (page != 0) ? "page=" + page + "&" : "";
+        result = result.Last() == '&' ? result.Substring(0, result.Length - 1) : result;
+        return result;
+    }
+}
+
 <!-- Page Title-->
 <div class="page-title">
     <div class="container">
@@ -83,7 +132,7 @@
                                 </h4>
                             </div>
                             @*
-        <div class="product-button-group"><a class="product-button btn-wishlist" href="#"><i class="icon-heart"></i><span>Wishlist</span></a><a class="product-button btn-compare" href="#"><i class="icon-repeat"></i><span>Compare</span></a><a class="product-button" href="#" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-check-circle" data-toast-title="Product" data-toast-message="successfuly added to cart!"><i class="icon-shopping-cart"></i><span>To Cart</span></a></div>
+                                <div class="product-button-group"><a class="product-button btn-wishlist" href="#"><i class="icon-heart"></i><span>Wishlist</span></a><a class="product-button btn-compare" href="#"><i class="icon-repeat"></i><span>Compare</span></a><a class="product-button" href="#" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-check-circle" data-toast-title="Product" data-toast-message="successfuly added to cart!"><i class="icon-shopping-cart"></i><span>To Cart</span></a></div>
                             *@
                         </div>
                     </div>
@@ -97,7 +146,7 @@
                         {
                             if (i != Model.PageNumber)
                             {
-                                <li><a href="/search?@(Model.UrlParameters)&page=@i.ToString()">@((i + 1).ToString())</a></li>
+                                <li><a href="@SearchUrlChangePage(Model, i)">@((i + 1).ToString())</a></li>
                             }
                             else
                             {
@@ -108,7 +157,7 @@
                 </div>
                 @if (Model.PageNumber < Model.PageCount - 1)
                 {
-                    <div class="column text-right hidden-xs-down"><a class="btn btn-outline-secondary btn-sm" href="/search?@(Model.UrlParameters)&page=@(Model.PageNumber + 1)">Next&nbsp;<i class="icon-chevron-right"></i></a></div>
+                    <div class="column text-right hidden-xs-down"><a class="btn btn-outline-secondary btn-sm" href="@SearchUrlChangePage(Model, Model.PageNumber + 1)">Next&nbsp;<i class="icon-chevron-right"></i></a></div>
                 }
             </nav>
         </div>
@@ -170,8 +219,8 @@
                         <h3 class="widget-title">Filter by Price</h3>
                         @foreach (var priceFilter in Model.PriceFilters)
                         {
-                            <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" type="checkbox" id="@(priceFilter.PriceStart)_@(priceFilter.PriceEnd)">
+                            <div class="custom-control custom-checkbox" onClick="window.location.href='@SearchUrlPriceFilter(Model, priceFilter.PriceStart + "-" + priceFilter.PriceEnd)';">
+                                <input class="custom-control-input" type="checkbox" id="@(priceFilter.PriceStart)_@(priceFilter.PriceEnd)" @( priceFilter.Selected ? "checked" : "" )>
                                 <label class="custom-control-label" for="low">@priceFilter.PriceStart€ - @priceFilter.PriceEnd€&nbsp;<span class="text-muted">(@priceFilter.Count)</span></label>
                             </div>
                         }
@@ -196,96 +245,7 @@
         </div>
     </div>
 </div>
-@*
 
+<script>
 
-
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10">
-                @Model.TotalCount articles
-                @if (Model.Query != "")
-                {
-                    @Html.Raw("pour la recherche \"" + Model.Query + "\"");
-                }
-                @if (Model.Category != "")
-                {
-                    @Html.Raw("dans la categorie " + Model.Category);
-                }
-            </div>
-        </div>
-
-        <div class="row">
-            @if (Model.ChildrenCategories != null)
-            {
-                <div class="col-md-2 search-option-column">
-                    <div>Catégories enfants</div>
-                    @foreach (var category in Model.ChildrenCategories)
-                    {
-                        <div>
-                            <a href="/search?c=@category.Category.LinkName">
-                                @category.Category.Name
-                            </a>
-                        </div>
-                    }
-                </div>
-            }
-            else
-            {
-                <div class="col-md-2 search-option-column">
-                    <div>Catégories en lien avec la recherche</div>
-                    @foreach (var category in Model.Categories)
-                    {
-                        <div>
-                            <a href="/search?c=@category.Category.LinkName">
-                                @foreach (var parentCategory in category.Breadcrumb)
-                                {
-                                    @parentCategory.Name
-                                    @Html.Raw(" &gt ");
-                                }
-                                @category.Category.Name
-                            </a>
-                        </div>
-                    }
-                </div>
-            }
-
-
-            <div class="col-md-10 search-result-column">
-                @foreach (var item in Model.Items)
-                {
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card h-100">
-                            <a href="/Item/@item.Item.LinkName"><img class="card-img-top" src="@(item.Image != null ? item.Image.Path : "http://placehold.it/700x400")" alt=""></a>
-                            <div class="card-body">
-                                <h4 class="card-title">
-                                    <a href="/Item/@item.Item.LinkName">@item.Item.Name</a>
-                                </h4>
-                                <h5>@item.Item.CurrentPrice €</h5>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">★ ★ ★ ★ ☆</small>
-                            </div>
-                        </div>
-                    </div>
-                }
-
-                <div>
-                    @for (var i = 0; i < Model.PageCount; i++)
-                    {
-                        if (i != Model.PageNumber)
-                        {
-                            <span><a class="btn btn-default" href="/search?@(Model.UrlParameters)&page=@i.ToString()">@((i + 1).ToString())</a></span>
-                        }
-                        else
-                        {
-                            <span>@((i + 1).ToString())</span>
-                        }
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-*@
+</script>

@@ -3,6 +3,7 @@ using DopaMarket.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -19,10 +20,12 @@ namespace DopaMarket.Controllers
             _context = new ApplicationDbContext();
         }
 
-        public ActionResult Index(string q, string c, int page = 0)
+        public ActionResult Index(string q, string c, string pf = null, int page = 0)
         {
             q = q == null ? string.Empty : q.Trim();
             c = c == null ? string.Empty : c.Trim();
+
+
 
             Category category = null;
             if (c != string.Empty)
@@ -62,43 +65,92 @@ namespace DopaMarket.Controllers
 
             int totalItems = itemsRequest.Count();
             var categories = GetCategories(itemsRequest);
+            var pricesFiltersData = SetPricesFilters(itemsRequest, pf);
 
-            var itemsRequestPage = itemsRequest.OrderBy(i => i.Name).Skip(ItemPerPage * page).Take(ItemPerPage);
+            var itemsRequestFiltered = itemsRequest;
 
-            string urlParameters = (q != string.Empty ? "q=" + q : "");
-            urlParameters += (q != string.Empty && c != string.Empty ? "&" : "");
-            urlParameters += (c != string.Empty ? "c=" + c : "");
+            itemsRequest = itemsRequest.Where(i => i.CurrentPrice >= pricesFiltersData.PriceRangeStart && i.CurrentPrice <= pricesFiltersData.PriceRangeEnd);
+
+            Expression<Func<Item, bool>> predicate = null;
+            foreach (var priceFilters in pricesFiltersData.PriceFilters.Where(f => f.Selected))
+            {
+                Expression<Func<Item, bool>> subPredicate = i => i.CurrentPrice >= priceFilters.PriceStart && i.CurrentPrice <= priceFilters.PriceEnd;
+                if (predicate == null)
+                {
+                    predicate = subPredicate;
+                }
+                else
+                {
+                    predicate = predicate.Or(subPredicate);
+                }
+            }
+            if(predicate != null)
+            {
+                itemsRequestFiltered = itemsRequestFiltered.Where(predicate);
+            }
+
+            int itemsCountAfterFilter = itemsRequestFiltered.Count();
+
+            var itemsRequestPage = itemsRequestFiltered.OrderBy(i => i.Name).Skip(ItemPerPage * page).Take(ItemPerPage);
 
             var searchViewModel = new SearchViewModel();
-            searchViewModel.Items = itemsRequestPage.Select(item => new SearchItemViewModel() { Item = item }).ToArray();
             searchViewModel.Query = q;
             searchViewModel.Category = c;
-            searchViewModel.UrlParameters = urlParameters;
-            searchViewModel.TotalCount = totalItems;
             searchViewModel.PageNumber = page;
-            searchViewModel.PageCount = (totalItems / ItemPerPage) + 1;
+            searchViewModel.TotalCount = totalItems;
+            searchViewModel.PageCount = (itemsCountAfterFilter / ItemPerPage) + 1;
             searchViewModel.Categories = categories;
             searchViewModel.ChildrenCategories = childrenCategories;
+            searchViewModel.PriceRangeMin = pricesFiltersData.PriceRangeMin;
+            searchViewModel.PriceRangeMax = pricesFiltersData.PriceRangeMax;
+            searchViewModel.PriceRangeStart = pricesFiltersData.PriceRangeStart;
+            searchViewModel.PriceRangeEnd = pricesFiltersData.PriceRangeEnd;
+            searchViewModel.PriceFilters = pricesFiltersData.PriceFilters;
 
-            SetPricesFilters(itemsRequest, ref searchViewModel);
+            searchViewModel.Items = itemsRequestPage.Select(item => new SearchItemViewModel() { Item = item }).ToArray();
 
             foreach (var item in searchViewModel.Items)
             {
                 item.Image = _context.ItemImages.Where(i => i.ItemId == item.Item.Id).FirstOrDefault();
             }
 
+            
+
             return View("Results", searchViewModel);
         }
 
-        void SetPricesFilters(IQueryable<Item> items, ref SearchViewModel searchViewModel)
+        class PricesFiltersData
         {
-            searchViewModel.PriceRangeMin = items.Min(i => i.CurrentPrice);
-            searchViewModel.PriceRangeStart = searchViewModel.PriceRangeMin;
+            public decimal PriceRangeMin { get; set; }
+            public decimal PriceRangeStart { get; set; }
 
-            searchViewModel.PriceRangeMax = items.Max(i => i.CurrentPrice);
-            searchViewModel.PriceRangeEnd = searchViewModel.PriceRangeMax;
+            public decimal PriceRangeMax { get; set; }
+            public decimal PriceRangeEnd { get; set; }
 
-            searchViewModel.PriceFilters = SplitPriceRange(items, searchViewModel.PriceRangeMin, searchViewModel.PriceRangeMax, 0);
+            public IEnumerable<PriceFilter> PriceFilters { get; set; }
+        }
+
+        PricesFiltersData SetPricesFilters(IQueryable<Item> items, string urlParameter)
+        {
+            PricesFiltersData result = new PricesFiltersData();
+            result.PriceRangeMin = items.Min(i => i.CurrentPrice);
+            result.PriceRangeStart = result.PriceRangeMin;
+
+            result.PriceRangeMax = items.Max(i => i.CurrentPrice);
+            result.PriceRangeEnd = result.PriceRangeMax;
+
+            result.PriceFilters = SplitPriceRange(items, result.PriceRangeMin, result.PriceRangeMax, 0);
+
+            if(urlParameter != null)
+            {
+                foreach(var parameter in urlParameter.Split('_'))
+                {
+                    decimal priceStart = decimal.Parse(parameter.Split('-')[0]);
+                    decimal priceEnd = decimal.Parse(parameter.Split('-')[1]);
+                    result.PriceFilters.Single(pf => pf.PriceStart == priceStart && pf.PriceEnd == priceEnd).Selected = true;
+                }
+            }
+            return result;
         }
 
         PriceFilter[] SplitPriceRange(IQueryable<Item> items, decimal startPrice, decimal endPrice, int depth)
@@ -112,7 +164,7 @@ namespace DopaMarket.Controllers
             {
                 if (depth == 2 || range1Count == 1)
                 {
-                    var filters1 = new PriceFilter() { PriceStart = startPrice, PriceEnd = middle, Count = range1Count };
+                    var filters1 = new PriceFilter() { PriceStart = startPrice, PriceEnd = middle, Count = range1Count, Selected = false };
                     result.Add(filters1);
                 }
                 else
@@ -126,7 +178,7 @@ namespace DopaMarket.Controllers
             {
                 if (depth == 2 || range2Count == 1)
                 {
-                    var filters2 = new PriceFilter() { PriceStart = middle, PriceEnd = endPrice, Count = range2Count };
+                    var filters2 = new PriceFilter() { PriceStart = middle, PriceEnd = endPrice, Count = range2Count, Selected = false };
                     result.Add(filters2);
                 }
                 else
