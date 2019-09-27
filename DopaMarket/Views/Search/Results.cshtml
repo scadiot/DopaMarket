@@ -123,41 +123,25 @@
                     <ul>
                         @foreach (var category in Model.Categories)
                         {
-                        <li class="has-children expanded">
-                            <a href="/search?c=@category.Category.LinkName">@category.Category.Name</a><span>(1138)</span>
-                        </li>
+                            <li class="has-children expanded">
+                                <a href="/search?c=@category.Category.LinkName">@category.Category.Name</a><span>(1138)</span>
+                                @if (category.Children != null && category.Children.Count() > 0)
+                                {
+                                    <ul>
+                                        @foreach (var child in category.Children)
+                                        {
+                                            <li><a href="/search?c=@child.Category.LinkName">@child.Category.Name</a></li>
+                                        }
+                                    </ul>
+                                }
+                            </li>
                         }
-                        @*
-        <li class="has-children expanded">
-            <a href="#">Computers &amp; Accessories</a><span>(1138)</span>
-            <ul>
-                <li>
-                    <a href="#">Desktop PCs</a><span>(508)</span>
-                    <ul>
-                        <li><a href="#">Office PC</a></li>
-                        <li><a href="#">Gaming PC</a></li>
-                        <li><a href="#">PC for Learning</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Laptops</a><span>(423)</span>
-                    <ul>
-                        <li><a href="#">15' Screens </a></li>
-                        <li><a href="#">13' Screens</a></li>
-                        <li><a href="#">Touch Screens</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Nettops</a><span>(97)</span></li>
-                <li><a href="#">PC Accessories</a><span>(110)</span></li>
-            </ul>
-        </li>
-                        *@
                     </ul>
                 </section>
                 <!-- Widget Price Range-->
                 <section class="widget widget-categories">
                     <h3 class="widget-title">Price Range</h3>
-                    <form class="price-range-slider" method="post" data-start-min="250" data-start-max="650" data-min="0" data-max="1000" data-step="1">
+                    <form class="price-range-slider" method="post" data-start-min="@Model.PriceRangeStart" data-start-max="@Model.PriceRangeEnd" data-min="@Model.PriceRangeMin" data-max="@Model.PriceRangeMax" data-step="1">
                         <div class="ui-range-slider"></div>
                         <footer class="ui-range-slider-footer">
                             <div class="column">
@@ -178,66 +162,36 @@
                         </footer>
                     </form>
                 </section>
-                <!-- Widget Size Filter-->
-                <section class="widget">
-                    <h3 class="widget-title">Filter by Price</h3>
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" id="low">
-                        <label class="custom-control-label" for="low">$50 - $100L&nbsp;<span class="text-muted">(208)</span></label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" id="middle">
-                        <label class="custom-control-label" for="middle">$100L - $500&nbsp;<span class="text-muted">(311)</span></label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" id="high">
-                        <label class="custom-control-label" for="high">$500 - $1,000&nbsp;<span class="text-muted">(485)</span></label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" id="top">
-                        <label class="custom-control-label" for="top">$1,000 - $5,000&nbsp;<span class="text-muted">(213)</span></label>
-                    </div>
-                </section>
-                <!-- Widget Brand Filter-->
-                <section class="widget">
-                    <h3 class="widget-title">Filter by Brand</h3>
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" id="apple">
-                        <label class="custom-control-label" for="apple">Apple&nbsp;<span class="text-muted">(254)</span></label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" id="bosh">
-                        <label class="custom-control-label" for="bosh">Bosh&nbsp;<span class="text-muted">(39)</span></label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" id="canon">
-                        <label class="custom-control-label" for="canon">Canon Inc.&nbsp;<span class="text-muted">(128)</span></label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" id="dell">
-                        <label class="custom-control-label" for="dell">Dell&nbsp;<span class="text-muted">(310)</span></label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" id="hewlet">
-                        <label class="custom-control-label" for="hewlet">Hewlett-Packard&nbsp;<span class="text-muted">(42)</span></label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" id="hitachi">
-                        <label class="custom-control-label" for="hitachi">Hitachi&nbsp;<span class="text-muted">(217)</span></label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" id="lg">
-                        <label class="custom-control-label" for="lg">LG Electronics&nbsp;<span class="text-muted">(310)</span></label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" id="panasonic">
-                        <label class="custom-control-label" for="panasonic">Panasonic&nbsp;<span class="text-muted">(74)</span></label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" id="siemens">
-                        <label class="custom-control-label" for="siemens">Siemens&nbsp;<span class="text-muted">(86)</span></label>
-                    </div>
-                </section>
+
+                @if (Model.PriceFilters != null)
+                {
+                    <!-- Widget Size Filter-->
+                    <section class="widget">
+                        <h3 class="widget-title">Filter by Price</h3>
+                        @foreach (var priceFilter in Model.PriceFilters)
+                        {
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" type="checkbox" id="@(priceFilter.PriceStart)_@(priceFilter.PriceEnd)">
+                                <label class="custom-control-label" for="low">@priceFilter.PriceStart€ - @priceFilter.PriceEnd€&nbsp;<span class="text-muted">(@priceFilter.Count)</span></label>
+                            </div>
+                        }
+                    </section>
+                }
+
+                @if (Model.Brands != null)
+                {
+                    <!-- Widget Brand Filter-->
+                    <section class="widget">
+                        <h3 class="widget-title">Filter by Brand</h3>
+                        @foreach (var brand in Model.Brands)
+                        {
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" type="checkbox" id="@brand.LinkName">
+                                <label class="custom-control-label" for="apple">@brand.Name&nbsp;<span class="text-muted">(1)</span></label>
+                            </div>
+                        }
+                    </section>
+                }
             </aside>
         </div>
     </div>
