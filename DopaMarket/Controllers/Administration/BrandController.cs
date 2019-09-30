@@ -1,4 +1,5 @@
 ﻿using DopaMarket.Models;
+using DopaMarket.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,8 @@ namespace DopaMarket.Controllers.Administration
             if (brand == null)
                 return HttpNotFound();
 
-            var viewModel = new CategoryFormViewModel();
-            viewModel.Breadcrumb = CategoriesTools.GetBreadcrumb(_context, brand);
-            viewModel.Category = brand;
+            var viewModel = new BrandFormViewModel();
+            viewModel.Brand = brand;
 
             return View("CategoryForm", viewModel);
         }
@@ -40,9 +40,8 @@ namespace DopaMarket.Controllers.Administration
         {
             if (!ModelState.IsValid)
             {
-                var viewModel = new CategoryFormViewModel();
-                viewModel.Breadcrumb = CategoriesTools.GetBreadcrumb(_context, brand);
-                viewModel.Category = brand;
+                var viewModel = new BrandFormViewModel();
+                viewModel.Brand = brand;
                 return View("CategoryForm", viewModel);
             }
 
@@ -50,6 +49,7 @@ namespace DopaMarket.Controllers.Administration
             {
                 var brandInDB = _context.Brands.Single<Brand>(c => c.Id == brand.Id);
                 brandInDB.Name = brand.Name;
+                brandInDB.LinkName = brand.LinkName;
             }
             else
                 _context.Brands.Add(brand);
