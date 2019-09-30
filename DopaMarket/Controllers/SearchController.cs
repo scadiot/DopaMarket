@@ -1,5 +1,6 @@
 ﻿using DopaMarket.Models;
 using DopaMarket.ViewModels;
+using LinqKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,34 @@ namespace DopaMarket.Controllers
 {
     public class SearchController : BaseController
     {
+        class RequestInfo
+        {
+            //Input data
+            public Category Category { get; set; }
+            public string KeywordsString { get; set; }
+            public IEnumerable<string> Keywords { get; set; }
+            public IEnumerable<Brand> Brands { get; set; }
+
+            public decimal PriceRangeMin { get; set; }
+            public decimal PriceRangeStart { get; set; }
+
+            public decimal PriceRangeMax { get; set; }
+            public decimal PriceRangeEnd { get; set; }
+
+            public IEnumerable<PriceFilter> PriceFilters { get; set; }
+
+            public string Sort { get; set; }
+
+            //Output data
+            public IQueryable<Item> ItemsRequest { get; set; }
+            public IQueryable<Item> ItemsRequestAfterFilter { get; set; }
+            public Item[] PageItems { get; set; }
+            public int ItemCountTotal { get; set; }
+            public int ItemCountAfterFilter { get; set; }
+            public int PageCount { get; set; }
+            public int PageNumber { get; set; }
+        }
+
         const int ItemPerPage = 3;
 
         ApplicationDbContext _context;
@@ -20,61 +49,145 @@ namespace DopaMarket.Controllers
             _context = new ApplicationDbContext();
         }
 
-        public ActionResult Index(string q, string c, string pf = null, int page = 0)
+        public ActionResult Index(string q, string c, string pf = null, decimal? minPrice = null, decimal? maxPrice = null, string sort = "", int page = 0)
         {
-            q = q == null ? string.Empty : q.Trim();
-            c = c == null ? string.Empty : c.Trim();
+            var requestInfo = new RequestInfo();
+            GetCategory(ref requestInfo, c);
+            ParseKeywords(ref requestInfo, q);
 
+            requestInfo.ItemsRequest = _context.Items;
+            CreateRequestByKeywords(ref requestInfo);
+            CreateRequestByCategory(ref requestInfo);
 
+            requestInfo.ItemCountTotal = requestInfo.ItemsRequest.Count();
+            requestInfo.ItemsRequestAfterFilter = requestInfo.ItemsRequest;
 
-            Category category = null;
-            if (c != string.Empty)
+            ParsePriceRange(ref requestInfo, minPrice, maxPrice);
+            ParsePricesFilters(ref requestInfo, pf);
+
+            SortRequest(ref requestInfo, sort);
+            FinalizeRequest(ref requestInfo, page);
+
+            var searchViewModel = new SearchViewModel();
+            searchViewModel.Query = requestInfo.KeywordsString;
+            searchViewModel.Category = requestInfo.Category != null ? requestInfo.Category.LinkName : "";
+            searchViewModel.PageNumber = requestInfo.PageNumber;
+            searchViewModel.TotalCount = requestInfo.ItemCountTotal;
+            searchViewModel.PageCount = requestInfo.PageCount;
+            searchViewModel.Categories = GetCategories();
+            searchViewModel.PriceRangeMin = requestInfo.PriceRangeMin;
+            searchViewModel.PriceRangeMax = requestInfo.PriceRangeMax;
+            searchViewModel.PriceRangeStart = requestInfo.PriceRangeStart;
+            searchViewModel.PriceRangeEnd = requestInfo.PriceRangeEnd;
+            searchViewModel.PriceFilters = requestInfo.PriceFilters;
+            searchViewModel.Items = requestInfo.PageItems.Select(item => new SearchItemViewModel() { Item = item }).ToArray();
+
+            foreach (var item in searchViewModel.Items)
             {
-                category = _context.Categories.SingleOrDefault(cat => cat.LinkName == c);
+                item.Image = _context.ItemImages.Where(i => i.ItemId == item.Item.Id).FirstOrDefault();
             }
 
-            Category[] childrenCategories = null;
-            if(c != string.Empty && q == string.Empty)
+            return View("Results", searchViewModel);
+        }
+
+        void GetCategory(ref RequestInfo requestInfo, string categoryLinkName)
+        {
+            categoryLinkName = categoryLinkName == null ? string.Empty : categoryLinkName.Trim();
+
+            if (categoryLinkName != string.Empty)
             {
-                childrenCategories = _context.Categories
-                                             .Where(cat => cat.ParentCategoryId == category.Id)
-                                             .ToArray();
+                requestInfo.Category = _context.Categories.SingleOrDefault(cat => cat.LinkName == categoryLinkName);
             }
+        }
 
-
-            IQueryable<Item> itemsRequest = _context.Items;
-            if (q.Trim() != string.Empty)
+        void ParseKeywords(ref RequestInfo requestInfo, string keywordsString)
+        {
+            if (keywordsString == null || keywordsString.Trim() == "")
             {
-                var keywords = q.ToLower().Split(' ');
-
-                itemsRequest = from item in itemsRequest
-                               join itemKeyword in _context.ItemKeywords on item.Id equals itemKeyword.ItemId
-                               join keyword in _context.Keywords on itemKeyword.KeywordId equals keyword.Id
-                               where keywords.Contains(keyword.Word)
-                               select item;
+                requestInfo.Keywords = new string[0];
+                return;
             }
 
-            if (c.Trim() != string.Empty)
-            { 
-                itemsRequest = from item in itemsRequest
-                               join ItemCategory in _context.ItemCategories on item.Id equals ItemCategory.ItemId
-                               join cat in _context.Categories on ItemCategory.CategoryId equals category.Id
-                               where cat.LinkName == c
-                               select item;
+            keywordsString = keywordsString.ToLower().Trim();
+
+            requestInfo.KeywordsString = keywordsString;
+            keywordsString = keywordsString == null ? string.Empty : keywordsString.Trim();
+            requestInfo.Keywords = keywordsString.ToLower().Split(' ');
+        }
+
+        void CreateRequestByKeywords(ref RequestInfo requestInfo)
+        {
+            if(requestInfo.Keywords.Count() == 0)
+            {
+                return;
             }
 
-            int totalItems = itemsRequest.Count();
-            var categories = GetCategories(itemsRequest);
-            var pricesFiltersData = SetPricesFilters(itemsRequest, pf);
+            var keywords = requestInfo.Keywords;
+            requestInfo.ItemsRequest = from item in requestInfo.ItemsRequest
+                                       join itemKeyword in _context.ItemKeywords on item.Id equals itemKeyword.ItemId
+                                       join keyword in _context.Keywords on itemKeyword.KeywordId equals keyword.Id
+                                       where keywords.Contains(keyword.Word)
+                                       select item;
+        }
 
-            var itemsRequestFiltered = itemsRequest;
+        void CreateRequestByCategory(ref RequestInfo requestInfo)
+        {
+            if (requestInfo.Category == null)
+            {
+                return;
+            }
+            int i = requestInfo.ItemsRequest.Count();
 
-            itemsRequest = itemsRequest.Where(i => i.CurrentPrice >= pricesFiltersData.PriceRangeStart && i.CurrentPrice <= pricesFiltersData.PriceRangeEnd);
+            var category = requestInfo.Category;
+            requestInfo.ItemsRequest = from item in requestInfo.ItemsRequest
+                                       join ItemCategory in _context.ItemCategories on item.Id equals ItemCategory.ItemId
+                                       where ItemCategory.CategoryId == category.Id
+                                       select item;
+
+            
+        }
+
+        void ParsePriceRange(ref RequestInfo requestInfo, decimal? urlParameterStart, decimal? urlParameterEnd)
+        {
+            if(requestInfo.ItemsRequest.Count() == 0)
+            {
+                return;
+            }
+
+            requestInfo.PriceRangeMin = requestInfo.ItemsRequest.Min(i => i.CurrentPrice);
+            requestInfo.PriceRangeStart = urlParameterStart != null ? (decimal)urlParameterStart : requestInfo.PriceRangeMin;
+
+            requestInfo.PriceRangeMax = requestInfo.ItemsRequest.Max(i => i.CurrentPrice);
+            requestInfo.PriceRangeEnd = urlParameterEnd != null ? (decimal)urlParameterEnd : requestInfo.PriceRangeMax;
+
+            if (urlParameterStart == null || urlParameterEnd == null)
+            {
+                return;
+            }
+
+            decimal priceRangeStart = requestInfo.PriceRangeStart;
+            decimal priceRangeEnd = requestInfo.PriceRangeEnd;
+            requestInfo.ItemsRequestAfterFilter = requestInfo.ItemsRequestAfterFilter.Where(i => i.CurrentPrice >= priceRangeStart && i.CurrentPrice <= priceRangeEnd);
+        }
+
+        void ParsePricesFilters(ref RequestInfo requestInfo, string urlParameter)
+        {
+            requestInfo.PriceFilters = SplitPriceRange(requestInfo.ItemsRequest, requestInfo.PriceRangeMin, requestInfo.PriceRangeMax, 0);
+
+            if(urlParameter != null)
+            {
+                foreach(var parameter in urlParameter.Split('_'))
+                {
+                    decimal priceStart = decimal.Parse(parameter.Split('-')[0]);
+                    decimal priceEnd = decimal.Parse(parameter.Split('-')[1]);
+                    requestInfo.PriceFilters.Single(pf => pf.PriceStart == priceStart && pf.PriceEnd == priceEnd).Selected = true;
+                }
+            }
 
             Expression<Func<Item, bool>> predicate = null;
-            foreach (var priceFilters in pricesFiltersData.PriceFilters.Where(f => f.Selected))
+            foreach (var priceFilter in requestInfo.PriceFilters.Where(f => f.Selected))
             {
-                Expression<Func<Item, bool>> subPredicate = i => i.CurrentPrice >= priceFilters.PriceStart && i.CurrentPrice <= priceFilters.PriceEnd;
+                Expression<Func<Item, bool>> subPredicate = i => i.CurrentPrice >= priceFilter.PriceStart && i.CurrentPrice <= priceFilter.PriceEnd;
                 if (predicate == null)
                 {
                     predicate = subPredicate;
@@ -84,73 +197,52 @@ namespace DopaMarket.Controllers
                     predicate = predicate.Or(subPredicate);
                 }
             }
-            if(predicate != null)
+
+            if (predicate != null)
             {
-                itemsRequestFiltered = itemsRequestFiltered.Where(predicate);
+                requestInfo.ItemsRequestAfterFilter = requestInfo.ItemsRequestAfterFilter.AsExpandable().Where(predicate);
             }
-
-            int itemsCountAfterFilter = itemsRequestFiltered.Count();
-
-            var itemsRequestPage = itemsRequestFiltered.OrderBy(i => i.Name).Skip(ItemPerPage * page).Take(ItemPerPage);
-
-            var searchViewModel = new SearchViewModel();
-            searchViewModel.Query = q;
-            searchViewModel.Category = c;
-            searchViewModel.PageNumber = page;
-            searchViewModel.TotalCount = totalItems;
-            searchViewModel.PageCount = (itemsCountAfterFilter / ItemPerPage) + 1;
-            searchViewModel.Categories = categories;
-            searchViewModel.ChildrenCategories = childrenCategories;
-            searchViewModel.PriceRangeMin = pricesFiltersData.PriceRangeMin;
-            searchViewModel.PriceRangeMax = pricesFiltersData.PriceRangeMax;
-            searchViewModel.PriceRangeStart = pricesFiltersData.PriceRangeStart;
-            searchViewModel.PriceRangeEnd = pricesFiltersData.PriceRangeEnd;
-            searchViewModel.PriceFilters = pricesFiltersData.PriceFilters;
-
-            searchViewModel.Items = itemsRequestPage.Select(item => new SearchItemViewModel() { Item = item }).ToArray();
-
-            foreach (var item in searchViewModel.Items)
-            {
-                item.Image = _context.ItemImages.Where(i => i.ItemId == item.Item.Id).FirstOrDefault();
-            }
-
-            
-
-            return View("Results", searchViewModel);
         }
 
-        class PricesFiltersData
+        void SortRequest(ref RequestInfo requestInfo, string sort)
         {
-            public decimal PriceRangeMin { get; set; }
-            public decimal PriceRangeStart { get; set; }
-
-            public decimal PriceRangeMax { get; set; }
-            public decimal PriceRangeEnd { get; set; }
-
-            public IEnumerable<PriceFilter> PriceFilters { get; set; }
+            requestInfo.Sort = sort;
+            if(sort == "low_price")
+            {
+                requestInfo.ItemsRequestAfterFilter = requestInfo.ItemsRequestAfterFilter.OrderBy(i => i.CurrentPrice).ThenBy(i => i.Name);
+            }
+            else if (sort == "high_price")
+            {
+                requestInfo.ItemsRequestAfterFilter = requestInfo.ItemsRequestAfterFilter.OrderByDescending(i => i.CurrentPrice).ThenBy(i => i.Name);
+            }
+            else if (sort == "popularity")
+            {
+                requestInfo.ItemsRequestAfterFilter = requestInfo.ItemsRequestAfterFilter.OrderByDescending(i => i.Popularity).ThenBy(i => i.Name);
+            }
+            else if (sort == "a-z")
+            {
+                requestInfo.ItemsRequestAfterFilter = requestInfo.ItemsRequestAfterFilter.OrderBy(i => i.Name);
+            }
+            else if (sort == "z-a")
+            {
+                requestInfo.ItemsRequestAfterFilter = requestInfo.ItemsRequestAfterFilter.OrderByDescending(i => i.Name);
+            }
+            else if (sort == "rating")
+            {
+                requestInfo.ItemsRequestAfterFilter = requestInfo.ItemsRequestAfterFilter.OrderByDescending(i => i.AverageRating).ThenBy(i => i.Name);
+            }
+            else
+            {
+                requestInfo.ItemsRequestAfterFilter = requestInfo.ItemsRequestAfterFilter.OrderBy(i => i.Popularity).ThenBy(i => i.Name);
+            }
         }
 
-        PricesFiltersData SetPricesFilters(IQueryable<Item> items, string urlParameter)
+        void FinalizeRequest(ref RequestInfo requestInfo, int page)
         {
-            PricesFiltersData result = new PricesFiltersData();
-            result.PriceRangeMin = items.Min(i => i.CurrentPrice);
-            result.PriceRangeStart = result.PriceRangeMin;
-
-            result.PriceRangeMax = items.Max(i => i.CurrentPrice);
-            result.PriceRangeEnd = result.PriceRangeMax;
-
-            result.PriceFilters = SplitPriceRange(items, result.PriceRangeMin, result.PriceRangeMax, 0);
-
-            if(urlParameter != null)
-            {
-                foreach(var parameter in urlParameter.Split('_'))
-                {
-                    decimal priceStart = decimal.Parse(parameter.Split('-')[0]);
-                    decimal priceEnd = decimal.Parse(parameter.Split('-')[1]);
-                    result.PriceFilters.Single(pf => pf.PriceStart == priceStart && pf.PriceEnd == priceEnd).Selected = true;
-                }
-            }
-            return result;
+            requestInfo.PageNumber = page;
+            requestInfo.PageItems = requestInfo.ItemsRequestAfterFilter.Skip(ItemPerPage * requestInfo.PageNumber).Take(ItemPerPage).ToArray();
+            requestInfo.ItemCountAfterFilter = requestInfo.ItemsRequestAfterFilter.Count();
+            requestInfo.PageCount = (requestInfo.ItemCountAfterFilter / ItemPerPage) + 1;
         }
 
         PriceFilter[] SplitPriceRange(IQueryable<Item> items, decimal startPrice, decimal endPrice, int depth)
@@ -192,7 +284,7 @@ namespace DopaMarket.Controllers
         }
 
 
-        CategoryViewModel[] GetCategories(IQueryable<Item> items)
+        CategoryViewModel[] GetCategories()
         {
             var categories = _context.Categories.Where(c => c.ParentCategoryId == null).ToArray();
             var categoriesIds = categories.Select(cat => cat.Id).ToArray();

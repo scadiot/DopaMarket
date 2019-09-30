@@ -21,5 +21,7 @@ namespace DopaMarket.Models
         public int? ParentCategoryId { get; set; }
 
         public Category Parent { get; set; }
+
+        public int ItemsCount { get; set; }
     }
 }

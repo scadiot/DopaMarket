@@ -41,7 +41,9 @@ namespace DopaMarket.Models
 
         public Category MainCategory { get; set; }
 
-        public int AverageScore { get; set; }
+        public decimal AverageRating { get; set; }
+
+        public int Popularity { get; set; }
 
         public string SKU { get; set; }
 

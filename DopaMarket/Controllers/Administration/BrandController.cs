@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DopaMarket.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +9,62 @@ namespace DopaMarket.Controllers.Administration
 {
     public class BrandController : Controller
     {
-        // GET: Brand
+        ApplicationDbContext _context;
+
+        public BrandController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
         public ActionResult Index()
         {
-            return View();
+            var brands = _context.Brands.ToList();
+            return View("Index", brands);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var brand = _context.Brands.SingleOrDefault<Brand>(c => c.Id == id);
+            if (brand == null)
+                return HttpNotFound();
+
+            var viewModel = new CategoryFormViewModel();
+            viewModel.Breadcrumb = CategoriesTools.GetBreadcrumb(_context, brand);
+            viewModel.Category = brand;
+
+            return View("CategoryForm", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Save(Brand brand)
+        {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new CategoryFormViewModel();
+                viewModel.Breadcrumb = CategoriesTools.GetBreadcrumb(_context, brand);
+                viewModel.Category = brand;
+                return View("CategoryForm", viewModel);
+            }
+
+            if (brand.Id != 0)
+            {
+                var brandInDB = _context.Brands.Single<Brand>(c => c.Id == brand.Id);
+                brandInDB.Name = brand.Name;
+            }
+            else
+                _context.Brands.Add(brand);
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Brands");
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var brand = _context.Brands.Single<Brand>(c => c.Id == id);
+
+
+            return RedirectToAction("Index", "Brands");
         }
     }
 }

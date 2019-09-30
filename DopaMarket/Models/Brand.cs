@@ -18,5 +18,7 @@ namespace DopaMarket.Models
         [StringLength(200)]
         [Index(IsUnique = true)]
         public string LinkName { get; set; }
+
+        public int ItemsCount { get; set; }
     }
 }
