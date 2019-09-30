@@ -18,7 +18,7 @@ namespace DopaMarket.Controllers
             public Category Category { get; set; }
             public string KeywordsString { get; set; }
             public IEnumerable<string> Keywords { get; set; }
-            public IEnumerable<Brand> Brands { get; set; }
+            public IEnumerable<Brand> SelectedBrands { get; set; }
 
             public decimal PriceRangeMin { get; set; }
             public decimal PriceRangeStart { get; set; }
@@ -27,6 +27,7 @@ namespace DopaMarket.Controllers
             public decimal PriceRangeEnd { get; set; }
 
             public IEnumerable<PriceFilter> PriceFilters { get; set; }
+            public IEnumerable<SearchBrandViewModel> Brands { get; set; }
 
             public string Sort { get; set; }
 
@@ -38,6 +39,7 @@ namespace DopaMarket.Controllers
             public int ItemCountAfterFilter { get; set; }
             public int PageCount { get; set; }
             public int PageNumber { get; set; }
+            
         }
 
         const int ItemPerPage = 3;
@@ -49,7 +51,7 @@ namespace DopaMarket.Controllers
             _context = new ApplicationDbContext();
         }
 
-        public ActionResult Index(string q, string c, string pf = null, decimal? minPrice = null, decimal? maxPrice = null, string sort = "", int page = 0)
+        public ActionResult Index(string q, string c, string pf = null, decimal? minPrice = null, decimal? maxPrice = null, string b = "", string sort = "", int page = 0)
         {
             var requestInfo = new RequestInfo();
             GetCategory(ref requestInfo, c);
@@ -64,6 +66,7 @@ namespace DopaMarket.Controllers
 
             ParsePriceRange(ref requestInfo, minPrice, maxPrice);
             ParsePricesFilters(ref requestInfo, pf);
+            ParseBrandsFilters(ref requestInfo, b);
 
             SortRequest(ref requestInfo, sort);
             FinalizeRequest(ref requestInfo, page);
@@ -71,6 +74,7 @@ namespace DopaMarket.Controllers
             var searchViewModel = new SearchViewModel();
             searchViewModel.Query = requestInfo.KeywordsString;
             searchViewModel.Category = requestInfo.Category != null ? requestInfo.Category.LinkName : "";
+            searchViewModel.Sort = requestInfo.Sort;
             searchViewModel.PageNumber = requestInfo.PageNumber;
             searchViewModel.TotalCount = requestInfo.ItemCountTotal;
             searchViewModel.PageCount = requestInfo.PageCount;
@@ -81,6 +85,7 @@ namespace DopaMarket.Controllers
             searchViewModel.PriceRangeEnd = requestInfo.PriceRangeEnd;
             searchViewModel.PriceFilters = requestInfo.PriceFilters;
             searchViewModel.Items = requestInfo.PageItems.Select(item => new SearchItemViewModel() { Item = item }).ToArray();
+            searchViewModel.Brands = requestInfo.Brands;
 
             foreach (var item in searchViewModel.Items)
             {
@@ -204,6 +209,37 @@ namespace DopaMarket.Controllers
             }
         }
 
+        void ParseBrandsFilters(ref RequestInfo requestInfo, string brands)
+        {
+            var brandsString = new string[0];
+            if(brands != null && brands.Trim() != "")
+            {
+                brandsString = brands.Split('_');
+            }
+
+            var brandList = requestInfo.ItemsRequest.GroupBy(i => i.Brand).Select(b => new {
+                Brand = b.Key,
+                Quantity = b.Count()
+            });
+
+            var resultList = new List<SearchBrandViewModel>();
+            foreach(var brand in brandList)
+            {
+                var brandVM = new SearchBrandViewModel();
+                brandVM.Brand = brand.Brand;
+                brandVM.Selected = brandsString.Contains(brand.Brand.LinkName);
+                brandVM.ItemsCount = brand.Quantity;
+                resultList.Add(brandVM);
+            }
+            requestInfo.Brands = resultList;
+
+            var brandsId = resultList.Where(b => b.Selected).Select(b => b.Brand.Id).ToArray();
+            if(brandsId.Count() > 0)
+            {
+                requestInfo.ItemsRequestAfterFilter = requestInfo.ItemsRequestAfterFilter.Where(i => brandsId.Contains((int)i.BrandId));
+            }
+        }
+
         void SortRequest(ref RequestInfo requestInfo, string sort)
         {
             requestInfo.Sort = sort;
@@ -242,7 +278,7 @@ namespace DopaMarket.Controllers
             requestInfo.PageNumber = page;
             requestInfo.PageItems = requestInfo.ItemsRequestAfterFilter.Skip(ItemPerPage * requestInfo.PageNumber).Take(ItemPerPage).ToArray();
             requestInfo.ItemCountAfterFilter = requestInfo.ItemsRequestAfterFilter.Count();
-            requestInfo.PageCount = (requestInfo.ItemCountAfterFilter / ItemPerPage) + 1;
+            requestInfo.PageCount = (requestInfo.ItemCountAfterFilter / ItemPerPage) + (requestInfo.ItemCountAfterFilter % ItemPerPage != 0 ? 1 : 0);
         }
 
         PriceFilter[] SplitPriceRange(IQueryable<Item> items, decimal startPrice, decimal endPrice, int depth)

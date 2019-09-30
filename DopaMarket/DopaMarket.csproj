@@ -213,7 +213,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\Administration\BrandController.cs" />
+    <Compile Include="Controllers\Administration\BrandsController.cs" />
     <Compile Include="Controllers\Administration\ItemInfoTypesController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CartController.cs" />
@@ -245,6 +245,10 @@
     <Compile Include="Migrations\201909261153383_NullableMainCategoryId.cs" />
     <Compile Include="Migrations\201909261153383_NullableMainCategoryId.Designer.cs">
       <DependentUpon>201909261153383_NullableMainCategoryId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909300724386_AddStatInfo.cs" />
+    <Compile Include="Migrations\201909300724386_AddStatInfo.Designer.cs">
+      <DependentUpon>201909300724386_AddStatInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -364,7 +368,8 @@
     <Content Include="Views\Customer\AddressForm.cshtml" />
     <Content Include="Views\Customer\Tickets.cshtml" />
     <Content Include="Views\Customer\Orders.cshtml" />
-    <Content Include="Views\Brand\BrandForm.cshtml" />
+    <Content Include="Views\Brands\BrandForm.cshtml" />
+    <Content Include="Views\Brands\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -389,6 +394,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909261153383_NullableMainCategoryId.resx">
       <DependentUpon>201909261153383_NullableMainCategoryId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909300724386_AddStatInfo.resx">
+      <DependentUpon>201909300724386_AddStatInfo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

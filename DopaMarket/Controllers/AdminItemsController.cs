@@ -34,6 +34,7 @@ namespace DopaMarket.Controllers
             viewModel.Keywords = "";
             viewModel.SelectedCategoryIds = new int[0];
             viewModel.Images = new ItemImage[0];
+            viewModel.Brands = _context.Brands.Select(b => new SelectListItem() { Text = b.Name, Value = b.Id.ToString() }).ToArray();
 
             return View("ItemForm", viewModel);
         }
@@ -46,9 +47,10 @@ namespace DopaMarket.Controllers
         
             var viewModel = new ItemFormViewModel();
             viewModel.Item = item;
-            viewModel.Categories = _context.Categories.Select(c => new SelectListItem() { Text = c.Name, Value = c.Id.ToString()}).ToList();
+            viewModel.Categories = _context.Categories.Select(c => new SelectListItem() { Text = c.Name, Value = c.Id.ToString()}).ToArray();
             viewModel.SelectedCategoryIds = _context.ItemCategories.Where(ic => ic.ItemId == id).Select(ic => ic.CategoryId).ToArray();
             viewModel.Images = _context.ItemImages.Where(ii => ii.ItemId == id).ToList();
+            viewModel.Brands = _context.Brands.Select(b => new SelectListItem() { Text = b.Name, Value = b.Id.ToString() }).ToArray();
 
             var keywordsList = (from ik in _context.ItemKeywords
                                 join k in _context.Keywords on ik.KeywordId equals k.Id
@@ -106,6 +108,7 @@ namespace DopaMarket.Controllers
                 itemInDB.ForSale = itemFormViewModel.Item.ForSale;
                 itemInDB.CurrentPrice = itemFormViewModel.Item.CurrentPrice;
                 itemInDB.InsertDate = itemFormViewModel.Item.InsertDate;
+                itemInDB.BrandId = itemFormViewModel.Item.BrandId;
             }
             else
                 _context.Items.Add(itemFormViewModel.Item);

@@ -12,6 +12,13 @@ namespace DopaMarket.ViewModels
         public ItemImage Image { get; set; }
     }
 
+    public class SearchBrandViewModel
+    {
+        public Brand Brand { get; set; }
+        public bool Selected { get; set; }
+        public int ItemsCount { get; set; }
+    }
+
     public class PriceFilter
     {
         public decimal PriceStart { get; set; }
@@ -27,6 +34,7 @@ namespace DopaMarket.ViewModels
         public int TotalCount { get; set; }
         public int PageCount { get; set; }
         public int PageNumber { get; set; }
+        public string Sort { get; set; }
 
         public decimal PriceRangeStart { get; set; }
         public decimal PriceRangeEnd { get; set; }
@@ -35,8 +43,7 @@ namespace DopaMarket.ViewModels
 
         public IEnumerable<PriceFilter> PriceFilters { get; set; }
 
-        public IEnumerable<Brand> Brands { get; set; }
-        public IEnumerable<Brand> SelectedBrands { get; set; }
+        public IEnumerable<SearchBrandViewModel> Brands { get; set; }
 
         public IEnumerable<CategoryViewModel> Categories { get; set; }
         public IEnumerable<Category> ChildrenCategories { get; set; }

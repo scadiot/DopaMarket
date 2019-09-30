@@ -8,11 +8,11 @@ using System.Web.Mvc;
 
 namespace DopaMarket.Controllers.Administration
 {
-    public class BrandController : Controller
+    public class BrandsController : BaseController
     {
         ApplicationDbContext _context;
 
-        public BrandController()
+        public BrandsController()
         {
             _context = new ApplicationDbContext();
         }
@@ -32,7 +32,7 @@ namespace DopaMarket.Controllers.Administration
             var viewModel = new BrandFormViewModel();
             viewModel.Brand = brand;
 
-            return View("CategoryForm", viewModel);
+            return View("BrandForm", viewModel);
         }
 
         [HttpPost]
@@ -42,7 +42,7 @@ namespace DopaMarket.Controllers.Administration
             {
                 var viewModel = new BrandFormViewModel();
                 viewModel.Brand = brand;
-                return View("CategoryForm", viewModel);
+                return View("BrandForm", viewModel);
             }
 
             if (brand.Id != 0)

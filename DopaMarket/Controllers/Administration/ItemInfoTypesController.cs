@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace DopaMarket.Controllers.Administration
 {
-    public class ItemInfoTypesController : Controller
+    public class ItemInfoTypesController : BaseController
     {
         ApplicationDbContext _context;
 

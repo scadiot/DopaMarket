@@ -1,0 +1,30 @@
+﻿@model DopaMarket.ViewModels.BrandFormViewModel
+
+@{
+    /**/
+
+    ViewBag.Title = "BrandForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Category Form</h2>
+
+@using (Html.BeginForm("Save", "Brands"))
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.Brand.Name)
+        @Html.TextBoxFor(model => model.Brand.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Brand.Name)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Brand.LinkName)
+        @Html.TextBoxFor(model => model.Brand.LinkName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Brand.LinkName)
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+
+    @Html.Hidden("Brand.Id", Model.Brand.Id);
+}

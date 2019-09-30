@@ -9,7 +9,7 @@
 @functions {
     public static string SearchUrlChangePage(DopaMarket.ViewModels.SearchViewModel model, int page)
     {
-        return SearchUrl(model.Query, model.Category, generatePriceFiltersData(model), model.PriceRangeStart, model.PriceRangeEnd, "", "", page);
+        return SearchUrl(model.Query, model.Category, generatePriceFiltersData(model), model.PriceRangeStart, model.PriceRangeEnd, generateBrandFiltersData(model), model.Sort, page);
     }
 
     public static string SearchUrlPriceFilter(DopaMarket.ViewModels.SearchViewModel model, string filter)
@@ -21,15 +21,15 @@
         }
         else if(priceFilter.Contains(filter))
         {
-             priceFilter = priceFilter.Replace("_" + filter, "");
-             priceFilter = priceFilter.Replace(filter + "_", "");
-             priceFilter = priceFilter.Replace(filter, "");
+            priceFilter = priceFilter.Replace("_" + filter, "");
+            priceFilter = priceFilter.Replace(filter + "_", "");
+            priceFilter = priceFilter.Replace(filter, "");
         }
         else
         {
             priceFilter += "_" + filter;
         }
-        return SearchUrl(model.Query, model.Category, priceFilter, model.PriceRangeStart, model.PriceRangeEnd, "", "", 0);
+        return SearchUrl(model.Query, model.Category, priceFilter, model.PriceRangeStart, model.PriceRangeEnd, generateBrandFiltersData(model), model.Sort, 0);
     }
 
     public static string generatePriceFiltersData(DopaMarket.ViewModels.SearchViewModel model)
@@ -37,16 +37,46 @@
         return string.Join("_",(model.PriceFilters.Where(pf => pf.Selected).Select(pf => pf.PriceStart + "-" + pf.PriceEnd)));
     }
 
+    public static string SearchUrlBrandFilter(DopaMarket.ViewModels.SearchViewModel model, string brand)
+    {
+        var brandFilter = generateBrandFiltersData(model);
+        if (brandFilter == string.Empty)
+        {
+            brandFilter = brand;
+        }
+        else if (brandFilter.Contains(brand))
+        {
+            brandFilter = brandFilter.Replace("_" + brand, "");
+            brandFilter = brandFilter.Replace(brand + "_", "");
+            brandFilter = brandFilter.Replace(brand, "");
+        }
+        else
+        {
+            brandFilter += "_" + brand;
+        }
+        return SearchUrl(model.Query, model.Category, generatePriceFiltersData(model), model.PriceRangeStart, model.PriceRangeEnd, brandFilter, model.Sort, 0);
+    }
+
+    public static string generateBrandFiltersData(DopaMarket.ViewModels.SearchViewModel model)
+    {
+        return string.Join("_", (model.Brands.Where(b => b.Selected).Select(b => b.Brand.LinkName)));
+    }
+
+    public static string SearchUrlChangeSorting(DopaMarket.ViewModels.SearchViewModel model, string sort)
+    {
+        return SearchUrl(model.Query, model.Category, generatePriceFiltersData(model), model.PriceRangeStart, model.PriceRangeEnd, generateBrandFiltersData(model), sort, 0);
+    }
+
     public static string SearchUrl(string query, string category, string priceFilters, decimal? minPrice, decimal? maxPrice, string brands, string order, int page)
     {
         string result = "/Search?";
-        result += (query != "" && query != null) ? "q=" + query + "&" : "";
+        result += (query != "" && query != null) ? "q=" + System.Net.WebUtility.UrlEncode(query) + "&" : "";
         result += (category != "" && category != null) ? "c=" + category + "&": "";
         result += (priceFilters != "" && priceFilters != null) ? "pf=" + priceFilters + "&" : "";
         result += (minPrice != null) ? "minp=" + minPrice + "&" : "";
         result += (maxPrice != null) ? "maxp=" + maxPrice + "&" : "";
         result += (brands != "" && brands != null) ? "b=" + brands + "&" : "";
-        result += (order != "" && order != null) ? "order=" + order + "&" : "";
+        result += (order != "" && order != null) ? "sort=" + order + "&" : "";
         result += (page != 0) ? "page=" + page + "&" : "";
         result = result.Last() == '&' ? result.Substring(0, result.Length - 1) : result;
         return result;
@@ -72,11 +102,11 @@
                     @Html.Raw(@Model.TotalCount + " produits");
                 }
 
-                @if (Model.Query != "")
+                @if (Model.Query != null && Model.Query != "")
                 {
                     @Html.Raw("pour la recherche \"" + Model.Query + "\"");
                 }
-                @if (Model.Category != "")
+                @if (Model.Category != null && Model.Category != "")
                 {
                     @Html.Raw("dans la categorie " + Model.Category);
                 }
@@ -103,13 +133,13 @@
                 <div class="column">
                     <div class="shop-sorting">
                         <label for="sorting">Sort by:</label>
-                        <select class="form-control" id="sorting">
-                            <option>Popularity</option>
-                            <option>Low - High Price</option>
-                            <option>High - Low Price</option>
-                            <option>Average Rating</option>
-                            <option>A - Z Order</option>
-                            <option>Z - A Order</option>
+                        <select class="form-control" id="sorting" onchange="onSortChanged()">
+                            <option value="@(SearchUrlChangeSorting(Model, "popularity"))" @(Model.Sort == "popularity" ? "selected" :"")>Popularity</option>
+                            <option value="@(SearchUrlChangeSorting(Model, "low_price"))" @(Model.Sort == "low_price" ? "selected" :"")>Low - High Price</option>
+                            <option value="@(SearchUrlChangeSorting(Model, "high_price"))" @(Model.Sort == "high_price" ? "selected" :"")>High - Low Price</option>
+                            <option value="@(SearchUrlChangeSorting(Model, "rating"))" @(Model.Sort == "rating" ? "selected" :"")>Average Rating</option>
+                            <option value="@(SearchUrlChangeSorting(Model, "a-z"))" @(Model.Sort == "a-z" ? "selected" :"")>A - Z Order</option>
+                            <option value="@(SearchUrlChangeSorting(Model, "z-a"))" @(Model.Sort == "z-a" ? "selected" :"")>Z - A Order</option>
                         </select><span class="text-muted">Showing:&nbsp;</span><span>1 - 12 items</span>
                     </div>
                 </div>
@@ -173,7 +203,7 @@
                         @foreach (var category in Model.Categories)
                         {
                             <li class="has-children expanded">
-                                <a href="/search?c=@category.Category.LinkName">@category.Category.Name</a><span>(1138)</span>
+                                <a href="/search?c=@category.Category.LinkName">@category.Category.Name</a><span>(@category.Category.ItemsCount)</span>
                                 @if (category.Children != null && category.Children.Count() > 0)
                                 {
                                     <ul>
@@ -187,32 +217,34 @@
                         }
                     </ul>
                 </section>
-                <!-- Widget Price Range-->
-                <section class="widget widget-categories">
-                    <h3 class="widget-title">Price Range</h3>
-                    <form class="price-range-slider" method="post" data-start-min="@Model.PriceRangeStart" data-start-max="@Model.PriceRangeEnd" data-min="@Model.PriceRangeMin" data-max="@Model.PriceRangeMax" data-step="1">
-                        <div class="ui-range-slider"></div>
-                        <footer class="ui-range-slider-footer">
-                            <div class="column">
-                                <button class="btn btn-outline-primary btn-sm" type="submit">Filter</button>
-                            </div>
-                            <div class="column">
-                                <div class="ui-range-values">
-                                    <div class="ui-range-value-min">
-                                        $<span></span>
-                                        <input type="hidden">
-                                    </div>&nbsp;-&nbsp;
-                                    <div class="ui-range-value-max">
-                                        $<span></span>
-                                        <input type="hidden">
+                @if (Model.TotalCount > 1)
+                {
+                    <!-- Widget Price Range-->
+                    <section class="widget widget-categories">
+                        <h3 class="widget-title">Price Range</h3>
+                        <form class="price-range-slider" method="post" data-start-min="@Model.PriceRangeStart" data-start-max="@Model.PriceRangeEnd" data-min="@Model.PriceRangeMin" data-max="@Model.PriceRangeMax" data-step="1">
+                            <div class="ui-range-slider"></div>
+                            <footer class="ui-range-slider-footer">
+                                <div class="column">
+                                    <button class="btn btn-outline-primary btn-sm" type="submit">Filter</button>
+                                </div>
+                                <div class="column">
+                                    <div class="ui-range-values">
+                                        <div class="ui-range-value-min">
+                                            $<span></span>
+                                            <input type="hidden">
+                                        </div>&nbsp;-&nbsp;
+                                        <div class="ui-range-value-max">
+                                            $<span></span>
+                                            <input type="hidden">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </footer>
-                    </form>
-                </section>
-
-                @if (Model.PriceFilters != null)
+                            </footer>
+                        </form>
+                    </section>
+                }
+                @if (Model.TotalCount > 1 && Model.PriceFilters != null)
                 {
                     <!-- Widget Size Filter-->
                     <section class="widget">
@@ -227,16 +259,16 @@
                     </section>
                 }
 
-                @if (Model.Brands != null)
+                @if (Model.TotalCount > 1 && Model.Brands != null)
                 {
                     <!-- Widget Brand Filter-->
                     <section class="widget">
                         <h3 class="widget-title">Filter by Brand</h3>
                         @foreach (var brand in Model.Brands)
                         {
-                            <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" type="checkbox" id="@brand.LinkName">
-                                <label class="custom-control-label" for="apple">@brand.Name&nbsp;<span class="text-muted">(1)</span></label>
+                            <div class="custom-control custom-checkbox" onClick="window.location.href='@SearchUrlBrandFilter(Model, brand.Brand.LinkName)';">
+                                <input class="custom-control-input" type="checkbox" id="@brand.Brand.LinkName" @(brand.Selected ? "checked" : "")>
+                                <label class="custom-control-label" for="apple">@brand.Brand.Name&nbsp;<span class="text-muted">(@(brand.ItemsCount))</span></label>
                             </div>
                         }
                     </section>
@@ -247,5 +279,7 @@
 </div>
 
 <script>
-
+    function onSortChanged() {
+        window.location.href = $("#sorting").val();
+    }
 </script>
