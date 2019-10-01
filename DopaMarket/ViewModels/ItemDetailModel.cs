@@ -17,5 +17,7 @@ namespace DopaMarket.ViewModels
         public Models.Item Item { get; set; }
         public IEnumerable<ItemDetailItemInfoModel> ItemInfos { get; set; }
         public IEnumerable<Models.ItemReview> Reviews { get; set; }
+        public IEnumerable<Models.ItemImage> Images { get; set; }
+        public IEnumerable<Models.ItemFeature> Features { get; set; }
     }
 }

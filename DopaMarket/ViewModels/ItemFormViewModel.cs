@@ -19,6 +19,9 @@ namespace DopaMarket.ViewModels
         public IEnumerable<SelectListItem> Brands { get; set; }
 
         [DataType(DataType.MultilineText)]
+        public string Features { get; set; }
+
+        [DataType(DataType.MultilineText)]
         public string ItemInfosData { get; set; }
     }
 }

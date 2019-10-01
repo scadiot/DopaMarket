@@ -250,6 +250,10 @@
     <Compile Include="Migrations\201909300724386_AddStatInfo.Designer.cs">
       <DependentUpon>201909300724386_AddStatInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910011143368_AddItemLinks.cs" />
+    <Compile Include="Migrations\201910011143368_AddItemLinks.Designer.cs">
+      <DependentUpon>201910011143368_AddItemLinks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -263,6 +267,7 @@
     <Compile Include="Models\ItemInfo.cs" />
     <Compile Include="Models\ItemInfoType.cs" />
     <Compile Include="Models\ItemKeyword.cs" />
+    <Compile Include="Models\ItemLink.cs" />
     <Compile Include="Models\ItemPrice.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -397,6 +402,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909300724386_AddStatInfo.resx">
       <DependentUpon>201909300724386_AddStatInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910011143368_AddItemLinks.resx">
+      <DependentUpon>201910011143368_AddItemLinks.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

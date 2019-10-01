@@ -31,11 +31,20 @@ namespace DopaMarket.Controllers
             var itemDetailModel = new ItemDetailModel();
             itemDetailModel.Item = item;
             itemDetailModel.ItemInfos = getItemDetailItemInfoModel(item);
+
             itemDetailModel.Reviews = _context.ItemReviews
                                               .Where(ir => ir.ItemId == item.Id)
                                               .Include(ir => ir.Customer)
                                               .OrderBy(ir => ir.Date)
                                               .ToArray();
+
+            itemDetailModel.Features = _context.ItemFeatures
+                                               .Where(i => i.ItemId == item.Id)
+                                               .ToArray();
+
+            itemDetailModel.Images = _context.ItemImages
+                                             .Where(i => i.ItemId == item.Id)
+                                             .ToArray();
 
             return View("Detail", itemDetailModel);
         }

@@ -23,7 +23,8 @@ namespace DopaMarket.Models
         public DbSet<Item> Items { get; set; }
         public DbSet<ItemCart> ItemCarts { get; set; }
         public DbSet<ItemCategory> ItemCategories { get; set; }
-        public DbSet<ItemKeyword> ItemKeywords { get; set; }
+        public DbSet<ItemKeyword> ItemKeywords { get; set; } 
+        public DbSet<ItemFeature> ItemFeatures { get; set; }      
         public DbSet<ItemPrice> ItemPrices { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Customer> Customers { get; set; }
@@ -38,6 +39,7 @@ namespace DopaMarket.Models
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TicketMessage> TicketMessages { get; set; }
+        public DbSet<ItemLink> ItemLinks { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

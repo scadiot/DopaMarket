@@ -35,6 +35,7 @@ namespace DopaMarket.Controllers
             viewModel.SelectedCategoryIds = new int[0];
             viewModel.Images = new ItemImage[0];
             viewModel.Brands = _context.Brands.Select(b => new SelectListItem() { Text = b.Name, Value = b.Id.ToString() }).ToArray();
+            viewModel.Features = "";
 
             return View("ItemForm", viewModel);
         }
@@ -51,6 +52,7 @@ namespace DopaMarket.Controllers
             viewModel.SelectedCategoryIds = _context.ItemCategories.Where(ic => ic.ItemId == id).Select(ic => ic.CategoryId).ToArray();
             viewModel.Images = _context.ItemImages.Where(ii => ii.ItemId == id).ToList();
             viewModel.Brands = _context.Brands.Select(b => new SelectListItem() { Text = b.Name, Value = b.Id.ToString() }).ToArray();
+            viewModel.Features = string.Join("\n", _context.ItemFeatures.Where(f => f.ItemId == id).Select(f => f.Text).ToArray());
 
             var keywordsList = (from ik in _context.ItemKeywords
                                 join k in _context.Keywords on ik.KeywordId equals k.Id
@@ -120,6 +122,7 @@ namespace DopaMarket.Controllers
 
             UpdateItemImage(itemFormViewModel.Item, itemFormViewModel.UploadImages);
             UpdateItemInfos(itemFormViewModel.Item, itemFormViewModel.ItemInfosData);
+            UpdateItemFeatures(itemFormViewModel.Item, itemFormViewModel.Features);
 
             return RedirectToAction("Index", "AdminItems");
         }
@@ -252,6 +255,22 @@ namespace DopaMarket.Controllers
                 }
                 _context.ItemInfos.Add(itemInfo);
             }
+            _context.SaveChanges();
+        }
+
+        void UpdateItemFeatures(Item item, string features)
+        {
+            var currentItemInfos = _context.ItemFeatures.Where(f => f.ItemId == item.Id).ToList();
+            _context.ItemFeatures.RemoveRange(currentItemInfos);
+
+            foreach(var featureText in features.Split('\n'))
+            {
+                var feature = new ItemFeature();
+                feature.ItemId = item.Id;
+                feature.Text = featureText;
+                _context.ItemFeatures.Add(feature);
+            }
+
             _context.SaveChanges();
         }
 
