@@ -46,6 +46,17 @@ namespace DopaMarket.Controllers
                                              .Where(i => i.ItemId == item.Id)
                                              .ToArray();
 
+            var starInfos = new List<StarInfo>();
+            for(int i = 1;i < 6;i++)
+            {
+                var starInfo = new StarInfo();
+                starInfo.Value = i;
+                starInfo.Count = itemDetailModel.Reviews.Count(r => r.Note == i);
+                starInfo.Ratio = itemDetailModel.Reviews.Count() > 0 ? (decimal)starInfo.Count / itemDetailModel.Reviews.Count() : 0;
+                starInfos.Add(starInfo);
+            }
+            itemDetailModel.Stars = starInfos.ToArray();
+
             return View("Detail", itemDetailModel);
         }
 
@@ -84,7 +95,7 @@ namespace DopaMarket.Controllers
         }
 
         [HttpPost]
-        public ActionResult PushReview(int itemId, int note, string text)
+        public ActionResult PushReview(int itemId, int rating, string text)
         {
             var userId = User.Identity.GetUserId().ToString();
             var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
@@ -96,14 +107,14 @@ namespace DopaMarket.Controllers
                 itemReview = new ItemReview();
                 itemReview.CustomerId = customer.Id;
                 itemReview.ItemId = itemId;
-                itemReview.Note = note;
+                itemReview.Note = rating;
                 itemReview.Text = text;
                 itemReview.Date = DateTime.Now;
                 _context.ItemReviews.Add(itemReview);
             }
             else
             {
-                itemReview.Note = note;
+                itemReview.Note = rating;
                 itemReview.Text = text;
                 itemReview.Date = DateTime.Now;
             }
