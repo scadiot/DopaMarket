@@ -1,12 +1,37 @@
 
 {
+	"Customers" : [
+		{ 
+			"Email" : "",
+			"Password" : "",
+			"FirstName" : "",
+			"LastName" : "",
+			"Phone" : "",
+			"Address1" : "",
+			"Address2" : "",
+			"PostalCode" : "",
+			"State" : "",
+			"Country" : "",
+			"City" : ""
+		}
+	],
 	"Categories" : [
 		{ "Name" : "", "LinkName" : "", "Parent" : "" }
+	],
+	"Specifications" : [
+		{ "Name" : "", "Type" : "", "Unity" : "Boolean, Interger, String, Decimal", "LongName" : "" }
+	],
+	"CompareGroups" : [
+		{ "Name" : "", "LinkName" : "" }
+	],
+	"CompareGroupSpecifications" : [
+		{ "CompareGroup" : "", "Specification" : "" }
 	],
 	"Items" : [
 		{
 			"Name" : "",
 			"LinkName" : "",
+			"InsertDate": "08/18/2018",
 			"TinyDescriptive" : "",
 			"Descriptive" : "",
 			"CurrentPrice" : 0,
@@ -16,10 +41,13 @@
 			"Width":0,
 			"Height":0,
 			"Length":0,
-			"Reviews" : [ {"rate" : 1, "title" : "", "text" : "" } ],
+			"Reviews" : [ {"Rate" : 1, "Title" : "", "Text" : "", "Email" : "" } ],
 			"Categories" : [ "" ],
-			"Keyword" : [ "" ],
-			"Feature" : [ "" ]
+			"Keywords" : [ "" ],
+			"Features" : [ "" ],
+			"ItemSpecifications" : [
+				{ "specification" : "", "IntegerValue" : 0, "DecimalValue" :0, "BooleanValue" : false, "StringValue" : "" }
+			]
 		}
 	]
 }

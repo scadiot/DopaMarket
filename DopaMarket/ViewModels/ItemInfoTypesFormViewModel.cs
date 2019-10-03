@@ -8,6 +8,6 @@ namespace DopaMarket.ViewModels
 {
     public class ItemInfoTypesFormViewModel
     {
-        public ItemInfoType ItemInfoType { get; set; }
+        public Specification ItemInfoType { get; set; }
     }
 }

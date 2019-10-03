@@ -68,7 +68,7 @@ namespace DopaMarket.Controllers
 
         public string SerializeItemInfos(Item item)
         {
-            var itemInfos = _context.ItemInfos.Where(ii => ii.ItemId == item.Id).Include(ii => ii.ItemInfoType);
+            var itemInfos = _context.ItemSpecifications.Where(ii => ii.ItemId == item.Id).Include(ii => ii.ItemInfoType);
 
             string result = "";
             foreach(var itemInfo in itemInfos)
@@ -221,10 +221,10 @@ namespace DopaMarket.Controllers
             if(itemInfosData == null)
                 itemInfosData = "";
 
-            var currentItemInfos = _context.ItemInfos.Where(ii => ii.ItemId == item.Id).ToList();
-            _context.ItemInfos.RemoveRange(currentItemInfos);
+            var currentItemInfos = _context.ItemSpecifications.Where(ii => ii.ItemId == item.Id).ToList();
+            _context.ItemSpecifications.RemoveRange(currentItemInfos);
 
-            var itemInfoTypes = _context.ItemInfoTypes.ToList();
+            var itemInfoTypes = _context.Specifications.ToList();
 
             var itemInfoData = itemInfosData.Split('\n');
             foreach(var itemInfoSplited in itemInfoData)
@@ -233,7 +233,7 @@ namespace DopaMarket.Controllers
                 if (intemInfoType == null)
                     continue;
 
-                var itemInfo = new ItemInfo();
+                var itemInfo = new ItemSpecification();
                 itemInfo.ItemId = item.Id;
                 itemInfo.ItemInfoTypeId = intemInfoType.Id;
 
@@ -253,7 +253,7 @@ namespace DopaMarket.Controllers
                         itemInfo.DecimalValue = decimal.Parse(value);
                         break;
                 }
-                _context.ItemInfos.Add(itemInfo);
+                _context.ItemSpecifications.Add(itemInfo);
             }
             _context.SaveChanges();
         }

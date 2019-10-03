@@ -62,7 +62,7 @@ namespace DopaMarket.Controllers
 
         ItemDetailItemInfoModel[] getItemDetailItemInfoModel(Item item)
         {
-            var itemInfos = _context.ItemInfos
+            var itemInfos = _context.ItemSpecifications
                                     .Where(ii => ii.ItemId == item.Id)
                                     .Include(ii => ii.ItemInfoType)
                                     .ToArray();

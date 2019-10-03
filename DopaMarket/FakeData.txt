@@ -1,12 +1,191 @@
 
 {
+	"Customers" : [
+		{ 
+			"Email" : "user1@outlook.fr",
+			"Password" : "user12345+",
+			"FirstName" : "Sibylle",
+			"LastName" : "Cohen",
+			"Phone" : "",
+			"Address1" : "4 Rue de la Haute Lande",
+			"Address2" : "",
+			"PostalCode" : "18300",
+			"State" : "",
+			"Country" : "France",
+			"City" : "Jalognes"
+		},
+		{ 
+			"Email" : "user2@outlook.fr",
+			"Password" : "user12345+",
+			"FirstName" : "Lazare",
+			"LastName" : "Garcia",
+			"Phone" : "",
+			"Address1" : "2 Rue du Soleil Levant",
+			"Address2" : "",
+			"PostalCode" : "55600",
+			"State" : "",
+			"Country" : "France",
+			"City" : "Verneuil-Grand"
+		},
+		{ 
+			"Email" : "user3@outlook.fr",
+			"Password" : "user12345+",
+			"FirstName" : "Hannah",
+			"LastName" : "Prat",
+			"Phone" : "",
+			"Address1" : "48 Rue du Petit Verger",
+			"Address2" : "",
+			"PostalCode" : "42140",
+			"State" : "",
+			"Country" : "France",
+			"City" : "Maringes"
+		},
+		{ 
+			"Email" : "user4@outlook.fr",
+			"Password" : "user12345+",
+			"FirstName" : "",
+			"LastName" : "",
+			"Phone" : "",
+			"Address1" : "",
+			"Address2" : "",
+			"PostalCode" : "",
+			"State" : "",
+			"Country" : "France",
+			"City" : ""
+		},
+		{ 
+			"Email" : "user5@outlook.fr",
+			"Password" : "user12345+",
+			"FirstName" : "Albert",
+			"LastName" : "Lopes",
+			"Phone" : "",
+			"Address1" : "20 Impasse de la Barre",
+			"Address2" : "",
+			"PostalCode" : "51700",
+			"State" : "",
+			"Country" : "France",
+			"City" : "Mareuil-le-Port"
+		},
+		{ 
+			"Email" : "user6@outlook.fr",
+			"Password" : "user12345+",
+			"FirstName" : "Constant",
+			"LastName" : "Martineau",
+			"Phone" : "",
+			"Address1" : "28 Rue Alfred Nobel",
+			"Address2" : "",
+			"PostalCode" : "70600",
+			"State" : "",
+			"Country" : "France",
+			"City" : "Fouvent-le-Bas"
+		},
+		{ 
+			"Email" : "user7@outlook.fr",
+			"Password" : "user12345+",
+			"FirstName" : "Thomas",
+			"LastName" : "Ferrand",
+			"Phone" : "",
+			"Address1" : "33 Impasse des Bertineries",
+			"Address2" : "",
+			"PostalCode" : "38220",
+			"State" : "",
+			"Country" : "France",
+			"City" : "Cholonge"
+		},
+		{ 
+			"Email" : "user8@outlook.fr",
+			"Password" : "user12345+",
+			"FirstName" : "Fabien",
+			"LastName" : "Thibault",
+			"Phone" : "",
+			"Address1" : "41 Impasse Henri Barbusse",
+			"Address2" : "",
+			"PostalCode" : "31830",
+			"State" : "",
+			"Country" : "France",
+			"City" : "Plaisance-du-Touch"
+		},
+		{ 
+			"Email" : "user9@outlook.fr",
+			"Password" : "user12345+",
+			"FirstName" : "Claire",
+			"LastName" : "Le gall",
+			"Phone" : "",
+			"Address1" : "29 Rue Marcel Sembat",
+			"Address2" : "",
+			"PostalCode" : "49400",
+			"State" : "",
+			"Country" : "France",
+			"City" : "Villebernier"
+		},
+		{ 
+			"Email" : "user10@outlook.fr",
+			"Password" : "user12345+",
+			"FirstName" : "Sidonie",
+			"LastName" : "Foulon",
+			"Phone" : "",
+			"Address1" : "39 Rue Adolphe Bouchaud",
+			"Address2" : "",
+			"PostalCode" : "03110",
+			"State" : "",
+			"Country" : "France",
+			"City" : "Espinasse-Vozelle"
+		},
+		{ 
+			"Email" : "user11@outlook.fr",
+			"Password" : "user12345+",
+			"FirstName" : "Marine",
+			"LastName" : "Mimi",
+			"Phone" : "",
+			"Address1" : "30 Rue Clément Bachelier",
+			"Address2" : "",
+			"PostalCode" : "26420",
+			"State" : "",
+			"Country" : "France",
+			"City" : "La Chapelle-en-Vercors"
+		},
+		{ 
+			"Email" : "user11@outlook.fr",
+			"Password" : "user12345+",
+			"FirstName" : "Maxime",
+			"LastName" : "Gaillard",
+			"Phone" : "",
+			"Address1" : "40 Rue d'Iroise",
+			"Address2" : "",
+			"PostalCode" : "55300",
+			"State" : "",
+			"Country" : "France",
+			"City" : "Les Paroches"
+		}
+	],
 	"Categories" : [
 		{ "Name" : "", "LinkName" : "", "Parent" : "" }
+	],
+	"Specifications" : [
+		{ "Name" : "support_processeur", "Type" : "String", "Unity" : "", "LongName" : "Support du processeur" },
+		{ "Name" : "frequence_cpu", "Type" : "Decimal", "Unity" : "GHz", "LongName" : "Fréquence CPU" },
+		{ "Name" : "frequence_turbo", "Type" : "Decimal", "Unity" : "GHz", "LongName" : "Fréquence en mode Turbo" },
+		{ "Name" : "nombre_core", "Type" : "Interger", "Unity" : "", "LongName" : "Nombre de core" },
+		{ "Name" : "nombre_threads", "Type" : "Interger", "Unity" : "", "LongName" : "Nombre de Threads" },
+		{ "Name" : "cache_l2", "Type" : "Decimal", "Unity" : "Mo", "LongName" : "Cache L2" },
+		{ "Name" : "cache_l3", "Type" : "Decimal", "Unity" : "Mo", "LongName" : "Cache L3" }
+	],
+	"CompareGroups" : [
+		{ "Name" : "Processeur", "LinkName" : "processeur" }
+	],
+	"CompareGroupSpecifications" : [
+		{ "CompareGroup" : "processeur", "Specification" : "support_processeur" },
+		{ "CompareGroup" : "processeur", "Specification" : "frequence_cpu" },
+		{ "CompareGroup" : "processeur", "Specification" : "frequence_turbo" },
+		{ "CompareGroup" : "processeur", "Specification" : "nombre_core" },
+		{ "CompareGroup" : "processeur", "Specification" : "nombre_threads" },
+		{ "CompareGroup" : "processeur", "Specification" : "cache_l2" }
 	],
 	"Items" : [
 		{
 			"Name" : "AMD Ryzen 5 3600",
 			"LinkName" : "amd_ryzen_5_3600",
+			"InsertDate": "01/06/2019",
 			"TinyDescriptive" : "AMD 3600, Ryzen. Famille de processeur: AMD Ryzen 5, Fréquence du processeur: 3, 6 GHz.",
 			"Descriptive" : "AMD 3600, Ryzen. Famille de processeur: AMD Ryzen 5, Fréquence du processeur: 3, 6 GHz, Socket de processeur (réceptacle de processeur): emplacement AM4. Canaux de mémoire pris en charge par le processeur: Dual, types de mémoires pris en charge par le processeur: DDR4-SDRAM, vitesses d'horloge de mémoire prises en charge par le processeur: 3200 MHz. Enveloppe thermique (TDP, Thermal Design Power): 65 W. Configurations de PCI Express: 1x16 processeur.",
 			"CurrentPrice" : 210,
@@ -17,24 +196,34 @@
 			"Height":10,
 			"Length":10,
 			"Reviews" : [ 
-				{"rate" : 5, "title" : "Excelent produit", "text" : "Ce processeur est une vraie bouffée d'air pour mon PC de bureau, et je n'ai pas cassé ma tirelire, parce que j'ai conservé le boitier, l'alim, le clavier, tous les disques, et que je n'ai pas acheté de carte graphique." },
-				{"rate" : 5, "title" : "Bon processeur", "text" : "AMD revient très fort avec ce Ryzen 5 3600. Ce processeur milieu de gamme est un concurrent direct au i5 9600." },
-				{"rate" : 3, "title" : "Problème de connecteur", "text" : "Les performances sont au top !, je retire deux étoiles car au déballage du processeur, 3 pinoches étaient tordues !!!" },
-				{"rate" : 5, "title" : "Performances au top", "text" : "AMD nous livre ici une très bonne mouture. Le processeur Ryzen 3700X se situe dans le milieu haut de gamme et vient concurrencer directement le Intel I7-9700K." },
-				{"rate" : 4, "title" : "Bon processeur", "text" : "Bon processeur mais encore "jeune". Il est annoncé en Boost (sans OC) à 4,4 Ghz est j'obtiens 4Ghz maxi, sous windows 10 ou linux (avec ou sans smt). Monté sur carte X570." },
-				{"rate" : 2, "title" : "chaleur & bruit", "text" : "Par rapport à la précédente génération de Ryzen, ca dégage une sacré chaleur et donc un bruit conséquent. Pas top selon les usages." },
-				{"rate" : 1, "title" : "En panne", "text" : "CPU neuf, en panne..." },
-				{"rate" : 1, "title" : "Trop de problèmes", "text" : "Je pense être actuellement la personne la plus négatif et la plus patiente concernant AMD et surtout concernant les Ryzen 3000 et je précise avant de raconter mes problèmes que je ne suis en aucun cas un cas isolé et en aucun cas Fanboy de la marque concurrente." },
-				{"rate" : 4, "title" : "Très Performant", "text" : "Difficile de passer à côté des nouveaux Ryzen tant ils ont fait parler d'eux de par leurs performances de haute volée." },
-				{"rate" : 5, "title" : "Très rapide", "text" : "Top Rapide.!" }
+				{"Rate" : 5, "Title" : "Excelent produit", "Text" : "Ce processeur est une vraie bouffée d'air pour mon PC de bureau, et je n'ai pas cassé ma tirelire, parce que j'ai conservé le boitier, l'alim, le clavier, tous les disques, et que je n'ai pas acheté de carte graphique.", "Email" : "user1@outlook.fr" },
+				{"Rate" : 5, "Title" : "Bon processeur", "Text" : "AMD revient très fort avec ce Ryzen 5 3600. Ce processeur milieu de gamme est un concurrent direct au i5 9600.", "Email" : "user2@outlook.fr" },
+				{"Rate" : 3, "Title" : "Problème de connecteur", "Text" : "Les performances sont au top !, je retire deux étoiles car au déballage du processeur, 3 pinoches étaient tordues !!!", "Email" : "user3@outlook.fr" },
+				{"Rate" : 5, "Title" : "Performances au top", "Text" : "AMD nous livre ici une très bonne mouture. Le processeur Ryzen 3700X se situe dans le milieu haut de gamme et vient concurrencer directement le Intel I7-9700K.", "Email" : "user4@outlook.fr" },
+				{"Rate" : 4, "Title" : "Bon processeur", "Text" : "Bon processeur mais encore jeune. Il est annoncé en Boost (sans OC) à 4,4 Ghz est j'obtiens 4Ghz maxi, sous windows 10 ou linux (avec ou sans smt). Monté sur carte X570.", "Email" : "user5@outlook.fr" },
+				{"Rate" : 2, "Title" : "chaleur & bruit", "Text" : "Par rapport à la précédente génération de Ryzen, ca dégage une sacré chaleur et donc un bruit conséquent. Pas top selon les usages.", "Email" : "user6@outlook.fr" },
+				{"Rate" : 1, "Title" : "En panne", "Text" : "CPU neuf, en panne...", "Email" : "user7@outlook.fr" },
+				{"Rate" : 1, "Title" : "Trop de problèmes", "Text" : "Je pense être actuellement la personne la plus négatif et la plus patiente concernant AMD et surtout concernant les Ryzen 3000 et je précise avant de raconter mes problèmes que je ne suis en aucun cas un cas isolé et en aucun cas Fanboy de la marque concurrente.", "Email" : "user8@outlook.fr" },
+				{"Rate" : 4, "Title" : "Très Performant", "Text" : "Difficile de passer à côté des nouveaux Ryzen tant ils ont fait parler d'eux de par leurs performances de haute volée.", "Email" : "user9@outlook.fr" },
+				{"Rate" : 5, "Title" : "Très rapide", "Text" : "Top Rapide.!", "Email" : "user10@outlook.fr" }
 			],
 			"Categories" : [ "processor" ],
-			"Keyword" : [ "ryzen", "5", "3600", "amd", "processor", "ryzen5", "AM4" ],
-			"Feature" : [ "AMD 3600", "Ryzen. Famille de processeur: AMD Ryzen 5", "Fréquence du processeur: 3, 6 Ghz", "Socket de processeur (réceptacle de processeur): emplacement AM4.", "Canaux de mémoire pris en charge par le processeur: Dual", "Types de mémoires pris en charge par le processeur: ddr4-sdram", "Vitesses d'horloge de mémoire prises en charge par le processeur: 3200 MHz" ]
+			"Keywords" : [ "ryzen", "5", "3600", "amd", "processor", "ryzen5", "AM4" ],
+			"Features" : [ "AMD 3600", "Ryzen. Famille de processeur: AMD Ryzen 5", "Fréquence du processeur: 3, 6 Ghz", "Socket de processeur (réceptacle de processeur): emplacement AM4.", "Canaux de mémoire pris en charge par le processeur: Dual", "Types de mémoires pris en charge par le processeur: ddr4-sdram", "Vitesses d'horloge de mémoire prises en charge par le processeur: 3200 MHz" ],
+			"ItemSpecifications" : [	
+				{ "specification" : "support_processeur", "StringValue" : "AMD AM4" },
+				{ "specification" : "frequence_cpu", "DecimalValue" : 3.6 },
+				{ "specification" : "frequence_turbo", "DecimalValue" : 4.2 },
+				{ "specification" : "nombre_core", "IntegerValue" : 6 },
+				{ "specification" : "nombre_threads", "IntegerValue" : 12 },
+				{ "specification" : "cache_l2", "DecimalValue" : 3 },
+				{ "specification" : "cache_l3", "DecimalValue" : 32 }
+			]
 		},
 		{
 			"Name" : "AMD Ryzen 3 3200G",
 			"LinkName" : "amd_ryzen_3_3200g",
+			"InsertDate": "07/06/2019",
 			"TinyDescriptive" : "Ryzen. Famille de processeur: AMD Ryzen 3, Fréquence du processeur: 3, 6 Ghz.",
 			"Descriptive" : "Ryzen. Famille de processeur: AMD Ryzen 3, Fréquence du processeur: 3, 6 Ghz.Socket de processeur (réceptacle de processeur): emplacement AM4. Canaux de mémoire pris en charge par le processeur: Dual. Types de mémoires pris en charge par le processeur: ddr4-sdram.",
 			"CurrentPrice" : 109.5,
@@ -45,12 +234,79 @@
 			"Height":10,
 			"Length":10,
 			"Reviews" : [ 
-				{"rate" : 3, "title" : "Attention a la compatibilité", "text" : "Un processeur plutôt puissant pour le prix, avec une carte graphique intégrée qui permet de jouer raisonnablement." },
-				{"rate" : 5, "title" : "Processeur puissant rapide", "text" : "excellent processeur puissant rapide" }
+				{"Rate" : 3, "Title" : "Attention a la compatibilité", "Text" : "Un processeur plutôt puissant pour le prix, avec une carte graphique intégrée qui permet de jouer raisonnablement.", "Email" : "user7@outlook.fr" },
+				{"Rate" : 5, "Title" : "Processeur puissant rapide", "Text" : "excellent processeur puissant rapide", "Email" : "user8@outlook.fr" }
 			],
 			"Categories" : [ "processor" ],
-			"Keyword" : [ "ryzen", "3", "3200G", "3200", "amd", "processor", "ryzen3", "AM4" ],
-			"Feature" : [ "AMD 3200G. CMOS: 12nm FinFET", 	"Ryzen. Famille de processeur: AMD Ryzen 3", "Fréquence du processeur: 3, 6 Ghz", "Socket de processeur (réceptacle de processeur): emplacement AM4", "Canaux de mémoire pris en charge par le processeur: Dual", "Types de mémoires pris en charge par le processeur: ddr4-sdram", "Vitesses d'horloge de mémoire prises en charge par le processeur: 2933 MHz" ]
+			"Keywords" : [ "ryzen", "3", "3200G", "3200", "amd", "processor", "ryzen3", "AM4" ],
+			"Features" : [ "AMD 3200G. CMOS: 12nm FinFET", 	"Ryzen. Famille de processeur: AMD Ryzen 3", "Fréquence du processeur: 3, 6 Ghz", "Socket de processeur (réceptacle de processeur): emplacement AM4", "Canaux de mémoire pris en charge par le processeur: Dual", "Types de mémoires pris en charge par le processeur: ddr4-sdram", "Vitesses d'horloge de mémoire prises en charge par le processeur: 2933 MHz" ],
+			"ItemSpecifications" : [	
+				{ "specification" : "support_processeur", "StringValue" : "AMD AM4" },
+				{ "specification" : "frequence_cpu", "DecimalValue" : 3.6 },
+				{ "specification" : "frequence_turbo", "DecimalValue" : 4 },
+				{ "specification" : "nombre_core", "IntegerValue" : 4 },
+				{ "specification" : "nombre_threads", "IntegerValue" : 4 },
+				{ "specification" : "cache_l2", "DecimalValue" : 2 },
+				{ "specification" : "cache_l3", "DecimalValue" : 4 }
+			]
+		},
+		{
+			"Name" : "Intel Core i5 9600K",
+			"LinkName" : "intel_core_i5_9600k",
+			"InsertDate": "17/09/2017",
+			"TinyDescriptive" : "Avec la 9ème génération de processeurs (Coffee Lake S / Coffe Lake Refresh) et le Core i5 9600K, Intel met à votre disposition une architecture ultra-moderne et encore plus puissante.",
+			"Descriptive" : "Avec la 9ème génération de processeurs (Coffee Lake S / Coffe Lake Refresh) et le Core i5 9600K, Intel met à votre disposition une architecture ultra-moderne et encore plus puissante. Profitez d'une plateforme technologique haute performance avec une fréquence DDR4 toujours à 2666 MHz et une rapidité toujours plus élevée avec une fréquence de base cadencée à 3,60 GHz efficaces en toutes circonstances, avec la technologie Turbo Boost 3.0 qui pousse cette fréquence à 4,9 Ghz. Le processeur Intel Core i5 9600K offre à votre PC la meilleure expérience visuelle ainsi qu'une vitesse d'exécution sans commune mesure avec 6 coeurs.",
+			"CurrentPrice" : 299.95,
+			"Brand" : "intel",
+			"MainCategory" : "processor",
+			"Weight":100,
+			"Width":10,
+			"Height":10,
+			"Length":10,
+			"Reviews" : [ 
+				{"Rate" : 4, "Title" : "Bon processeur", "Text" : "Fait le boulot sans trop se ruiner.", "Email" : "user3@outlook.fr" },
+				{"Rate" : 5, "Title" : "CPU solide", "Text" : "Un i5, j'étais pas séduis, on me l'a conseillé, et là POUF.... L'amour charnelle ! Incroyable, aucun soucis, mon pc tourne à fond, je fais même tourner Star Citizen sans aucun soucis, ni latence !...", "Email" : "user7@outlook.fr" } 
+			],
+			"Categories" : [ "processor" ],
+			"Keywords" : [ "core", "i5", "5", "9600", "9600k", "intel", "processor", "Coffee", "Lake", "1151" ],
+			"Features" : [ "Fréquence de base 3,70 GHz / Mode Turbo Boost 3.0 à 4.60 GHz", "Plateforme Intel Coffee Lake Refresh - 9ème génération de processeurs", "Socket compatible Intel LGA 1151", "Compatible avec les contrôleurs cartes mères série 300 et nouvelles Z390", "Mémoire cache 9 Mo", "Contrôleur graphique Intel HD 630", "Contrôleur mémoire Dual Channel DDR4 2666 MHz", "Enveloppe thermique maximale (TDP) : 95W" ],
+			"ItemSpecifications" : [	
+				{ "specification" : "support_processeur", "StringValue" : "Intel 1151" },
+				{ "specification" : "frequence_cpu", "DecimalValue" : 3.7 },
+				{ "specification" : "frequence_turbo", "DecimalValue" : 4.6 },
+				{ "specification" : "nombre_core", "IntegerValue" : 6 },
+				{ "specification" : "nombre_threads", "IntegerValue" : 6 },
+				{ "specification" : "cache_l3", "DecimalValue" : 9 }
+			]
+		},
+		{
+			"Name" : "Intel Core i7 9700K",
+			"LinkName" : "intel_core_i7_9700k",
+			"InsertDate": "28/02/2015",
+			"TinyDescriptive" : "Avec la 9ème génération de processeurs (Coffee Lake S / Coffe Lake Refresh) et le Core i7 9700K, Intel met à votre disposition une architecture ultra-moderne et encore plus puissante.",
+			"Descriptive" : "Avec la 9ème génération de processeurs (Coffee Lake S / Coffe Lake Refresh) et le Core i7 9700K, Intel met à votre disposition une architecture ultra-moderne et encore plus puissante. Profitez d'une plateforme technologique haute performance avec une fréquence DDR4 toujours à 2666 MHz et une rapidité toujours plus élevée avec une fréquence de base cadencée à 3,60 GHz efficaces en toutes circonstances, avec la technologie Turbo Boost 3.0 qui pousse cette fréquence à 4,9 Ghz. Le processeur Intel Core i7 9700K offre à votre PC la meilleure expérience visuelle ainsi qu'une vitesse d'exécution sans commune mesure avec 8 coeurs.",
+			"CurrentPrice" : 445.95,
+			"Brand" : "intel",
+			"MainCategory" : "processor",
+			"Weight":100,
+			"Width":10,
+			"Height":10,
+			"Length":10,
+			"Reviews" : [ 
+				{"Rate" : 5, "Title" : "Un processeur qui a du répondant", "Text" : "Codant des fonctions assez gourmandes, j'ai des temps de calcul vraiment améliorés avec ce proc'", "Email" : "user3@outlook.fr" },
+				{"Rate" : 5, "Title" : "Produit au top !", "Text" : "Le produit est très performant, de plus il est facile à monter, et overclockable, rien à ajouter il est très bien.", "Email" : "user7@outlook.fr" } 
+			],
+			"Categories" : [ "processor" ],
+			"Keywords" : [ "core", "i7", "7", "9700", "9700K", "intel", "processor", "Coffee", "Lake", "1151" ],
+			"Features" : [ "Fréquence de base 3,60 GHz / Mode Turbo Boost 3.0 à 4.90 GHz", "Plateforme Intel Coffee Lake Refresh - 9ème génération de processeurs", "Socket compatible Intel LGA 1151", "Compatible avec les contrôleurs cartes mères série 300 et nouvelles Z390", "Mémoire cache 12 Mo", "Contrôleur graphique Intel HD 630", "Contrôleur mémoire Dual Channel DDR4 2666 MHz", "Enveloppe thermique maximale (TDP) : 95W"],
+			"ItemSpecifications" : [	
+				{ "specification" : "support_processeur", "StringValue" : "Intel 1151" },
+				{ "specification" : "frequence_cpu", "DecimalValue" : 3.6 },
+				{ "specification" : "frequence_turbo", "DecimalValue" : 4.9 },
+				{ "specification" : "nombre_core", "IntegerValue" : 8 },
+				{ "specification" : "nombre_threads", "IntegerValue" : 8 },
+				{ "specification" : "cache_l3", "DecimalValue" : 12 }
+			]
 		}
 	]
 }

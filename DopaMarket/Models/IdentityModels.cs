@@ -33,8 +33,10 @@ namespace DopaMarket.Models
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<ItemImage> ItemImages { get; set; }
         public DbSet<Address> Address { get; set; }
-        public DbSet<ItemInfoType> ItemInfoTypes { get; set; }
-        public DbSet<ItemInfo> ItemInfos { get; set; }
+        public DbSet<Specification> Specifications { get; set; }
+        public DbSet<ItemSpecification> ItemSpecifications { get; set; }
+        public DbSet<CompareGroup> CompareGroups { get; set; }
+        public DbSet<CompareGroupSpecification> CompareGroupSpecifications { get; set; }
         public DbSet<ItemReview> ItemReviews { get; set; }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Ticket> Tickets { get; set; }

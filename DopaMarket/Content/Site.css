@@ -39,3 +39,11 @@ textarea {
 .search-result-column {
     padding: 5px;
 }
+
+#importer-data {
+    width: 100%;
+    resize: vertical;
+    max-width: 95%;
+    height:700px;
+    margin:10px;
+}

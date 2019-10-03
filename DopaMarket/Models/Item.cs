@@ -37,6 +37,10 @@ namespace DopaMarket.Models
 
         public Brand Brand { get; set; }
 
+        public int? CompareGroupId { get; set; }
+
+        public CompareGroup CompareGroup { get; set; }
+
         public int? MainCategoryId { get; set; }
 
         public Category MainCategory { get; set; }

@@ -28,6 +28,7 @@ namespace DopaMarket
                        .Include("~/Scripts/dopamarket-scripts.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/Site.css",
                       "~/Content/styles.min.css",
                       "~/Content/vendor.min.css"));
         }

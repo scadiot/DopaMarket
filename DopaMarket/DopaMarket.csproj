@@ -214,6 +214,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Administration\BrandsController.cs" />
+    <Compile Include="Controllers\Administration\ImporterController.cs" />
     <Compile Include="Controllers\Administration\ItemInfoTypesController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CartController.cs" />
@@ -254,18 +255,24 @@
     <Compile Include="Migrations\201910011143368_AddItemLinks.Designer.cs">
       <DependentUpon>201910011143368_AddItemLinks.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910031041466_AddCompareData.cs" />
+    <Compile Include="Migrations\201910031041466_AddCompareData.Designer.cs">
+      <DependentUpon>201910031041466_AddCompareData.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Brand.cs" />
+    <Compile Include="Models\CompareGroup.cs" />
+    <Compile Include="Models\CompareGroupSpecification.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemCart.cs" />
     <Compile Include="Models\ItemCategory.cs" />
-    <Compile Include="Models\ItemComment.cs" />
+    <Compile Include="Models\ItemReview.cs" />
     <Compile Include="Models\ItemFeature.cs" />
     <Compile Include="Models\ItemImage.cs" />
-    <Compile Include="Models\ItemInfo.cs" />
-    <Compile Include="Models\ItemInfoType.cs" />
+    <Compile Include="Models\ItemSpecification.cs" />
+    <Compile Include="Models\Specification.cs" />
     <Compile Include="Models\ItemKeyword.cs" />
     <Compile Include="Models\ItemLink.cs" />
     <Compile Include="Models\ItemPrice.cs" />
@@ -288,6 +295,7 @@
     <Compile Include="ViewModels\CustomerProfileViewModel.cs" />
     <Compile Include="ViewModels\CustomerTicketsViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\ImporterViewModel.cs" />
     <Compile Include="ViewModels\ItemFormViewModel.cs" />
     <Compile Include="ViewModels\CategoryFormViewModel.cs" />
     <Compile Include="ViewModels\ItemDetailModel.cs" />
@@ -375,6 +383,7 @@
     <Content Include="Views\Customer\Orders.cshtml" />
     <Content Include="Views\Brands\BrandForm.cshtml" />
     <Content Include="Views\Brands\Index.cshtml" />
+    <Content Include="Views\Importer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -405,6 +414,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910011143368_AddItemLinks.resx">
       <DependentUpon>201910011143368_AddItemLinks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910031041466_AddCompareData.resx">
+      <DependentUpon>201910031041466_AddCompareData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -19,14 +19,14 @@ namespace DopaMarket.Controllers.Administration
 
         public ActionResult Index()
         {
-            var itemInfoTypes = _context.ItemInfoTypes.ToList();
+            var itemInfoTypes = _context.Specifications.ToList();
             return View("Index", itemInfoTypes);
         }
 
         public ActionResult New()
         {
             var viewModel = new ItemInfoTypesFormViewModel();
-            viewModel.ItemInfoType = new ItemInfoType();
+            viewModel.ItemInfoType = new Specification();
             viewModel.ItemInfoType.Type = ItemInfoValueType.String;
 
             return View("ItemInfoTypeForm", viewModel);
@@ -34,7 +34,7 @@ namespace DopaMarket.Controllers.Administration
 
         public ActionResult Edit(int id)
         {
-            var itemInfoTypes = _context.ItemInfoTypes.SingleOrDefault<ItemInfoType>(c => c.Id == id);
+            var itemInfoTypes = _context.Specifications.SingleOrDefault<Specification>(c => c.Id == id);
             if (itemInfoTypes == null)
                 return HttpNotFound();
 
@@ -45,7 +45,7 @@ namespace DopaMarket.Controllers.Administration
         }
 
         [HttpPost]
-        public ActionResult Save(ItemInfoType itemInfoType)
+        public ActionResult Save(Specification itemInfoType)
         {
             if (!ModelState.IsValid)
             {
@@ -56,13 +56,13 @@ namespace DopaMarket.Controllers.Administration
 
             if (itemInfoType.Id != 0)
             {
-                var itemInfoTypeInDB = _context.ItemInfoTypes.Single<ItemInfoType>(c => c.Id == itemInfoType.Id);
+                var itemInfoTypeInDB = _context.Specifications.Single<Specification>(c => c.Id == itemInfoType.Id);
                 itemInfoTypeInDB.Name = itemInfoType.Name;
                 itemInfoTypeInDB.LongName = itemInfoType.LongName;
                 itemInfoTypeInDB.Unity = itemInfoType.Unity;
             }
             else
-                _context.ItemInfoTypes.Add(itemInfoType);
+                _context.Specifications.Add(itemInfoType);
 
             _context.SaveChanges();
 
@@ -71,12 +71,12 @@ namespace DopaMarket.Controllers.Administration
 
         public ActionResult Delete(int id)
         {
-            var itemInfoType = _context.ItemInfoTypes.Single<ItemInfoType>(c => c.Id == id);
+            var itemInfoType = _context.Specifications.Single<Specification>(c => c.Id == id);
 
-            var itemInfosToRemove = _context.ItemInfos.Where(ic => ic.ItemInfoTypeId == id);
-            _context.ItemInfos.RemoveRange(itemInfosToRemove);
+            var itemInfosToRemove = _context.ItemSpecifications.Where(ic => ic.ItemInfoTypeId == id);
+            _context.ItemSpecifications.RemoveRange(itemInfosToRemove);
 
-            _context.ItemInfoTypes.Remove(itemInfoType);
+            _context.Specifications.Remove(itemInfoType);
             _context.SaveChanges();
 
             return RedirectToAction("Index", "ItemInfoTypes");
