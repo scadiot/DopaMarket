@@ -1,0 +1,25 @@
+
+{
+	"Categories" : [
+		{ "Name" : "", "LinkName" : "", "Parent" : "" }
+	],
+	"Items" : [
+		{
+			"Name" : "",
+			"LinkName" : "",
+			"TinyDescriptive" : "",
+			"Descriptive" : "",
+			"CurrentPrice" : 0,
+			"Brand" : "",
+			"MainCategory" : "",
+			"Weight":0,
+			"Width":0,
+			"Height":0,
+			"Length":0,
+			"Reviews" : [ {"rate" : 1, "title" : "", "text" : "" } ],
+			"Categories" : [ "" ],
+			"Keyword" : [ "" ],
+			"Feature" : [ "" ]
+		}
+	]
+}

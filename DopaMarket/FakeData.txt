@@ -1,0 +1,56 @@
+
+{
+	"Categories" : [
+		{ "Name" : "", "LinkName" : "", "Parent" : "" }
+	],
+	"Items" : [
+		{
+			"Name" : "AMD Ryzen 5 3600",
+			"LinkName" : "amd_ryzen_5_3600",
+			"TinyDescriptive" : "AMD 3600, Ryzen. Famille de processeur: AMD Ryzen 5, Fréquence du processeur: 3, 6 GHz.",
+			"Descriptive" : "AMD 3600, Ryzen. Famille de processeur: AMD Ryzen 5, Fréquence du processeur: 3, 6 GHz, Socket de processeur (réceptacle de processeur): emplacement AM4. Canaux de mémoire pris en charge par le processeur: Dual, types de mémoires pris en charge par le processeur: DDR4-SDRAM, vitesses d'horloge de mémoire prises en charge par le processeur: 3200 MHz. Enveloppe thermique (TDP, Thermal Design Power): 65 W. Configurations de PCI Express: 1x16 processeur.",
+			"CurrentPrice" : 210,
+			"Brand" : "amd",
+			"MainCategory" : "processor",
+			"Weight":100,
+			"Width":10,
+			"Height":10,
+			"Length":10,
+			"Reviews" : [ 
+				{"rate" : 5, "title" : "Excelent produit", "text" : "Ce processeur est une vraie bouffée d'air pour mon PC de bureau, et je n'ai pas cassé ma tirelire, parce que j'ai conservé le boitier, l'alim, le clavier, tous les disques, et que je n'ai pas acheté de carte graphique." },
+				{"rate" : 5, "title" : "Bon processeur", "text" : "AMD revient très fort avec ce Ryzen 5 3600. Ce processeur milieu de gamme est un concurrent direct au i5 9600." },
+				{"rate" : 3, "title" : "Problème de connecteur", "text" : "Les performances sont au top !, je retire deux étoiles car au déballage du processeur, 3 pinoches étaient tordues !!!" },
+				{"rate" : 5, "title" : "Performances au top", "text" : "AMD nous livre ici une très bonne mouture. Le processeur Ryzen 3700X se situe dans le milieu haut de gamme et vient concurrencer directement le Intel I7-9700K." },
+				{"rate" : 4, "title" : "Bon processeur", "text" : "Bon processeur mais encore "jeune". Il est annoncé en Boost (sans OC) à 4,4 Ghz est j'obtiens 4Ghz maxi, sous windows 10 ou linux (avec ou sans smt). Monté sur carte X570." },
+				{"rate" : 2, "title" : "chaleur & bruit", "text" : "Par rapport à la précédente génération de Ryzen, ca dégage une sacré chaleur et donc un bruit conséquent. Pas top selon les usages." },
+				{"rate" : 1, "title" : "En panne", "text" : "CPU neuf, en panne..." },
+				{"rate" : 1, "title" : "Trop de problèmes", "text" : "Je pense être actuellement la personne la plus négatif et la plus patiente concernant AMD et surtout concernant les Ryzen 3000 et je précise avant de raconter mes problèmes que je ne suis en aucun cas un cas isolé et en aucun cas Fanboy de la marque concurrente." },
+				{"rate" : 4, "title" : "Très Performant", "text" : "Difficile de passer à côté des nouveaux Ryzen tant ils ont fait parler d'eux de par leurs performances de haute volée." },
+				{"rate" : 5, "title" : "Très rapide", "text" : "Top Rapide.!" }
+			],
+			"Categories" : [ "processor" ],
+			"Keyword" : [ "ryzen", "5", "3600", "amd", "processor", "ryzen5", "AM4" ],
+			"Feature" : [ "AMD 3600", "Ryzen. Famille de processeur: AMD Ryzen 5", "Fréquence du processeur: 3, 6 Ghz", "Socket de processeur (réceptacle de processeur): emplacement AM4.", "Canaux de mémoire pris en charge par le processeur: Dual", "Types de mémoires pris en charge par le processeur: ddr4-sdram", "Vitesses d'horloge de mémoire prises en charge par le processeur: 3200 MHz" ]
+		},
+		{
+			"Name" : "AMD Ryzen 3 3200G",
+			"LinkName" : "amd_ryzen_3_3200g",
+			"TinyDescriptive" : "Ryzen. Famille de processeur: AMD Ryzen 3, Fréquence du processeur: 3, 6 Ghz.",
+			"Descriptive" : "Ryzen. Famille de processeur: AMD Ryzen 3, Fréquence du processeur: 3, 6 Ghz.Socket de processeur (réceptacle de processeur): emplacement AM4. Canaux de mémoire pris en charge par le processeur: Dual. Types de mémoires pris en charge par le processeur: ddr4-sdram.",
+			"CurrentPrice" : 109.5,
+			"Brand" : "amd",
+			"MainCategory" : "processor",
+			"Weight":100,
+			"Width":10,
+			"Height":10,
+			"Length":10,
+			"Reviews" : [ 
+				{"rate" : 3, "title" : "Attention a la compatibilité", "text" : "Un processeur plutôt puissant pour le prix, avec une carte graphique intégrée qui permet de jouer raisonnablement." },
+				{"rate" : 5, "title" : "Processeur puissant rapide", "text" : "excellent processeur puissant rapide" }
+			],
+			"Categories" : [ "processor" ],
+			"Keyword" : [ "ryzen", "3", "3200G", "3200", "amd", "processor", "ryzen3", "AM4" ],
+			"Feature" : [ "AMD 3200G. CMOS: 12nm FinFET", 	"Ryzen. Famille de processeur: AMD Ryzen 3", "Fréquence du processeur: 3, 6 Ghz", "Socket de processeur (réceptacle de processeur): emplacement AM4", "Canaux de mémoire pris en charge par le processeur: Dual", "Types de mémoires pris en charge par le processeur: ddr4-sdram", "Vitesses d'horloge de mémoire prises en charge par le processeur: 2933 MHz" ]
+		}
+	]
+}
