@@ -1,9 +1,11 @@
 ﻿using DopaMarket.Models;
 using DopaMarket.ViewModels;
+using Microsoft.AspNet.Identity.Owin;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -44,27 +46,146 @@ namespace DopaMarket.Controllers.Administration
 
         void ImportCustomers(Data data)
         {
-            //_context.Customers
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+            foreach (var customerData in data.Customers)
+            {
+                var applicationUser = _context.Users.SingleOrDefault(u => u.Email == customerData.Email);
+                if (applicationUser == null)
+                {
+                    applicationUser = new ApplicationUser { UserName = customerData.Email, Email = customerData.Email };
+                    var task = userManager.CreateAsync(applicationUser, customerData.Password);
+                    if(task.Status == TaskStatus.Running)
+                    {
+                        task.RunSynchronously();
+                    }
+                    var result = task.Result;
+                    if (!result.Succeeded)
+                    {
+                        continue;
+                    }
+                }
+
+                var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == applicationUser.Id);
+                if (customer == null)
+                {
+                    customer = new Models.Customer();
+                    customer.IdentityUserId = applicationUser.Id;
+                    _context.Customers.Add(customer);
+                }
+                customer.FirstName = customerData.FirstName;
+                customer.LastName = customerData.LastName;
+                customer.PhoneNumber = customerData.Phone;
+                _context.SaveChanges();
+
+                Models.Address address = null;
+                if (customer.AddressId != null)
+                {
+                    address = _context.Address.Single(a => a.Id == customer.AddressId);
+                }
+                else
+                {
+                    address = new Address();
+                    _context.Address.Add(address);
+                }
+
+                address.Street = customerData.Address1;
+                address.Street2 = customerData.Address2;
+                address.PostalCode = customerData.PostalCode;
+                address.City = customerData.City;
+                address.Country = customerData.Country;
+                address.PostalCode = customerData.PostalCode;
+                address.State = customerData.State;
+                _context.SaveChanges();
+
+                if (customer.AddressId == null)
+                {
+                    customer.AddressId = address.Id;
+                    _context.SaveChanges();
+                }
+            }
         }
 
         void ImportCategories(Data data)
         {
-            //_context.Customers
+            foreach (var categoryData in data.Categories)
+            {
+                var category = _context.Categories.SingleOrDefault(c => c.LinkName == categoryData.LinkName);
+                if(category == null)
+                {
+                    category = new Category();
+                    _context.Categories.Add(category);
+                }
+                category.Name = categoryData.Name;
+                category.LinkName = categoryData.LinkName;
+                if(categoryData.Parent != "")
+                {
+                    category.ParentCategoryId = _context.Categories.Single(c => c.LinkName == categoryData.Parent).Id;
+                }
+                else
+                {
+                    category.ParentCategoryId = null;
+                }
+                _context.SaveChanges();
+            }
         }
 
         void ImportSpecifications(Data data)
         {
-            //_context.Customers
+            Dictionary<string, Models.SpecificationType> stringToType = new Dictionary<string, SpecificationType>()
+            {
+                { "Boolean", Models.SpecificationType.Boolean }, {"Interger", Models.SpecificationType.Interger }, {"String", Models.SpecificationType.String}, {"Decimal", Models.SpecificationType.Decimal}
+            };
+
+            foreach (var specificationData in data.Specifications)
+            {
+                var specification = _context.Specifications.SingleOrDefault(c => c.Name == specificationData.Name);
+                if (specification == null)
+                {
+                    specification = new Models.Specification();
+                    _context.Specifications.Add(specification);
+                }
+                specification.Name = specificationData.Name;
+                specification.LongName = specificationData.LongName;
+                specification.Unity = specificationData.Unity;
+                specification.Type = stringToType[specificationData.Type];
+                _context.SaveChanges();
+            }
         }
 
         void ImportCompareGroups(Data data)
         {
-            //_context.Customers
+            foreach(var compareGroupData in data.CompareGroups)
+            {
+                var compareGroup = _context.CompareGroups.SingleOrDefault(c => c.LinkName == compareGroupData.LinkName);
+                if(compareGroup == null)
+                {
+                    compareGroup = new Models.CompareGroup();
+                    _context.CompareGroups.Add(compareGroup);
+                }
+                compareGroup.LinkName = compareGroupData.LinkName;
+                compareGroup.Name = compareGroupData.Name;
+                _context.SaveChanges();
+            }
         }
 
         void ImportCompareGroupSpecifications(Data data)
         {
-            //_context.Customers
+            foreach (var compareGroupSpecificationData in data.CompareGroupSpecifications)
+            {
+                var compareGroup = _context.CompareGroups.Single(c => c.LinkName == compareGroupSpecificationData.CompareGroup);
+                var specification = _context.Specifications.Single(s => s.Name == compareGroupSpecificationData.Specification);
+
+                var compareGroupSpecification = _context.CompareGroupSpecifications.SingleOrDefault(c => c.CompareGroupId == compareGroup.Id && c.SpecificationId == specification.Id);
+                if (compareGroupSpecification == null)
+                {
+                    compareGroupSpecification = new Models.CompareGroupSpecification();
+                    compareGroupSpecification.CompareGroupId = compareGroup.Id;
+                    compareGroupSpecification.SpecificationId = specification.Id;
+                    _context.CompareGroupSpecifications.Add(compareGroupSpecification);
+                    _context.SaveChanges();
+                }               
+            }
         }
 
         void ImportItems(Data data)

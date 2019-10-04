@@ -5,7 +5,7 @@ using System.Web;
 
 namespace DopaMarket.Models
 {
-    public enum ItemInfoValueType
+    public enum SpecificationType
     {
         Boolean,
         Interger,
@@ -17,7 +17,7 @@ namespace DopaMarket.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ItemInfoValueType Type { get; set; }
+        public SpecificationType Type { get; set; }
         public string Unity { get; set; }
         public string LongName { get; set; }
     }

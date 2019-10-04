@@ -76,16 +76,16 @@ namespace DopaMarket.Controllers
                 result += itemInfo.ItemInfoType.Name + ":";
                 switch (itemInfo.ItemInfoType.Type)
                 {
-                    case ItemInfoValueType.Boolean:
+                    case SpecificationType.Boolean:
                         result += itemInfo.BooleanValue;
                         break;
-                    case ItemInfoValueType.Interger:
+                    case SpecificationType.Interger:
                         result += itemInfo.IntegerValue;
                         break;
-                    case ItemInfoValueType.String:
+                    case SpecificationType.String:
                         result += itemInfo.StringValue;
                         break;
-                    case ItemInfoValueType.Decimal:
+                    case SpecificationType.Decimal:
                         result += itemInfo.DecimalValue;
                         break;
                 }
@@ -240,16 +240,16 @@ namespace DopaMarket.Controllers
                 string value = itemInfoSplited.Split(':')[1];
                 switch (intemInfoType.Type)
                 {
-                    case ItemInfoValueType.Boolean:
+                    case SpecificationType.Boolean:
                         itemInfo.BooleanValue = bool.Parse(value);
                         break;
-                    case ItemInfoValueType.Interger:
+                    case SpecificationType.Interger:
                         itemInfo.IntegerValue = int.Parse(value);
                         break;
-                    case ItemInfoValueType.String:
+                    case SpecificationType.String:
                         itemInfo.StringValue = value;
                         break;
-                    case ItemInfoValueType.Decimal:
+                    case SpecificationType.Decimal:
                         itemInfo.DecimalValue = decimal.Parse(value);
                         break;
                 }

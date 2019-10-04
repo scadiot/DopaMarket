@@ -74,16 +74,16 @@ namespace DopaMarket.Controllers
                 ItemDetailItemInfoModel.Name = itemInfo.ItemInfoType.LongName;
                 switch (itemInfo.ItemInfoType.Type)
                 {
-                    case ItemInfoValueType.Boolean:
+                    case SpecificationType.Boolean:
                         ItemDetailItemInfoModel.Value = itemInfo.BooleanValue.ToString();
                         break;
-                    case ItemInfoValueType.Interger:
+                    case SpecificationType.Interger:
                         ItemDetailItemInfoModel.Value = itemInfo.IntegerValue.ToString();
                         break;
-                    case ItemInfoValueType.String:
+                    case SpecificationType.String:
                         ItemDetailItemInfoModel.Value = itemInfo.StringValue;
                         break;
-                    case ItemInfoValueType.Decimal:
+                    case SpecificationType.Decimal:
                         ItemDetailItemInfoModel.Value = itemInfo.DecimalValue.ToString();
                         break;
                 }

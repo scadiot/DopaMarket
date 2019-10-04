@@ -27,7 +27,7 @@ namespace DopaMarket.Controllers.Administration
         {
             var viewModel = new ItemInfoTypesFormViewModel();
             viewModel.ItemInfoType = new Specification();
-            viewModel.ItemInfoType.Type = ItemInfoValueType.String;
+            viewModel.ItemInfoType.Type = SpecificationType.String;
 
             return View("ItemInfoTypeForm", viewModel);
         }

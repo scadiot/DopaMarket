@@ -3,7 +3,7 @@
 	"Customers" : [
 		{ 
 			"Email" : "user1@outlook.fr",
-			"Password" : "user12345+",
+			"Password" : "User12345+",
 			"FirstName" : "Sibylle",
 			"LastName" : "Cohen",
 			"Phone" : "",
@@ -16,7 +16,7 @@
 		},
 		{ 
 			"Email" : "user2@outlook.fr",
-			"Password" : "user12345+",
+			"Password" : "User12345+",
 			"FirstName" : "Lazare",
 			"LastName" : "Garcia",
 			"Phone" : "",
@@ -29,7 +29,7 @@
 		},
 		{ 
 			"Email" : "user3@outlook.fr",
-			"Password" : "user12345+",
+			"Password" : "User12345+",
 			"FirstName" : "Hannah",
 			"LastName" : "Prat",
 			"Phone" : "",
@@ -42,20 +42,20 @@
 		},
 		{ 
 			"Email" : "user4@outlook.fr",
-			"Password" : "user12345+",
-			"FirstName" : "",
-			"LastName" : "",
+			"Password" : "User12345+",
+			"FirstName" : "Margot",
+			"LastName" : "Duran",
 			"Phone" : "",
-			"Address1" : "",
+			"Address1" : "14 Rue de la Lande",
 			"Address2" : "",
-			"PostalCode" : "",
+			"PostalCode" : "52500",
 			"State" : "",
 			"Country" : "France",
-			"City" : ""
+			"City" : "Velles"
 		},
 		{ 
 			"Email" : "user5@outlook.fr",
-			"Password" : "user12345+",
+			"Password" : "User12345+",
 			"FirstName" : "Albert",
 			"LastName" : "Lopes",
 			"Phone" : "",
@@ -68,7 +68,7 @@
 		},
 		{ 
 			"Email" : "user6@outlook.fr",
-			"Password" : "user12345+",
+			"Password" : "User12345+",
 			"FirstName" : "Constant",
 			"LastName" : "Martineau",
 			"Phone" : "",
@@ -81,7 +81,7 @@
 		},
 		{ 
 			"Email" : "user7@outlook.fr",
-			"Password" : "user12345+",
+			"Password" : "User12345+",
 			"FirstName" : "Thomas",
 			"LastName" : "Ferrand",
 			"Phone" : "",
@@ -94,7 +94,7 @@
 		},
 		{ 
 			"Email" : "user8@outlook.fr",
-			"Password" : "user12345+",
+			"Password" : "User12345+",
 			"FirstName" : "Fabien",
 			"LastName" : "Thibault",
 			"Phone" : "",
@@ -107,7 +107,7 @@
 		},
 		{ 
 			"Email" : "user9@outlook.fr",
-			"Password" : "user12345+",
+			"Password" : "User12345+",
 			"FirstName" : "Claire",
 			"LastName" : "Le gall",
 			"Phone" : "",
@@ -120,7 +120,7 @@
 		},
 		{ 
 			"Email" : "user10@outlook.fr",
-			"Password" : "user12345+",
+			"Password" : "User12345+",
 			"FirstName" : "Sidonie",
 			"LastName" : "Foulon",
 			"Phone" : "",
@@ -133,7 +133,7 @@
 		},
 		{ 
 			"Email" : "user11@outlook.fr",
-			"Password" : "user12345+",
+			"Password" : "User12345+",
 			"FirstName" : "Marine",
 			"LastName" : "Mimi",
 			"Phone" : "",
@@ -146,7 +146,7 @@
 		},
 		{ 
 			"Email" : "user11@outlook.fr",
-			"Password" : "user12345+",
+			"Password" : "User12345+",
 			"FirstName" : "Maxime",
 			"LastName" : "Gaillard",
 			"Phone" : "",
@@ -159,7 +159,7 @@
 		}
 	],
 	"Categories" : [
-		{ "Name" : "", "LinkName" : "", "Parent" : "" }
+		{ "Name" : "processeur", "LinkName" : "processeur", "Parent" : "" }
 	],
 	"Specifications" : [
 		{ "Name" : "support_processeur", "Type" : "String", "Unity" : "", "LongName" : "Support du processeur" },
