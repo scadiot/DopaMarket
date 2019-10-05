@@ -5,40 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section start_page
-{
-    <!-- Leave a Review-->
-    <form class="modal fade" method="post" id="leaveReview" tabindex="-1" action="/ItemAction/PushReview">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Leave a Review</h4>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="review-rating">Rating</label>
-                        <select class="form-control" name="rating">
-                            <option value="5">5 Stars</option>
-                            <option value="4">4 Stars</option>
-                            <option value="3">3 Stars</option>
-                            <option value="2">2 Stars</option>
-                            <option value="1">1 Star</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="review-message">Review</label>
-                        <textarea class="form-control" id="review-message" name="text" rows="8" required></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" type="submit">Submit Review</button>
-                </div>
-            </div>
-        </div>
-        <input name="itemId" type="hidden" value="@Model.Item.Id">
-    </form>
-}
+
 
 <!-- Page Content-->
 <div class="container padding-bottom-3x">
@@ -112,11 +79,10 @@
             <div class="col-md-6">
                 <h3 class="h4">Specifications</h3>
                 <ul class="list-unstyled mb-4">
-                    <li><strong>Weight:</strong> 35.5oz (1006g)</li>
-                    <li><strong>Maximum Speed:</strong> 	35 mph (15 m/s)</li>
-                    <li><strong>Maximum Distance:</strong> 	Up to 9,840ft (3,000m)</li>
-                    <li><strong>Operating Frequency:</strong> 2.4GHz</li>
-                    <li><strong>Manufacturer:</strong> GoPro, USA</li>
+                    @foreach (var itemSpecification in Model.ItemSpecifications)
+                    {
+                        <li><strong>@itemSpecification.Name:</strong> @itemSpecification.Value @itemSpecification.Unity</li>
+                    }
                 </ul>
                 <h3 class="h4">Shipping Options:</h3>
                 <ul class="list-unstyled mb-4">
@@ -159,7 +125,7 @@
                                 <label class="text-medium text-sm">0 star <span class='text-muted'></span></label>
                             }
                             <div class="progress margin-bottom-1x">
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: @(starInfo.Ratio * 100)%; height: 2px;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: @((starInfo.Ratio * 100).ToString().Replace(",","."))%; height: 2px;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         }
                     </div>
@@ -176,6 +142,7 @@
                     <div class="comment-author-ava"><img src="img/reviews/02.jpg" alt="Comment author"></div>
                     <div class="comment-body">
                         <div class="comment-header d-flex flex-wrap justify-content-between">
+                            <h4 class="comment-title">@review.Title</h4>
                             <div class="mb-2">
                                 <div class="rating-stars">
                                     @for (int i = 0; i < review.Note; i++)
@@ -406,3 +373,35 @@
         </script>
     }
 *@
+
+<!-- Leave a Review-->
+<form class="modal fade" method="post" id="leaveReview" tabindex="-1" action="/ItemAction/PushReview">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Leave a Review</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="review-rating">Rating</label>
+                    <select class="form-control" name="rating">
+                        <option value="5">5 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="2">2 Stars</option>
+                        <option value="1">1 Star</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="review-message">Review</label>
+                    <textarea class="form-control" id="review-message" name="text" rows="8" required></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit">Submit Review</button>
+            </div>
+        </div>
+    </div>
+    <input name="itemId" type="hidden" value="@Model.Item.Id">
+</form>

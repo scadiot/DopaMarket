@@ -181,6 +181,10 @@
 		{ "CompareGroup" : "processeur", "Specification" : "nombre_threads" },
 		{ "CompareGroup" : "processeur", "Specification" : "cache_l2" }
 	],
+	"Brands" : [
+		{ "Name" : "Intel", "LinkName" : "intel" },
+		{ "Name" : "AMD", "LinkName" : "amd" }
+	],
 	"Items" : [
 		{
 			"Name" : "AMD Ryzen 5 3600",
@@ -190,7 +194,7 @@
 			"Descriptive" : "AMD 3600, Ryzen. Famille de processeur: AMD Ryzen 5, Fréquence du processeur: 3, 6 GHz, Socket de processeur (réceptacle de processeur): emplacement AM4. Canaux de mémoire pris en charge par le processeur: Dual, types de mémoires pris en charge par le processeur: DDR4-SDRAM, vitesses d'horloge de mémoire prises en charge par le processeur: 3200 MHz. Enveloppe thermique (TDP, Thermal Design Power): 65 W. Configurations de PCI Express: 1x16 processeur.",
 			"CurrentPrice" : 210,
 			"Brand" : "amd",
-			"MainCategory" : "processor",
+			"MainCategory" : "processeur",
 			"Weight":100,
 			"Width":10,
 			"Height":10,
@@ -207,8 +211,8 @@
 				{"Rate" : 4, "Title" : "Très Performant", "Text" : "Difficile de passer à côté des nouveaux Ryzen tant ils ont fait parler d'eux de par leurs performances de haute volée.", "Email" : "user9@outlook.fr" },
 				{"Rate" : 5, "Title" : "Très rapide", "Text" : "Top Rapide.!", "Email" : "user10@outlook.fr" }
 			],
-			"Categories" : [ "processor" ],
-			"Keywords" : [ "ryzen", "5", "3600", "amd", "processor", "ryzen5", "AM4" ],
+			"Categories" : [ "processeur" ],
+			"Keywords" : [ "ryzen", "5", "3600", "amd", "processeur", "ryzen5", "AM4" ],
 			"Features" : [ "AMD 3600", "Ryzen. Famille de processeur: AMD Ryzen 5", "Fréquence du processeur: 3, 6 Ghz", "Socket de processeur (réceptacle de processeur): emplacement AM4.", "Canaux de mémoire pris en charge par le processeur: Dual", "Types de mémoires pris en charge par le processeur: ddr4-sdram", "Vitesses d'horloge de mémoire prises en charge par le processeur: 3200 MHz" ],
 			"ItemSpecifications" : [	
 				{ "specification" : "support_processeur", "StringValue" : "AMD AM4" },
@@ -228,7 +232,7 @@
 			"Descriptive" : "Ryzen. Famille de processeur: AMD Ryzen 3, Fréquence du processeur: 3, 6 Ghz.Socket de processeur (réceptacle de processeur): emplacement AM4. Canaux de mémoire pris en charge par le processeur: Dual. Types de mémoires pris en charge par le processeur: ddr4-sdram.",
 			"CurrentPrice" : 109.5,
 			"Brand" : "amd",
-			"MainCategory" : "processor",
+			"MainCategory" : "processeur",
 			"Weight":100,
 			"Width":10,
 			"Height":10,
@@ -237,8 +241,8 @@
 				{"Rate" : 3, "Title" : "Attention a la compatibilité", "Text" : "Un processeur plutôt puissant pour le prix, avec une carte graphique intégrée qui permet de jouer raisonnablement.", "Email" : "user7@outlook.fr" },
 				{"Rate" : 5, "Title" : "Processeur puissant rapide", "Text" : "excellent processeur puissant rapide", "Email" : "user8@outlook.fr" }
 			],
-			"Categories" : [ "processor" ],
-			"Keywords" : [ "ryzen", "3", "3200G", "3200", "amd", "processor", "ryzen3", "AM4" ],
+			"Categories" : [ "processeur" ],
+			"Keywords" : [ "ryzen", "3", "3200G", "3200", "amd", "processeur", "ryzen3", "AM4" ],
 			"Features" : [ "AMD 3200G. CMOS: 12nm FinFET", 	"Ryzen. Famille de processeur: AMD Ryzen 3", "Fréquence du processeur: 3, 6 Ghz", "Socket de processeur (réceptacle de processeur): emplacement AM4", "Canaux de mémoire pris en charge par le processeur: Dual", "Types de mémoires pris en charge par le processeur: ddr4-sdram", "Vitesses d'horloge de mémoire prises en charge par le processeur: 2933 MHz" ],
 			"ItemSpecifications" : [	
 				{ "specification" : "support_processeur", "StringValue" : "AMD AM4" },
@@ -258,7 +262,7 @@
 			"Descriptive" : "Avec la 9ème génération de processeurs (Coffee Lake S / Coffe Lake Refresh) et le Core i5 9600K, Intel met à votre disposition une architecture ultra-moderne et encore plus puissante. Profitez d'une plateforme technologique haute performance avec une fréquence DDR4 toujours à 2666 MHz et une rapidité toujours plus élevée avec une fréquence de base cadencée à 3,60 GHz efficaces en toutes circonstances, avec la technologie Turbo Boost 3.0 qui pousse cette fréquence à 4,9 Ghz. Le processeur Intel Core i5 9600K offre à votre PC la meilleure expérience visuelle ainsi qu'une vitesse d'exécution sans commune mesure avec 6 coeurs.",
 			"CurrentPrice" : 299.95,
 			"Brand" : "intel",
-			"MainCategory" : "processor",
+			"MainCategory" : "processeur",
 			"Weight":100,
 			"Width":10,
 			"Height":10,
@@ -267,8 +271,8 @@
 				{"Rate" : 4, "Title" : "Bon processeur", "Text" : "Fait le boulot sans trop se ruiner.", "Email" : "user3@outlook.fr" },
 				{"Rate" : 5, "Title" : "CPU solide", "Text" : "Un i5, j'étais pas séduis, on me l'a conseillé, et là POUF.... L'amour charnelle ! Incroyable, aucun soucis, mon pc tourne à fond, je fais même tourner Star Citizen sans aucun soucis, ni latence !...", "Email" : "user7@outlook.fr" } 
 			],
-			"Categories" : [ "processor" ],
-			"Keywords" : [ "core", "i5", "5", "9600", "9600k", "intel", "processor", "Coffee", "Lake", "1151" ],
+			"Categories" : [ "processeur" ],
+			"Keywords" : [ "core", "i5", "5", "9600", "9600k", "intel", "processeur", "Coffee", "Lake", "1151" ],
 			"Features" : [ "Fréquence de base 3,70 GHz / Mode Turbo Boost 3.0 à 4.60 GHz", "Plateforme Intel Coffee Lake Refresh - 9ème génération de processeurs", "Socket compatible Intel LGA 1151", "Compatible avec les contrôleurs cartes mères série 300 et nouvelles Z390", "Mémoire cache 9 Mo", "Contrôleur graphique Intel HD 630", "Contrôleur mémoire Dual Channel DDR4 2666 MHz", "Enveloppe thermique maximale (TDP) : 95W" ],
 			"ItemSpecifications" : [	
 				{ "specification" : "support_processeur", "StringValue" : "Intel 1151" },
@@ -287,7 +291,7 @@
 			"Descriptive" : "Avec la 9ème génération de processeurs (Coffee Lake S / Coffe Lake Refresh) et le Core i7 9700K, Intel met à votre disposition une architecture ultra-moderne et encore plus puissante. Profitez d'une plateforme technologique haute performance avec une fréquence DDR4 toujours à 2666 MHz et une rapidité toujours plus élevée avec une fréquence de base cadencée à 3,60 GHz efficaces en toutes circonstances, avec la technologie Turbo Boost 3.0 qui pousse cette fréquence à 4,9 Ghz. Le processeur Intel Core i7 9700K offre à votre PC la meilleure expérience visuelle ainsi qu'une vitesse d'exécution sans commune mesure avec 8 coeurs.",
 			"CurrentPrice" : 445.95,
 			"Brand" : "intel",
-			"MainCategory" : "processor",
+			"MainCategory" : "processeur",
 			"Weight":100,
 			"Width":10,
 			"Height":10,
@@ -296,8 +300,8 @@
 				{"Rate" : 5, "Title" : "Un processeur qui a du répondant", "Text" : "Codant des fonctions assez gourmandes, j'ai des temps de calcul vraiment améliorés avec ce proc'", "Email" : "user3@outlook.fr" },
 				{"Rate" : 5, "Title" : "Produit au top !", "Text" : "Le produit est très performant, de plus il est facile à monter, et overclockable, rien à ajouter il est très bien.", "Email" : "user7@outlook.fr" } 
 			],
-			"Categories" : [ "processor" ],
-			"Keywords" : [ "core", "i7", "7", "9700", "9700K", "intel", "processor", "Coffee", "Lake", "1151" ],
+			"Categories" : [ "processeur" ],
+			"Keywords" : [ "core", "i7", "7", "9700", "9700K", "intel", "processeur", "Coffee", "Lake", "1151" ],
 			"Features" : [ "Fréquence de base 3,60 GHz / Mode Turbo Boost 3.0 à 4.90 GHz", "Plateforme Intel Coffee Lake Refresh - 9ème génération de processeurs", "Socket compatible Intel LGA 1151", "Compatible avec les contrôleurs cartes mères série 300 et nouvelles Z390", "Mémoire cache 12 Mo", "Contrôleur graphique Intel HD 630", "Contrôleur mémoire Dual Channel DDR4 2666 MHz", "Enveloppe thermique maximale (TDP) : 95W"],
 			"ItemSpecifications" : [	
 				{ "specification" : "support_processeur", "StringValue" : "Intel 1151" },

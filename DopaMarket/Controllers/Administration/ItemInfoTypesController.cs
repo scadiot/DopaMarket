@@ -73,7 +73,7 @@ namespace DopaMarket.Controllers.Administration
         {
             var itemInfoType = _context.Specifications.Single<Specification>(c => c.Id == id);
 
-            var itemInfosToRemove = _context.ItemSpecifications.Where(ic => ic.ItemInfoTypeId == id);
+            var itemInfosToRemove = _context.ItemSpecifications.Where(ic => ic.SpecificationId == id);
             _context.ItemSpecifications.RemoveRange(itemInfosToRemove);
 
             _context.Specifications.Remove(itemInfoType);

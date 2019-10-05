@@ -27,6 +27,9 @@
 	"CompareGroupSpecifications" : [
 		{ "CompareGroup" : "", "Specification" : "" }
 	],
+	"Brands" : [
+		{ "Name" : "", "LinkName" : "" }
+	],
 	"Items" : [
 		{
 			"Name" : "",

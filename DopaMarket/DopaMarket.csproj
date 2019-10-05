@@ -259,6 +259,10 @@
     <Compile Include="Migrations\201910031041466_AddCompareData.Designer.cs">
       <DependentUpon>201910031041466_AddCompareData.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910050754021_RenameSpecificationField.cs" />
+    <Compile Include="Migrations\201910050754021_RenameSpecificationField.Designer.cs">
+      <DependentUpon>201910050754021_RenameSpecificationField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -417,6 +421,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910031041466_AddCompareData.resx">
       <DependentUpon>201910031041466_AddCompareData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910050754021_RenameSpecificationField.resx">
+      <DependentUpon>201910050754021_RenameSpecificationField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

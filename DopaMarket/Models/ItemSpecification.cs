@@ -10,8 +10,8 @@ namespace DopaMarket.Models
         public int Id { get; set; }
         public int ItemId { get; set; }
         public Item Item { get; set; }
-        public int ItemInfoTypeId { get; set; }
-        public Specification ItemInfoType { get; set; }
+        public int SpecificationId { get; set; }
+        public Specification Specification { get; set; }
         public int IntegerValue { get; set; }
         public decimal DecimalValue { get; set; } 
         public bool BooleanValue { get; set; }

@@ -30,7 +30,7 @@ namespace DopaMarket.Controllers
 
             var itemDetailModel = new ItemDetailModel();
             itemDetailModel.Item = item;
-            itemDetailModel.ItemInfos = getItemDetailItemInfoModel(item);
+            itemDetailModel.ItemSpecifications = getItemSpecificationsModel(item);
 
             itemDetailModel.Reviews = _context.ItemReviews
                                               .Where(ir => ir.ItemId == item.Id)
@@ -60,36 +60,36 @@ namespace DopaMarket.Controllers
             return View("Detail", itemDetailModel);
         }
 
-        ItemDetailItemInfoModel[] getItemDetailItemInfoModel(Item item)
+        ItemSpecificationModel[] getItemSpecificationsModel(Item item)
         {
             var itemInfos = _context.ItemSpecifications
                                     .Where(ii => ii.ItemId == item.Id)
-                                    .Include(ii => ii.ItemInfoType)
+                                    .Include(ii => ii.Specification)
                                     .ToArray();
 
-            var result = new List<ItemDetailItemInfoModel>();
+            var result = new List<ItemSpecificationModel>();
             foreach (var itemInfo in itemInfos)
             {
-                var ItemDetailItemInfoModel = new ItemDetailItemInfoModel();
-                ItemDetailItemInfoModel.Name = itemInfo.ItemInfoType.LongName;
-                switch (itemInfo.ItemInfoType.Type)
+                var ItemItemSpecificationModel = new ItemSpecificationModel();
+                ItemItemSpecificationModel.Name = itemInfo.Specification.LongName;
+                switch (itemInfo.Specification.Type)
                 {
                     case SpecificationType.Boolean:
-                        ItemDetailItemInfoModel.Value = itemInfo.BooleanValue.ToString();
+                        ItemItemSpecificationModel.Value = itemInfo.BooleanValue.ToString();
                         break;
                     case SpecificationType.Interger:
-                        ItemDetailItemInfoModel.Value = itemInfo.IntegerValue.ToString();
+                        ItemItemSpecificationModel.Value = itemInfo.IntegerValue.ToString();
                         break;
                     case SpecificationType.String:
-                        ItemDetailItemInfoModel.Value = itemInfo.StringValue;
+                        ItemItemSpecificationModel.Value = itemInfo.StringValue;
                         break;
                     case SpecificationType.Decimal:
-                        ItemDetailItemInfoModel.Value = itemInfo.DecimalValue.ToString();
+                        ItemItemSpecificationModel.Value = itemInfo.DecimalValue.ToString();
                         break;
                 }
                 
-                ItemDetailItemInfoModel.Unity = itemInfo.ItemInfoType.Unity;
-                result.Add(ItemDetailItemInfoModel);
+                ItemItemSpecificationModel.Unity = itemInfo.Specification.Unity;
+                result.Add(ItemItemSpecificationModel);
             }
             return result.ToArray();
         }

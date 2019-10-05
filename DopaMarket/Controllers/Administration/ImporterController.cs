@@ -36,6 +36,7 @@ namespace DopaMarket.Controllers.Administration
             ImportSpecifications(parsedData);
             ImportCompareGroups(parsedData);
             ImportCompareGroupSpecifications(parsedData);
+            ImportBrands(parsedData);
             ImportItems(parsedData);
 
             var result = new ImporterViewModel();
@@ -188,9 +189,172 @@ namespace DopaMarket.Controllers.Administration
             }
         }
 
+        void ImportBrands(Data data)
+        {
+            foreach (var brandData in data.Brands)
+            {
+                var brand = _context.Brands.SingleOrDefault(b => b.LinkName == brandData.LinkName);
+                if (brand == null)
+                {
+                    brand = new Models.Brand();
+                    _context.Brands.Add(brand);
+                }
+                brand.LinkName = brandData.LinkName;
+                brand.Name = brandData.Name;
+                _context.SaveChanges();
+            }
+        }
+
         void ImportItems(Data data)
         {
-            //_context.Customers
+            foreach (var itemData in data.Items)
+            {
+                var item = _context.Items.SingleOrDefault(c => c.LinkName == itemData.LinkName);
+                if (item == null)
+                {
+                    item = new Models.Item();
+                    _context.Items.Add(item);
+                }
+
+                item.Name = itemData.Name;
+
+                item.LinkName = itemData.LinkName;
+                item.InsertDate = DateTime.Parse(itemData.InsertDate);
+                item.TinyDescriptive = itemData.TinyDescriptive;
+                item.Descriptive = itemData.Descriptive;
+                item.CurrentPrice = itemData.CurrentPrice;
+                item.Brand = _context.Brands.Single(b => b.LinkName == itemData.Brand);
+                item.MainCategoryId = _context.Categories.Single(c => c.LinkName == itemData.MainCategory).Id;
+                item.Weight = itemData.Weight;
+                item.Width = itemData.Width;
+                item.Height = itemData.Height;
+                item.Length = itemData.Length;
+                item.SKU = "";
+                _context.SaveChanges();
+
+                ImportReview(item, itemData.Reviews);
+                ImportItemCategories(item, itemData.Categories);
+                ImportItemKeywords(item, itemData.Keywords);
+                ImportFeatures(item, itemData.Features);
+                ImportItemSpecifications(item, itemData.ItemSpecifications);
+            }
+        }
+
+        void ImportReview(Models.Item item, IEnumerable<Review> reviews)
+        {
+            foreach (var reviewData in reviews)
+            {
+                var applicationUser = _context.Users.Single(u => u.Email == reviewData.Email);
+                var customer = _context.Customers.Single(c => c.IdentityUserId == applicationUser.Id);
+
+                var review = _context.ItemReviews.SingleOrDefault(r => r.ItemId == item.Id && r.CustomerId == customer.Id);
+                if(review == null)
+                {
+                    review = new ItemReview();
+                    review.ItemId = item.Id;
+                    review.CustomerId = customer.Id;
+                    _context.ItemReviews.Add(review);
+                }
+                review.Title = reviewData.Title;
+                review.Text = reviewData.Text;
+                review.Note = reviewData.Rate;
+                review.Date = DateTime.Now;
+                _context.SaveChanges();
+            }
+        }
+
+        void ImportItemCategories(Models.Item item, IEnumerable<String> categories)
+        {
+            foreach (var categoryLinkName in categories)
+            {
+                var category = _context.Categories.Single(c => c.LinkName == categoryLinkName);
+                var itemCategory = _context.ItemCategories.SingleOrDefault(ic => ic.ItemId == item.Id && ic.CategoryId == category.Id);
+                if(itemCategory == null)
+                {
+                    itemCategory = new ItemCategory();
+                    itemCategory.ItemId = item.Id;
+                    itemCategory.CategoryId = category.Id;
+                    _context.ItemCategories.Add(itemCategory);
+                }
+                _context.SaveChanges();
+            }
+        }
+
+        void ImportItemKeywords(Models.Item item, IEnumerable<String> keywords)
+        {
+            foreach (var word in keywords)
+            {
+                var keyword = _context.Keywords.SingleOrDefault(k => k.Word == word);
+                if(keyword == null)
+                {
+                    keyword = new Keyword();
+                    keyword.Word = word;
+                    _context.Keywords.Add(keyword);
+                    _context.SaveChanges();
+                }
+
+                var ItemKeyword = _context.ItemKeywords.SingleOrDefault(ic => ic.ItemId == item.Id && ic.KeywordId == keyword.Id);
+                if (ItemKeyword == null)
+                {
+                    ItemKeyword = new ItemKeyword();
+                    ItemKeyword.ItemId = item.Id;
+                    ItemKeyword.KeywordId = keyword.Id;
+                    _context.ItemKeywords.Add(ItemKeyword);
+                }
+                _context.SaveChanges();
+            }
+        }
+
+        void ImportFeatures(Models.Item item, IEnumerable<String> features)
+        {
+            var exisitingFeatures = _context.ItemFeatures.Where(f => f.ItemId == item.Id);
+            _context.ItemFeatures.RemoveRange(exisitingFeatures);
+            _context.SaveChanges();
+
+            foreach (var featureString in features)
+            {
+                var newFeature = new Models.ItemFeature();
+                newFeature.ItemId = item.Id;
+                newFeature.Text = featureString;
+                _context.ItemFeatures.Add(newFeature);
+            }
+            _context.SaveChanges();
+        }
+
+        void ImportItemSpecifications(Models.Item item, IEnumerable<ItemSpecification> ItemSpecifications)
+        {
+            foreach(var itemSpecificationData in ItemSpecifications)
+            {
+                var specification = _context.Specifications.Single(s => s.Name == itemSpecificationData.specification);
+                var itemSpecification = _context.ItemSpecifications.SingleOrDefault(i => i.ItemId == item.Id && i.SpecificationId == specification.Id);
+                if(itemSpecification == null)
+                {
+                    itemSpecification = new Models.ItemSpecification();
+                    itemSpecification.ItemId = item.Id;
+                    itemSpecification.SpecificationId = specification.Id;
+                    _context.ItemSpecifications.Add(itemSpecification);
+                }
+                itemSpecification.DecimalValue = 0;
+                itemSpecification.StringValue = "";
+                itemSpecification.BooleanValue = false;
+                itemSpecification.IntegerValue = 0;
+                switch (specification.Type)
+                {
+                    case SpecificationType.Boolean:
+                        itemSpecification.BooleanValue = itemSpecificationData.BooleanValue;
+                        break;
+                    case SpecificationType.Interger:
+                        itemSpecification.IntegerValue = itemSpecificationData.IntegerValue;
+                        break;
+                    case SpecificationType.String:
+                        itemSpecification.StringValue = itemSpecificationData.StringValue;
+                        break;
+                    case SpecificationType.Decimal:
+                        itemSpecification.DecimalValue = itemSpecificationData.DecimalValue;
+                        break;
+                }
+                _context.SaveChanges();
+            }
         }
 
         public class Customer
@@ -238,7 +402,7 @@ namespace DopaMarket.Controllers.Administration
         public class Review
         {
             public int Rate { get; set; }
-            public string title { get; set; }
+            public string Title { get; set; }
             public string Text { get; set; }
             public string Email { get; set; }
         }
@@ -250,6 +414,12 @@ namespace DopaMarket.Controllers.Administration
             public decimal DecimalValue { get; set; }
             public bool BooleanValue { get; set; }
             public string StringValue { get; set; }
+        }
+
+        public class Brand
+        {
+            public string Name { get; set; }
+            public string LinkName { get; set; }
         }
 
         public class Item
@@ -280,6 +450,7 @@ namespace DopaMarket.Controllers.Administration
             public IList<Specification> Specifications { get; set; }
             public IList<CompareGroup> CompareGroups { get; set; }
             public IList<CompareGroupSpecification> CompareGroupSpecifications { get; set; }
+            public IList<Brand> Brands { get; set; }
             public IList<Item> Items { get; set; }
         }
     }

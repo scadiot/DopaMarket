@@ -68,13 +68,13 @@ namespace DopaMarket.Controllers
 
         public string SerializeItemInfos(Item item)
         {
-            var itemInfos = _context.ItemSpecifications.Where(ii => ii.ItemId == item.Id).Include(ii => ii.ItemInfoType);
+            var itemInfos = _context.ItemSpecifications.Where(ii => ii.ItemId == item.Id).Include(ii => ii.Specification);
 
             string result = "";
             foreach(var itemInfo in itemInfos)
             {
-                result += itemInfo.ItemInfoType.Name + ":";
-                switch (itemInfo.ItemInfoType.Type)
+                result += itemInfo.Specification.Name + ":";
+                switch (itemInfo.Specification.Type)
                 {
                     case SpecificationType.Boolean:
                         result += itemInfo.BooleanValue;
@@ -235,7 +235,7 @@ namespace DopaMarket.Controllers
 
                 var itemInfo = new ItemSpecification();
                 itemInfo.ItemId = item.Id;
-                itemInfo.ItemInfoTypeId = intemInfoType.Id;
+                itemInfo.SpecificationId = intemInfoType.Id;
 
                 string value = itemInfoSplited.Split(':')[1];
                 switch (intemInfoType.Type)
