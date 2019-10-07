@@ -31,11 +31,12 @@ namespace DopaMarket.Controllers
 
             var cartViewModel = new CartViewModel();
             cartViewModel.Items = items;
+            cartViewModel.SubTotal = cartViewModel.Items.Select(i => i.Item.CurrentPrice * i.Quantity).Sum();
 
             return View(cartViewModel);
         }
 
-        public JsonResult AddItem(int id)
+        public JsonResult AddItem(int id, int count)
         {
             var userId = User.Identity.GetUserId().ToString();
             var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
@@ -48,7 +49,7 @@ namespace DopaMarket.Controllers
             var itemCart = new ItemCart();
             itemCart.ItemId = id;
             itemCart.CustomerId = customer.Id;
-            itemCart.Count = 1;
+            itemCart.Count = count;
             _context.ItemCarts.Add(itemCart);
             _context.SaveChanges();
 

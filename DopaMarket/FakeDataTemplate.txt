@@ -44,7 +44,8 @@
 			"Width":0,
 			"Height":0,
 			"Length":0,
-			"Reviews" : [ {"Rate" : 1, "Title" : "", "Text" : "", "Email" : "" } ],
+			"Popularity":0,
+			"Reviews" : [ {"Rate" : 1, "Title" : "", "Text" : "", "Email" : "", "InsertDate": "08/18/2018" } ],
 			"Categories" : [ "" ],
 			"Keywords" : [ "" ],
 			"Features" : [ "" ],
@@ -52,5 +53,18 @@
 				{ "specification" : "", "IntegerValue" : 0, "DecimalValue" :0, "BooleanValue" : false, "StringValue" : "" }
 			]
 		}
+	],
+	"ItemLink" : [
+		{ "MainItem" : "", "OtherItem" : ""}
+	],
+	"Orders" : [
+	    "VisibleId" : "",
+		"Customer" : "",
+		"DateTime" : "08/18/2018 18:10:50",
+		"Status" : "InProgress, Canceled, Delayed, Delivered",
+		"Items": [
+			{"Item" : "", "price" : 0.0, "Quantity" : 1 }
+		]
 	]
+	
 }

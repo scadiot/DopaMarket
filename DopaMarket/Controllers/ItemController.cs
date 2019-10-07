@@ -95,7 +95,7 @@ namespace DopaMarket.Controllers
         }
 
         [HttpPost]
-        public ActionResult PushReview(int itemId, int rating, string text)
+        public ActionResult PushReview(int itemId, string title, int rating, string text)
         {
             var userId = User.Identity.GetUserId().ToString();
             var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
@@ -107,6 +107,7 @@ namespace DopaMarket.Controllers
                 itemReview = new ItemReview();
                 itemReview.CustomerId = customer.Id;
                 itemReview.ItemId = itemId;
+                itemReview.Title = title;
                 itemReview.Note = rating;
                 itemReview.Text = text;
                 itemReview.Date = DateTime.Now;
@@ -116,9 +117,15 @@ namespace DopaMarket.Controllers
             {
                 itemReview.Note = rating;
                 itemReview.Text = text;
+                itemReview.Title = title;
                 itemReview.Date = DateTime.Now;
             }
             _context.SaveChanges();
+
+            var rates = _context.ItemReviews.Where(r => r.ItemId == item.Id).Select(r => r.Note).ToArray();
+            item.AverageRating = (decimal)rates.Sum() / rates.Count();
+            _context.SaveChanges();
+
             return RedirectToAction(item.LinkName, "Item");
         }
     }

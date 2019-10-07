@@ -132,7 +132,9 @@ namespace DopaMarket.Controllers
                                        join itemKeyword in _context.ItemKeywords on item.Id equals itemKeyword.ItemId
                                        join keyword in _context.Keywords on itemKeyword.KeywordId equals keyword.Id
                                        where keywords.Contains(keyword.Word)
-                                       select item;
+                                       group item by item into g
+                                       where g.Count() == keywords.Count()
+                                       select g.Key;
         }
 
         void CreateRequestByCategory(ref RequestInfo requestInfo)
@@ -227,7 +229,10 @@ namespace DopaMarket.Controllers
             {
                 var brandVM = new SearchBrandViewModel();
                 brandVM.Brand = brand.Brand;
-                brandVM.Selected = brandsString.Contains(brand.Brand.LinkName);
+                if(brand.Brand != null)
+                {
+                    brandVM.Selected = brandsString.Contains(brand.Brand.LinkName);
+                }
                 brandVM.ItemsCount = brand.Quantity;
                 resultList.Add(brandVM);
             }

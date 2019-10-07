@@ -13,6 +13,7 @@ namespace DopaMarket.ViewModels
 
     public class CartViewModel
     {
+        public decimal SubTotal { get; set; }
         public IEnumerable<CartItemViewModel> Items { get; set; }
     }
 }

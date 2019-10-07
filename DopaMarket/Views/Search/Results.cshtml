@@ -266,9 +266,9 @@
                         <h3 class="widget-title">Filter by Brand</h3>
                         @foreach (var brand in Model.Brands)
                         {
-                            <div class="custom-control custom-checkbox" onClick="window.location.href='@SearchUrlBrandFilter(Model, brand.Brand.LinkName)';">
-                                <input class="custom-control-input" type="checkbox" id="@brand.Brand.LinkName" @(brand.Selected ? "checked" : "")>
-                                <label class="custom-control-label" for="apple">@brand.Brand.Name&nbsp;<span class="text-muted">(@(brand.ItemsCount))</span></label>
+                            <div class="custom-control custom-checkbox" onClick="window.location.href='@(brand.Brand != null ? SearchUrlBrandFilter(Model, brand.Brand.LinkName) : "other")';">
+                                <input class="custom-control-input" type="checkbox" id="@(brand.Brand != null ? brand.Brand.LinkName : "other")" @(brand.Selected ? "checked" : "")>
+                                <label class="custom-control-label" for="apple">@(brand.Brand != null ? brand.Brand.Name : "Autre") &nbsp;<span class="text-muted">(@(brand.ItemsCount))</span></label>
                             </div>
                         }
                     </section>

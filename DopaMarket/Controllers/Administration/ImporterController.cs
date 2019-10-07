@@ -38,6 +38,7 @@ namespace DopaMarket.Controllers.Administration
             ImportCompareGroupSpecifications(parsedData);
             ImportBrands(parsedData);
             ImportItems(parsedData);
+            UpdateCategoriesItemsCount();
 
             var result = new ImporterViewModel();
             result.Data = data;
@@ -237,6 +238,7 @@ namespace DopaMarket.Controllers.Administration
                 ImportItemKeywords(item, itemData.Keywords);
                 ImportFeatures(item, itemData.Features);
                 ImportItemSpecifications(item, itemData.ItemSpecifications);
+                ComputeAverageRate(item);
             }
         }
 
@@ -355,6 +357,23 @@ namespace DopaMarket.Controllers.Administration
                 }
                 _context.SaveChanges();
             }
+        }
+
+        void ComputeAverageRate(Models.Item item)
+        {
+            var rates = _context.ItemReviews.Where(r => r.ItemId == item.Id).Select(r => r.Note).ToArray();
+            item.AverageRating = (decimal)rates.Sum() / rates.Count();
+            _context.SaveChanges();
+        }
+
+        void UpdateCategoriesItemsCount()
+        {
+            var itemCategories = _context.ItemCategories.ToArray();
+            foreach (var categories in _context.Categories.ToArray())
+            {
+                categories.ItemsCount = itemCategories.Where(ic => ic.CategoryId == categories.Id).Count();
+            }
+            _context.SaveChanges();
         }
 
         public class Customer
