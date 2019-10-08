@@ -11,7 +11,7 @@
         </div>
     </aside>
     <nav class="list-group">
-        <a class="list-group-item with-badge @(Request.Url.ToString().Contains("Orders")? "active" : "")" href="/Customer/Orders"><i class="icon-shopping-bag"></i>Orders<span class="badge badge-default badge-pill">6</span></a>
+        <a class="list-group-item with-badge @(Request.Url.ToString().Contains("Orders")? "active" : "")" href="/Customer/Orders"><i class="icon-shopping-bag"></i>Orders<span class="badge badge-default badge-pill">@ViewBag.orderCount</span></a>
         <a class="list-group-item @(Request.Url.ToString().Contains("ProfileEdit")? "active" : "")" href="/Customer/ProfileEdit"><i class="icon-user"></i>Profile</a>
         <a class="list-group-item @(Request.Url.ToString().Contains("AddressEdit")? "active" : "")" href="/Customer/AddressEdit"><i class="icon-map-pin"></i>Addresses</a>
         <a class="list-group-item with-badge @(Request.Url.ToString().Contains("Tickets")? "active" : "")" href="/Customer/Tickets"><i class="icon-tag"></i>My Tickets<span class="badge badge-default badge-pill">4</span></a>

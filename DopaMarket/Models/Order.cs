@@ -9,7 +9,12 @@ namespace DopaMarket.Models
 {
     public enum OrderStatus
     {
-        InProgress,
+        WaitProcess,
+        Processing,
+        WaitQualityCheck,
+        QualityChecking,
+        WaitDispatching,
+        Dispatched,
         Canceled,
         Delayed,
         Delivered
@@ -20,8 +25,7 @@ namespace DopaMarket.Models
         public int Id { get; set; }
 
         [Required]
-        [Index(IsUnique = true)]
-        public int VisibleId { get; set; }
+        public string Key { get; set; }
 
         public int CustomerId { get; set; }
 

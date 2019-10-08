@@ -58,13 +58,18 @@
 		{ "MainItem" : "", "OtherItem" : ""}
 	],
 	"Orders" : [
-	    "VisibleId" : "",
+	    "Key" : "",
 		"Customer" : "",
 		"DateTime" : "08/18/2018 18:10:50",
-		"Status" : "InProgress, Canceled, Delayed, Delivered",
+		"Status" : "WaitProcess, Processing, WaitQualityCheck, QualityChecking, WaitDispatching, Dispatched, Canceled, Delayed, Delivered",
+		"ExpeditionPrice" : 10.0,
+		"TotalPrice" : 10.0,
 		"Items": [
-			{"Item" : "", "price" : 0.0, "Quantity" : 1 }
-		]
+			{"Item" : "", "Price" : 0.0, "Quantity" : 1 }
+		],
+		"Notifications": [
+			{"Type" : "Processed, QualityCheckPassed, ProductDispatched, ProductDelivered, Canceled, Return", "Text" : "", "DateTime" : "08/18/2018 10:10:00" }
+		],
 	]
 	
 }

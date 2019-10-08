@@ -5,6 +5,34 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@{ 
+    var statusText = new Dictionary<DopaMarket.Models.OrderStatus, string>()
+    {
+        {  DopaMarket.Models.OrderStatus.WaitProcess, "WaitProcess" },
+        {  DopaMarket.Models.OrderStatus.Processing, "Processing" },
+        {  DopaMarket.Models.OrderStatus.WaitQualityCheck, "WaitQualityCheck" },
+        {  DopaMarket.Models.OrderStatus.QualityChecking, "QualityChecking" },
+        {  DopaMarket.Models.OrderStatus.WaitDispatching, "WaitDispatching" },
+        {  DopaMarket.Models.OrderStatus.Dispatched, "Dispatched" },
+        {  DopaMarket.Models.OrderStatus.Canceled, "Canceled" },
+        {  DopaMarket.Models.OrderStatus.Delayed, "Delayed" },
+        {  DopaMarket.Models.OrderStatus.Delivered, "Delivered" }
+    };
+
+    var statusClass = new Dictionary<DopaMarket.Models.OrderStatus, string>()
+    {
+        {  DopaMarket.Models.OrderStatus.WaitProcess, "text-info" },
+        {  DopaMarket.Models.OrderStatus.Processing, "text-info" },
+        {  DopaMarket.Models.OrderStatus.WaitQualityCheck, "text-info" },
+        {  DopaMarket.Models.OrderStatus.QualityChecking, "text-info" },
+        {  DopaMarket.Models.OrderStatus.WaitDispatching, "text-info" },
+        {  DopaMarket.Models.OrderStatus.Dispatched, "text-success" },
+        {  DopaMarket.Models.OrderStatus.Canceled, "text-danger" },
+        {  DopaMarket.Models.OrderStatus.Delayed, "text-warning" },
+        {  DopaMarket.Models.OrderStatus.Delivered, "text-info" }
+    };
+}
+
 <div class="page-title">
     <div class="container">
         <div class="column">
@@ -46,42 +74,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><a class="navi-link" href="#" data-toggle="modal" data-target="#orderDetails">78A643CD409</a></td>
-                            <td>August 08, 2017</td>
-                            <td><span class="text-danger">Canceled</span></td>
-                            <td><span>$760.50</span></td>
-                        </tr>
-                        <tr>
-                            <td><a class="navi-link" href="#" data-toggle="modal" data-target="#orderDetails">34VB5540K83</a></td>
-                            <td>July 21, 2017</td>
-                            <td><span class="text-info">In Progress</span></td>
-                            <td>$315.20</td>
-                        </tr>
-                        <tr>
-                            <td><a class="navi-link" href="#" data-toggle="modal" data-target="#orderDetails">112P45A90V2</a></td>
-                            <td>June 15, 2017</td>
-                            <td><span class="text-warning">Delayed</span></td>
-                            <td>$1,264.00</td>
-                        </tr>
-                        <tr>
-                            <td><a class="navi-link" href="#" data-toggle="modal" data-target="#orderDetails">28BA67U0981</a></td>
-                            <td>May 19, 2017</td>
-                            <td><span class="text-success">Delivered</span></td>
-                            <td>$198.35</td>
-                        </tr>
-                        <tr>
-                            <td><a class="navi-link" href="#" data-toggle="modal" data-target="#orderDetails">502TR872W2</a></td>
-                            <td>April 04, 2017</td>
-                            <td><span class="text-success">Delivered</span></td>
-                            <td>$2,133.90</td>
-                        </tr>
-                        <tr>
-                            <td><a class="navi-link" href="#" data-toggle="modal" data-target="#orderDetails">47H76G09F33</a></td>
-                            <td>March 30, 2017</td>
-                            <td><span class="text-success">Delivered</span></td>
-                            <td>$86.40</td>
-                        </tr>
+                        @foreach (var order in Model.Orders)
+                        {
+                            <tr>
+                                <td><a class="navi-link" href="#" data-toggle="modal" data-target="#orderDetails">@order.Key</a></td>
+                                <td>@order.Date.ToString()</td>
+                                <td><span class="@(statusClass[order.Status])">@(statusText[order.Status])</span></td>
+                                <td><span>@order.TotalPrice</span></td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>

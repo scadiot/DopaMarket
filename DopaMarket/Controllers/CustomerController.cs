@@ -24,6 +24,8 @@ namespace DopaMarket.Controllers
             _context = new ApplicationDbContext();
             var userId = User.Identity.GetUserId().ToString();
             _customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
+
+            ViewBag.orderCount = _context.Orders.Count(o => o.CustomerId == _customer.Id);
         }
 
         public ActionResult Index()

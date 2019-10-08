@@ -38,6 +38,7 @@ namespace DopaMarket.Controllers.Administration
             ImportCompareGroupSpecifications(parsedData);
             ImportBrands(parsedData);
             ImportItems(parsedData);
+            ImportOrders(parsedData);
             UpdateCategoriesItemsCount();
 
             var result = new ImporterViewModel();
@@ -359,6 +360,77 @@ namespace DopaMarket.Controllers.Administration
             }
         }
 
+        void ImportOrders(Data parsedData)
+        {
+            Dictionary<string, OrderStatus> StringToOrderStatus = new Dictionary<string, OrderStatus>()
+            {
+                { "InProWaitProcessgress", OrderStatus.WaitProcess }, { "Processing", OrderStatus.Processing }, { "WaitQualityCheck", OrderStatus.WaitQualityCheck }, { "QualityChecking", OrderStatus.QualityChecking },
+                { "WaitDispatching", OrderStatus.WaitDispatching },{ "Dispatched", OrderStatus.Dispatched },{ "Canceled", OrderStatus.Canceled },{ "Delayed", OrderStatus.Delayed },{ "Delivered", OrderStatus.Delivered }
+            };
+
+            foreach (var orderData in parsedData.Orders)
+            {
+                var applicationUser = _context.Users.Single(u => u.Email == orderData.Customer);
+                var customer = _context.Customers.Single(c => c.IdentityUserId == applicationUser.Id);
+
+                var order = _context.Orders.SingleOrDefault(o => o.Key == orderData.Key);
+                if (order == null)
+                {
+                    order = new Models.Order();
+                    order.Key = orderData.Key;
+                    _context.Orders.Add(order);
+                }
+                order.CustomerId = customer.Id;
+                order.ExpeditionPrice = orderData.ExpeditionPrice;
+                order.TotalPrice = orderData.TotalPrice;
+                order.Status = StringToOrderStatus[orderData.Status];
+                order.Date = DateTime.Parse(orderData.DateTime);
+                _context.SaveChanges();
+
+                ImportOrderItems(order, orderData.Items);
+            }
+        }
+
+        void ImportOrderItems(Models.Order order, IEnumerable<OrderItem> orderItems)
+        {
+            foreach(var orderItemData in orderItems)
+            {
+                var item = _context.Items.Single(i => i.LinkName == orderItemData.Item);
+                var orderItem = _context.OrderItems.SingleOrDefault(oi => oi.ItemId == item.Id);
+                if(orderItem == null)
+                {
+                    orderItem = new Models.OrderItem();
+                    orderItem.ItemId = item.Id;
+                    orderItem.OrderId = order.Id;
+                }
+                orderItem.Count = orderItemData.Quantity;
+                orderItem.Price = orderItemData.Price;
+                _context.SaveChanges();
+            }
+        }
+
+        void ImportOrderNotifications(Models.Order order, IEnumerable<OrderNotification> orderNotifications)
+        {
+            Dictionary<string, OrderNotificationType> StringToOrderNotificationType = new Dictionary<string, OrderNotificationType>()
+            {
+                { "Processed", OrderNotificationType.Processed }, { "QualityCheckPassed", OrderNotificationType.QualityCheckPassed }, { "Dispatched", OrderNotificationType.Dispatched},
+                { "Delivered", OrderNotificationType.Delivered },{ "Canceled", OrderNotificationType.Canceled },{ "Return", OrderNotificationType.Return }
+            };
+
+            var existingNotifications = _context.OrderNotifications.Where(n => n.OrderId == order.Id);
+            _context.OrderNotifications.RemoveRange(existingNotifications);
+            _context.SaveChanges();
+
+            foreach (var orderNotificationData in orderNotifications)
+            {
+                var orderNotification = new Models.OrderNotification();
+                orderNotification.DateTime = DateTime.Parse(orderNotificationData.DateTime);
+                orderNotification.Text = orderNotificationData.Text;
+                orderNotification.Type = StringToOrderNotificationType[orderNotificationData.Type];
+                _context.SaveChanges();
+            }
+        }
+
         void ComputeAverageRate(Models.Item item)
         {
             var rates = _context.ItemReviews.Where(r => r.ItemId == item.Id).Select(r => r.Note).ToArray();
@@ -460,7 +532,33 @@ namespace DopaMarket.Controllers.Administration
             public IList<string> Keywords { get; set; }
             public IList<string> Features { get; set; }
             public IList<ItemSpecification> ItemSpecifications { get; set; }
-    }
+        }
+
+        public class Order
+        {
+            public string Key { get; set; }
+            public string Customer { get; set; }
+            public string DateTime { get; set; }
+            public string Status { get; set; }
+            public decimal ExpeditionPrice { get; set; }
+            public decimal TotalPrice { get; set; }
+            public IList<OrderItem> Items { get; set; }
+            public IList<OrderNotification> Notifications { get; set; }
+        }
+
+        public class OrderItem
+        {
+            public string Item { get; set; }
+            public decimal Price { get; set; }
+            public int Quantity { get; set; }
+        }
+
+        public class OrderNotification
+        {
+            public string Type { get; set; }
+            public string Text { get; set; }
+            public string DateTime { get; set; }
+        }
 
         public class Data
         {
@@ -471,6 +569,7 @@ namespace DopaMarket.Controllers.Administration
             public IList<CompareGroupSpecification> CompareGroupSpecifications { get; set; }
             public IList<Brand> Brands { get; set; }
             public IList<Item> Items { get; set; }
+            public IList<Order> Orders { get; set; }
         }
     }
 }

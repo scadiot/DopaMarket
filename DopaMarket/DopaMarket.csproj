@@ -263,6 +263,10 @@
     <Compile Include="Migrations\201910050754021_RenameSpecificationField.Designer.cs">
       <DependentUpon>201910050754021_RenameSpecificationField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910081153237_AddOrderNotification.cs" />
+    <Compile Include="Migrations\201910081153237_AddOrderNotification.Designer.cs">
+      <DependentUpon>201910081153237_AddOrderNotification.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -276,6 +280,7 @@
     <Compile Include="Models\ItemFeature.cs" />
     <Compile Include="Models\ItemImage.cs" />
     <Compile Include="Models\ItemSpecification.cs" />
+    <Compile Include="Models\OrderOperation.cs" />
     <Compile Include="Models\Specification.cs" />
     <Compile Include="Models\ItemKeyword.cs" />
     <Compile Include="Models\ItemLink.cs" />
@@ -424,6 +429,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910050754021_RenameSpecificationField.resx">
       <DependentUpon>201910050754021_RenameSpecificationField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910081153237_AddOrderNotification.resx">
+      <DependentUpon>201910081153237_AddOrderNotification.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
