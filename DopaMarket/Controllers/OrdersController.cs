@@ -36,7 +36,7 @@ namespace DopaMarket.Controllers
             var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
 
             var itemsToOrder = _context.ItemCarts
-                                      .Where(ib => ib.CustomerId == customer.Id)
+                                      .Where(ib => ib.SessionId == Session.SessionID)
                                       .Include(ib => ib.Item)
                                       .ToArray();
 

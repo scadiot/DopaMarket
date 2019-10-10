@@ -12,8 +12,7 @@ namespace DopaMarket.Models
         public int ItemId { get; set; }
         public Item Item { get; set; }
 
-        public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
+        public string SessionId { get; set; }
 
         public int Count { get; set; }
     }

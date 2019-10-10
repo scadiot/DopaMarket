@@ -21,12 +21,9 @@ namespace DopaMarket.Controllers
 
         public ActionResult Index()
         {
-            var userId = User.Identity.GetUserId().ToString();
-            var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
-
             var items = (from i in _context.Items
                          join ib in _context.ItemCarts on i.Id equals ib.ItemId
-                         where ib.CustomerId == customer.Id
+                         where ib.SessionId == Session.SessionID
                          select new CartItemViewModel() { Item = i, Quantity = ib.Count }).ToArray();
 
             var cartViewModel = new CartViewModel();
@@ -38,17 +35,17 @@ namespace DopaMarket.Controllers
 
         public JsonResult AddItem(int id, int count)
         {
-            var userId = User.Identity.GetUserId().ToString();
-            var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
+            //var userId = User.Identity.GetUserId().ToString();
+            //var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
 
-            if(_context.ItemCarts.Any(ib => ib.CustomerId == customer.Id && ib.ItemId == id))
+            if(_context.ItemCarts.Any(ib => ib.SessionId == Session.SessionID && ib.ItemId == id))
             {
                 return Json(new { result = "error", message = "already exist" }, JsonRequestBehavior.AllowGet);
             }
 
             var itemCart = new ItemCart();
             itemCart.ItemId = id;
-            itemCart.CustomerId = customer.Id;
+            itemCart.SessionId = Session.SessionID;
             itemCart.Count = count;
             _context.ItemCarts.Add(itemCart);
             _context.SaveChanges();
@@ -61,7 +58,7 @@ namespace DopaMarket.Controllers
             var userId = User.Identity.GetUserId().ToString();
             var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
 
-            var itemInCart = _context.ItemCarts.SingleOrDefault(ib => ib.CustomerId == customer.Id && ib.ItemId == id);
+            var itemInCart = _context.ItemCarts.SingleOrDefault(ib => ib.SessionId == Session.SessionID && ib.ItemId == id);
             if (itemInCart == null)
             {
                 return Json(new { result = "error", message = "not in cart" }, JsonRequestBehavior.AllowGet);
@@ -78,7 +75,7 @@ namespace DopaMarket.Controllers
                 var userId = User.Identity.GetUserId().ToString();
                 var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
 
-            var itemInCart = _context.ItemCarts.SingleOrDefault(ib => ib.CustomerId == customer.Id && ib.ItemId == id);
+            var itemInCart = _context.ItemCarts.SingleOrDefault(ib => ib.SessionId == Session.SessionID && ib.ItemId == id);
             if (itemInCart == null)
             {
                 return Json(new { result = "error", message = "not in cart" }, JsonRequestBehavior.AllowGet);
@@ -107,7 +104,7 @@ namespace DopaMarket.Controllers
 
             var items = (from i in _context.Items
                          join ib in _context.ItemCarts on i.Id equals ib.ItemId
-                         where ib.CustomerId == customer.Id
+                         where ib.SessionId == Session.SessionID
                          select new CartItemViewModel() { Item = i, Quantity = ib.Count }).ToArray();
 
             var cartViewModel = new CartViewModel();
