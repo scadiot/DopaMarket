@@ -43,6 +43,8 @@ namespace DopaMarket.Models
         public DbSet<TicketMessage> TicketMessages { get; set; }
         public DbSet<ItemLink> ItemLinks { get; set; }
         public DbSet<OrderNotification> OrderNotifications { get; set; }
+        public DbSet<ItemCompare> ItemCompares { get; set; }
+        public DbSet<SpecificationGroup> SpecificationGroups { get; set; }
         
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

@@ -18,8 +18,11 @@
 	"Categories" : [
 		{ "Name" : "", "LinkName" : "", "Parent" : "" }
 	],
+	"SpecificationGroups" : [
+		{ "Name" : "", "LongName" : "" }
+	],
 	"Specifications" : [
-		{ "Name" : "", "Type" : "", "Unity" : "Boolean, Interger, String, Decimal", "LongName" : "" }
+		{ "Name" : "", "Type" : "", "Unity" : "Boolean, Interger, String, Decimal", "LongName" : "", "Group" : "" }
 	],
 	"CompareGroups" : [
 		{ "Name" : "", "LinkName" : "" }

@@ -161,14 +161,18 @@
 	"Categories" : [
 		{ "Name" : "processeur", "LinkName" : "processeur", "Parent" : "" }
 	],
+	"SpecificationGroups" : [
+		{ "Name" : "principales_caracteristiques", "LongName" : "Principales caractéristiques" },
+		{ "Name" : "architecture", "LongName" : "Architecture" }
+	],
 	"Specifications" : [
-		{ "Name" : "support_processeur", "Type" : "String", "Unity" : "", "LongName" : "Support du processeur" },
-		{ "Name" : "frequence_cpu", "Type" : "Decimal", "Unity" : "GHz", "LongName" : "Fréquence CPU" },
-		{ "Name" : "frequence_turbo", "Type" : "Decimal", "Unity" : "GHz", "LongName" : "Fréquence en mode Turbo" },
-		{ "Name" : "nombre_core", "Type" : "Interger", "Unity" : "", "LongName" : "Nombre de core" },
-		{ "Name" : "nombre_threads", "Type" : "Interger", "Unity" : "", "LongName" : "Nombre de Threads" },
-		{ "Name" : "cache_l2", "Type" : "Decimal", "Unity" : "Mo", "LongName" : "Cache L2" },
-		{ "Name" : "cache_l3", "Type" : "Decimal", "Unity" : "Mo", "LongName" : "Cache L3" }
+		{ "Name" : "support_processeur", "Type" : "String", "Unity" : "", "LongName" : "Support du processeur", "Group":"principales_caracteristiques" },
+		{ "Name" : "frequence_cpu", "Type" : "Decimal", "Unity" : "GHz", "LongName" : "Fréquence CPU", "Group":"principales_caracteristiques" },
+		{ "Name" : "frequence_turbo", "Type" : "Decimal", "Unity" : "GHz", "LongName" : "Fréquence en mode Turbo", "Group":"principales_caracteristiques" },
+		{ "Name" : "nombre_core", "Type" : "Interger", "Unity" : "", "LongName" : "Nombre de core", "Group":"principales_caracteristiques" },
+		{ "Name" : "nombre_threads", "Type" : "Interger", "Unity" : "", "LongName" : "Nombre de Threads", "Group":"principales_caracteristiques" },
+		{ "Name" : "cache_l2", "Type" : "Interger", "Unity" : "Mo", "LongName" : "Cache L2", "Group":"architecture" },
+		{ "Name" : "cache_l3", "Type" : "Interger", "Unity" : "Mo", "LongName" : "Cache L3", "Group":"architecture" }
 	],
 	"CompareGroups" : [
 		{ "Name" : "Processeur", "LinkName" : "processeur" }
@@ -179,7 +183,8 @@
 		{ "CompareGroup" : "processeur", "Specification" : "frequence_turbo" },
 		{ "CompareGroup" : "processeur", "Specification" : "nombre_core" },
 		{ "CompareGroup" : "processeur", "Specification" : "nombre_threads" },
-		{ "CompareGroup" : "processeur", "Specification" : "cache_l2" }
+		{ "CompareGroup" : "processeur", "Specification" : "cache_l2" },
+		{ "CompareGroup" : "processeur", "Specification" : "cache_l3" }
 	],
 	"Brands" : [
 		{ "Name" : "Intel", "LinkName" : "intel" },
@@ -221,8 +226,8 @@
 				{ "specification" : "frequence_turbo", "DecimalValue" : 4.2 },
 				{ "specification" : "nombre_core", "IntegerValue" : 6 },
 				{ "specification" : "nombre_threads", "IntegerValue" : 12 },
-				{ "specification" : "cache_l2", "DecimalValue" : 3 },
-				{ "specification" : "cache_l3", "DecimalValue" : 32 }
+				{ "specification" : "cache_l2", "IntegerValue" : 3 },
+				{ "specification" : "cache_l3", "IntegerValue" : 32 }
 			]
 		},
 		{
@@ -252,8 +257,8 @@
 				{ "specification" : "frequence_turbo", "DecimalValue" : 4 },
 				{ "specification" : "nombre_core", "IntegerValue" : 4 },
 				{ "specification" : "nombre_threads", "IntegerValue" : 4 },
-				{ "specification" : "cache_l2", "DecimalValue" : 2 },
-				{ "specification" : "cache_l3", "DecimalValue" : 4 }
+				{ "specification" : "cache_l2", "IntegerValue" : 2 },
+				{ "specification" : "cache_l3", "IntegerValue" : 4 }
 			]
 		},
 		{
@@ -283,7 +288,7 @@
 				{ "specification" : "frequence_turbo", "DecimalValue" : 4.6 },
 				{ "specification" : "nombre_core", "IntegerValue" : 6 },
 				{ "specification" : "nombre_threads", "IntegerValue" : 6 },
-				{ "specification" : "cache_l3", "DecimalValue" : 9 }
+				{ "specification" : "cache_l3", "IntegerValue" : 9 }
 			]
 		},
 		{
@@ -313,7 +318,7 @@
 				{ "specification" : "frequence_turbo", "DecimalValue" : 4.9 },
 				{ "specification" : "nombre_core", "IntegerValue" : 8 },
 				{ "specification" : "nombre_threads", "IntegerValue" : 8 },
-				{ "specification" : "cache_l3", "DecimalValue" : 12 }
+				{ "specification" : "cache_l3", "IntegerValue" : 12 }
 			]
 		}
 	],

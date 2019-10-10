@@ -33,6 +33,7 @@ namespace DopaMarket.Controllers.Administration
 
             ImportCustomers(parsedData);
             ImportCategories(parsedData);
+            ImportSpecificationGroups(parsedData);
             ImportSpecifications(parsedData);
             ImportCompareGroups(parsedData);
             ImportCompareGroupSpecifications(parsedData);
@@ -133,6 +134,22 @@ namespace DopaMarket.Controllers.Administration
             }
         }
 
+        void ImportSpecificationGroups(Data data)
+        {
+            foreach (var specificationGroupData in data.SpecificationGroups)
+            {
+                var specificationGroup = _context.SpecificationGroups.SingleOrDefault(c => c.Name == specificationGroupData.Name);
+                if (specificationGroup == null)
+                {
+                    specificationGroup = new Models.SpecificationGroup();
+                    _context.SpecificationGroups.Add(specificationGroup);
+                }
+                specificationGroup.Name = specificationGroupData.Name;
+                specificationGroup.LongName = specificationGroupData.LongName;
+                _context.SaveChanges();
+            }
+        }
+
         void ImportSpecifications(Data data)
         {
             Dictionary<string, Models.SpecificationType> stringToType = new Dictionary<string, SpecificationType>()
@@ -152,6 +169,7 @@ namespace DopaMarket.Controllers.Administration
                 specification.LongName = specificationData.LongName;
                 specification.Unity = specificationData.Unity;
                 specification.Type = stringToType[specificationData.Type];
+                specification.SpecificationGroupId = _context.SpecificationGroups.Single(g => g.Name == specificationData.Group).Id;
                 _context.SaveChanges();
             }
         }
@@ -470,12 +488,19 @@ namespace DopaMarket.Controllers.Administration
             public string Parent { get; set; }
         }
 
+        public class SpecificationGroup
+        {
+            public string Name { get; set; }
+            public string LongName { get; set; }
+        }
+
         public class Specification
         {
             public string Name { get; set; }
             public string Type { get; set; }
             public string Unity { get; set; }
             public string LongName { get; set; }
+            public string Group { get; set; }
         }
 
         public class CompareGroup
@@ -565,6 +590,7 @@ namespace DopaMarket.Controllers.Administration
             public IList<Customer> Customers { get; set; }
             public IList<Categorie> Categories { get; set; }
             public IList<Specification> Specifications { get; set; }
+            public IList<SpecificationGroup> SpecificationGroups { get; set; }
             public IList<CompareGroup> CompareGroups { get; set; }
             public IList<CompareGroupSpecification> CompareGroupSpecifications { get; set; }
             public IList<Brand> Brands { get; set; }

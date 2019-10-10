@@ -35,9 +35,6 @@ namespace DopaMarket.Controllers
 
         public JsonResult AddItem(int id, int count)
         {
-            //var userId = User.Identity.GetUserId().ToString();
-            //var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
-
             if(_context.ItemCarts.Any(ib => ib.SessionId == Session.SessionID && ib.ItemId == id))
             {
                 return Json(new { result = "error", message = "already exist" }, JsonRequestBehavior.AllowGet);

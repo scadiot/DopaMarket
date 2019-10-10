@@ -20,5 +20,7 @@ namespace DopaMarket.Models
         public SpecificationType Type { get; set; }
         public string Unity { get; set; }
         public string LongName { get; set; }
+        public int SpecificationGroupId { get; set; }
+        public SpecificationGroup SpecificationGroup { get; set; }
     }
 }

@@ -220,6 +220,7 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CategoriesTools.cs" />
+    <Compile Include="Controllers\CompareController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\AdminItemsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -271,6 +272,14 @@
     <Compile Include="Migrations\201910082000532_ConnectCartToSessionId.Designer.cs">
       <DependentUpon>201910082000532_ConnectCartToSessionId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910101355202_CompareList.cs" />
+    <Compile Include="Migrations\201910101355202_CompareList.Designer.cs">
+      <DependentUpon>201910101355202_CompareList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910101504469_SpecificationGroups.cs" />
+    <Compile Include="Migrations\201910101504469_SpecificationGroups.Designer.cs">
+      <DependentUpon>201910101504469_SpecificationGroups.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -280,6 +289,7 @@
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemCart.cs" />
     <Compile Include="Models\ItemCategory.cs" />
+    <Compile Include="Models\ItemCompare.cs" />
     <Compile Include="Models\ItemReview.cs" />
     <Compile Include="Models\ItemFeature.cs" />
     <Compile Include="Models\ItemImage.cs" />
@@ -297,14 +307,15 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderItem.cs" />
+    <Compile Include="Models\SpecificationGroup.cs" />
     <Compile Include="Models\Ticket.cs" />
     <Compile Include="Models\TicketMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SessionIdHandler.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\BasketViewModel.cs" />
     <Compile Include="ViewModels\BrandFormViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\CompareViewModel.cs" />
     <Compile Include="ViewModels\CustomerAddressViewModel.cs" />
     <Compile Include="ViewModels\CustomerProfileViewModel.cs" />
     <Compile Include="ViewModels\CustomerTicketsViewModel.cs" />
@@ -398,6 +409,7 @@
     <Content Include="Views\Brands\BrandForm.cshtml" />
     <Content Include="Views\Brands\Index.cshtml" />
     <Content Include="Views\Importer\Index.cshtml" />
+    <Content Include="Views\Compare\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -440,6 +452,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910082000532_ConnectCartToSessionId.resx">
       <DependentUpon>201910082000532_ConnectCartToSessionId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910101355202_CompareList.resx">
+      <DependentUpon>201910101355202_CompareList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910101504469_SpecificationGroups.resx">
+      <DependentUpon>201910101504469_SpecificationGroups.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
