@@ -17,7 +17,7 @@ namespace DopaMarket.Controllers
             if ( User.Identity.IsAuthenticated )
             {
                 var userId = User.Identity.GetUserId().ToString();
-                var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
+                var customer = _context.Customers.SingleOrDefault(c => c.ApplicationUserId == userId);
                 ViewBag.customer = customer;
             }
 

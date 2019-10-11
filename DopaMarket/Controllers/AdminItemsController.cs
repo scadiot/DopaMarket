@@ -33,7 +33,6 @@ namespace DopaMarket.Controllers
             viewModel.Categories = _context.Categories.Select(c => new SelectListItem() { Text = c.Name, Value = c.Id.ToString() }).ToList();
             viewModel.Keywords = "";
             viewModel.SelectedCategoryIds = new int[0];
-            viewModel.Images = new ItemImage[0];
             viewModel.Brands = _context.Brands.Select(b => new SelectListItem() { Text = b.Name, Value = b.Id.ToString() }).ToArray();
             viewModel.Features = "";
 
@@ -50,7 +49,6 @@ namespace DopaMarket.Controllers
             viewModel.Item = item;
             viewModel.Categories = _context.Categories.Select(c => new SelectListItem() { Text = c.Name, Value = c.Id.ToString()}).ToArray();
             viewModel.SelectedCategoryIds = _context.ItemCategories.Where(ic => ic.ItemId == id).Select(ic => ic.CategoryId).ToArray();
-            viewModel.Images = _context.ItemImages.Where(ii => ii.ItemId == id).ToList();
             viewModel.Brands = _context.Brands.Select(b => new SelectListItem() { Text = b.Name, Value = b.Id.ToString() }).ToArray();
             viewModel.Features = string.Join("\n", _context.ItemFeatures.Where(f => f.ItemId == id).Select(f => f.Text).ToArray());
 
@@ -203,16 +201,12 @@ namespace DopaMarket.Controllers
                     continue;
                 }
 
-                var itemImage = new ItemImage();
-                itemImage.ItemId = item.Id;
-                _context.ItemImages.Add(itemImage);
+                item.ImageCount++;
                 _context.SaveChanges();
 
-                itemImage.Name = item.LinkName + "_" + itemImage.Id + ".jpg";
-                itemImage.Path = "\\Content\\ItemsImages\\" + itemImage.Name;
-                _context.SaveChanges();
+                string imageName = item.LinkName + "_" + item.ImageCount + ".jpg";
 
-                image.SaveAs(Server.MapPath("~\\Content\\ItemsImages") + "\\" + itemImage.Name);
+                image.SaveAs(Server.MapPath("~\\Content\\ItemsImages") + "\\" + imageName);
             }
         }
 
@@ -292,11 +286,11 @@ namespace DopaMarket.Controllers
 
         public ActionResult RemoveImage(int id)
         {
-            var itemImage = _context.ItemImages.SingleOrDefault(i => i.Id == id);
-            _context.ItemImages.Remove(itemImage);
-            _context.SaveChanges();
-
-            System.IO.File.Delete(Server.MapPath("~\\Content\\ItemsImages") + "\\" + itemImage.Name);
+            //var itemImage = _context.ItemImages.SingleOrDefault(i => i.Id == id);
+            //_context.ItemImages.Remove(itemImage);
+            //_context.SaveChanges();
+            //
+            //System.IO.File.Delete(Server.MapPath("~\\Content\\ItemsImages") + "\\" + itemImage.Name);
 
             return Content("image removed");
         }

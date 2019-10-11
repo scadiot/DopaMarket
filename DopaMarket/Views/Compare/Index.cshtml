@@ -28,14 +28,12 @@
         <table class="table table-bordered">
             <thead class="bg-secondary">
                 <tr>
-                    <td class="align-middle">
-
-                    </td>
+                    <td class="align-middle"></td>
                     @foreach (var column in Model.Columns)
                     {
                         <td>
                             <div class="comparison-item">
-                                <span class="remove-item"><i class="icon-x"></i></span><a class="comparison-item-thumb" href="/item/@column.Item.LinkName">
+                                <a href="/Compare/RemoveItem/@column.Item.Id"><span class="remove-item"><i class="icon-x"></i></span></a><a class="comparison-item-thumb" href="/item/@column.Item.LinkName">
                                     <img src="img/shop/comparison/th01.jpg" alt="Apple iPhone X">
                                 </a><a class="comparison-item-title" href="shop-single.html">@column.Item.Name</a>
                                 <a class="btn btn-outline-primary btn-sm" href="#" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-check-circle" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</a>

@@ -31,7 +31,6 @@ namespace DopaMarket.Models
         public DbSet<Keyword> Keywords { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
-        public DbSet<ItemImage> ItemImages { get; set; }
         public DbSet<Address> Address { get; set; }
         public DbSet<Specification> Specifications { get; set; }
         public DbSet<ItemSpecification> ItemSpecifications { get; set; }

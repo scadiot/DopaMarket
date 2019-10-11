@@ -13,19 +13,16 @@
         <!-- Poduct Gallery-->
         <div class="col-md-6">
             <div class="product-gallery">
-                <div class="gallery-wrapper">
-                    <div class="gallery-item video-btn text-center"><a href="#" data-toggle="tooltip" data-type="video" data-video="&lt;div class=&quot;wrapper&quot;&gt;&lt;div class=&quot;video-wrapper&quot;&gt;&lt;iframe class=&quot;pswp__video&quot; width=&quot;960&quot; height=&quot;640&quot; src=&quot;https://www.youtube.com/embed/CjNjcrQZtd8&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;&lt;/div&gt;" title="Watch video"></a></div>
-                </div><span class="product-badge bg-danger">Sale</span>
                 <div class="product-carousel owl-carousel gallery-wrapper">
-                    @foreach (var image in Model.Images)
+                    @for (int i = 0;i < Model.Item.ImageCount;i++)
                     {
-                        <div class="gallery-item" data-hash="@image.Id"><a href="https://picsum.photos/1000/667" data-size="1000x667"><img src="https://picsum.photos/1000/667" alt="Product"></a></div>
+                        <div class="gallery-item" data-hash="@i"><a href="/img/items/@(Model.Item.LinkName + "_" + i.ToString()).jpg" data-size="1000x667"><img src="/img/items/@(Model.Item.LinkName + "_" + i.ToString()).jpg" alt="Product"></a></div>
                     }
                 </div>
                 <ul class="product-thumbnails">
-                    @foreach (var image in Model.Images)
+                    @for (int i = 0; i < Model.Item.ImageCount; i++)
                     {
-                        <li class="active"><a href="#@image.Id"><img src="https://picsum.photos/150/100" alt="Product"></a></li>
+                        <li class="active"><a href="#@i"><img src="/img/items/@(Model.Item.LinkName + "_" + i.ToString()).jpg" alt="Product"></a></li>
                     }
                 </ul>
             </div>
@@ -61,7 +58,7 @@
             <div class="d-flex flex-wrap justify-content-between">
                 <div class="mt-2 mb-2">
                     <button class="btn btn-outline-secondary btn-sm btn-wishlist"><i class="icon-heart"></i>&nbsp;To Wishlist</button>
-                    <button class="btn btn-outline-secondary btn-sm btn-compare"><i class="icon-repeat"></i>&nbsp;Compare</button>
+                    <button class="btn btn-outline-secondary btn-sm btn-compare" onClick="addToCompare(this)" data-item-id='@Model.Item.Id'><i class="icon-repeat"></i>&nbsp;Compare</button>
                 </div>
             </div>
         </div>
@@ -148,7 +145,7 @@
             {
                 <!-- Review-->
                 <div class="comment">
-                    <div class="comment-author-ava"><img src="img/reviews/02.jpg" alt="Comment author"></div>
+                    <div class="comment-author-ava"><img src="/img/users/@(review.Customer.ApplicationUser.Email.Replace("@", "_").Replace(".", "_")).jpg" alt="Comment author"></div>
                     <div class="comment-body">
                         <div class="comment-header d-flex flex-wrap justify-content-between">
                             <h4 class="comment-title">@review.Title</h4>
@@ -179,84 +176,21 @@
     <h3 class="text-center padding-top-2x mt-2 padding-bottom-1x">You May Also Like</h3>
     <!-- Carousel-->
     <div class="owl-carousel" data-owl-carousel="{ &quot;nav&quot;: false, &quot;dots&quot;: true, &quot;margin&quot;: 30, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;576&quot;:{&quot;items&quot;:2},&quot;768&quot;:{&quot;items&quot;:3},&quot;991&quot;:{&quot;items&quot;:4},&quot;1200&quot;:{&quot;items&quot;:4}} }">
+        @foreach(var item in Model.OtherItems)
+        {
         <!-- Product-->
         <div class="product-card">
-            <div class="product-badge bg-danger">Sale</div><a class="product-thumb" href="shop-single.html"><img src="img/shop/products/01.jpg" alt="Product"></a>
+            <a class="product-thumb" href="/Item/@item.LinkName"><img src="/img/items/@(item.LinkName)_0.jpg" alt="Product"></a>
             <div class="product-card-body">
                 <div class="product-category"><a href="#">Smart home</a></div>
-                <h3 class="product-title"><a href="shop-single.html">Echo Dot (2nd Generation)</a></h3>
+                <h3 class="product-title"><a href="/Item/@item.LinkName">@item.Name</a></h3>
                 <h4 class="product-price">
-                    <del>$62.00</del>$49.99
+                    @item.CurrentPrice€
                 </h4>
             </div>
             <div class="product-button-group"><a class="product-button btn-wishlist" href="#"><i class="icon-heart"></i><span>Wishlist</span></a><a class="product-button btn-compare" href="#"><i class="icon-repeat"></i><span>Compare</span></a><a class="product-button" href="#" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-check-circle" data-toast-title="Product" data-toast-message="successfuly added to cart!"><i class="icon-shopping-cart"></i><span>To Cart</span></a></div>
         </div>
-        <!-- Product-->
-        <div class="product-card">
-            <a class="product-thumb" href="shop-single.html"><img src="img/shop/products/11.jpg" alt="Product"></a>
-            <div class="product-card-body">
-                <div class="product-category"><a href="#">Headphones</a></div>
-                <h3 class="product-title"><a href="shop-single.html">Edifier W855BT Bluetooth</a></h3>
-                <h4 class="product-price">$99.75</h4>
-            </div>
-            <div class="product-button-group"><a class="product-button btn-wishlist" href="#"><i class="icon-heart"></i><span>Wishlist</span></a><a class="product-button btn-compare" href="#"><i class="icon-repeat"></i><span>Compare</span></a><a class="product-button" href="#" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-check-circle" data-toast-title="Product" data-toast-message="successfuly added to cart!"><i class="icon-shopping-cart"></i><span>To Cart</span></a></div>
-        </div>
-        <!-- Product-->
-        <div class="product-card">
-            <div class="rating-stars">
-                <i class="icon-star filled"></i><i class="icon-star filled"></i><i class="icon-star filled"></i><i class="icon-star filled"></i><i class="icon-star filled"></i>
-            </div><a class="product-thumb" href="shop-single.html"><img src="img/shop/products/06.jpg" alt="Product"></a>
-            <div class="product-card-body">
-                <div class="product-category"><a href="#">Video games</a></div>
-                <h3 class="product-title"><a href="shop-single.html">Xbox One S White</a></h3>
-                <h4 class="product-price">$298.99</h4>
-            </div>
-            <div class="product-button-group"><a class="product-button btn-wishlist" href="#"><i class="icon-heart"></i><span>Wishlist</span></a><a class="product-button btn-compare" href="#"><i class="icon-repeat"></i><span>Compare</span></a><a class="product-button" href="#" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-check-circle" data-toast-title="Product" data-toast-message="successfuly added to cart!"><i class="icon-shopping-cart"></i><span>To Cart</span></a></div>
-        </div>
-        <!-- Product-->
-        <div class="product-card">
-            <a class="product-thumb" href="shop-single.html"><img src="img/shop/products/07.jpg" alt="Product"></a>
-            <div class="product-card-body">
-                <div class="product-category"><a href="#">Smartphones</a></div>
-                <h3 class="product-title"><a href="shop-single.html">Samsung Galaxy S9+</a></h3>
-                <h4 class="product-price">$839.99</h4>
-            </div>
-            <div class="product-button-group"><a class="product-button btn-wishlist" href="#"><i class="icon-heart"></i><span>Wishlist</span></a><a class="product-button btn-compare" href="#"><i class="icon-repeat"></i><span>Compare</span></a><a class="product-button" href="#" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-check-circle" data-toast-title="Product" data-toast-message="successfuly added to cart!"><i class="icon-shopping-cart"></i><span>To Cart</span></a></div>
-        </div>
-        <!-- Product-->
-        <div class="product-card">
-            <div class="product-badge bg-secondary border-default text-body">Out of stock</div><a class="product-thumb" href="shop-single.html"><img src="img/shop/products/12.jpg" alt="Product"></a>
-            <div class="product-card-body">
-                <div class="product-category"><a href="#">Wearable electornics</a></div>
-                <h3 class="product-title"><a href="shop-single.html">Apple Watch Series 3</a></h3>
-                <h4 class="product-price">$329.10</h4>
-            </div>
-            <div class="product-button-group"><a class="product-button btn-wishlist" href="#"><i class="icon-heart"></i><span>Wishlist</span></a><a class="product-button btn-compare" href="#"><i class="icon-repeat"></i><span>Compare</span></a><a class="product-button" href="shop-single.html"><i class="icon-arrow-right"></i><span>Details</span></a></div>
-        </div>
-        <!-- Product-->
-        <div class="product-card">
-            <div class="rating-stars">
-                <i class="icon-star filled"></i><i class="icon-star filled"></i><i class="icon-star filled"></i><i class="icon-star filled"></i><i class="icon-star"></i>
-            </div><a class="product-thumb" href="shop-single.html"><img src="img/shop/products/10.jpg" alt="Product"></a>
-            <div class="product-card-body">
-                <div class="product-category"><a href="#">Printers &amp; Ink</a></div>
-                <h3 class="product-title"><a href="shop-single.html">HP LaserJet Pro Printer</a></h3>
-                <h4 class="product-price">$249.50</h4>
-            </div>
-            <div class="product-button-group"><a class="product-button btn-wishlist" href="#"><i class="icon-heart"></i><span>Wishlist</span></a><a class="product-button btn-compare" href="#"><i class="icon-repeat"></i><span>Compare</span></a><a class="product-button" href="#" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-check-circle" data-toast-title="Product" data-toast-message="successfuly added to cart!"><i class="icon-shopping-cart"></i><span>To Cart</span></a></div>
-        </div>
-        <!-- Product-->
-        <div class="product-card">
-            <div class="product-badge bg-danger">Sale</div><a class="product-thumb" href="shop-single.html"><img src="img/shop/products/09.jpg" alt="Product"></a>
-            <div class="product-card-body">
-                <div class="product-category"><a href="#">Action cameras</a></div>
-                <h3 class="product-title"><a href="shop-single.html">Samsung Gear 360 Camera</a></h3>
-                <h4 class="product-price">
-                    <del>$74.00</del>$68.00
-                </h4>
-            </div>
-            <div class="product-button-group"><a class="product-button btn-wishlist" href="#"><i class="icon-heart"></i><span>Wishlist</span></a><a class="product-button btn-compare" href="#"><i class="icon-repeat"></i><span>Compare</span></a><a class="product-button" href="#" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-check-circle" data-toast-title="Product" data-toast-message="successfuly added to cart!"><i class="icon-shopping-cart"></i><span>To Cart</span></a></div>
-        </div>
+        }
     </div>
 </div>
 
@@ -277,111 +211,29 @@
                         position: 'topRight'
                     });
                     GetItemsInCart();
-                    //bootbox.dialog({
-                    //    title: 'Article ajouté au panier',
-                    //    message: "<p>Voulez vous voire le contenu de votre panier.</p>",
-                    //    buttons: {
-                    //        cancel: {
-                    //            label: "Revenir à l'article!",
-                    //            className: 'btn-danger',
-                    //        },
-                    //        ok: {
-                    //            label: "Aller au panier",
-                    //            className: 'btn-info',
-                    //            callback: function () {
-                    //                window.location.href = '/Cart';
-                    //            }
-                    //        }
-                    //    }
-                    //});
+                }
+            });
+        }
+
+        function addToCompare(button) {
+            let itemId = button.getAttribute('data-item-id');
+
+            $.ajax({
+                url: "/Compare/AddItem/" + itemId,
+            }).done(function (response) {
+                if (response.result === "added") {
+                    iziToast.show({
+                        title: 'OK',
+                        message: 'Successfully inserted record!',
+                        position: 'topRight'
+                    });
+                    GetItemsInCart();
                 }
             });
         }
     </script>
 
 }
-@*
-    <h2>Item view</h2>
-
-    @Model.Item.Name
-    <button class="btn btn-default" onClick="buyItem(this)" data-item-id='@Model.Item.Id' type="button">Ajouter au panier</button>
-
-    <table>
-        @foreach (var itemInfo in Model.ItemInfos)
-        {
-            <tr>
-                <td>@itemInfo.Name</td>
-                <td>@itemInfo.Value @itemInfo.Unity</td>
-            </tr>
-        }
-    </table>
-
-    <hr />
-
-    <div>
-        @foreach (var review in Model.Reviews)
-        {
-            <div><span>@review.Customer.FirstName</span><span>@review.Note</span></div>
-            <div>@review.Text</div>
-        }
-    </div>
-
-
-    @using (Html.BeginForm("PushReview", "ItemAction", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <div class="form-group">
-            @Html.TextBox("note")
-        </div>
-
-        <div class="form-group">
-            @Html.TextBox("text")
-        </div>
-
-        @Html.Hidden("itemId", Model.Item.Id);
-
-        <button type="submit" class="btn btn-primary">Envoyer</button>
-    }
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    @section scripts
-    {
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js">
-        </script>
-
-        <script type="text/javascript">
-
-            function buyItem(button) {
-                let itemId = button.getAttribute('data-item-id');
-
-                $.ajax({
-                    url: "/Cart/AddItem/" + itemId,
-                }).done(function (response) {
-                    if (response.result === "added") {
-                        bootbox.dialog({
-                            title: 'Article ajouté au panier',
-                            message: "<p>Voulez vous voire le contenu de votre panier.</p>",
-                            buttons: {
-                                cancel: {
-                                    label: "Revenir à l'article!",
-                                    className: 'btn-danger',
-                                },
-                                ok: {
-                                    label: "Aller au panier",
-                                    className: 'btn-info',
-                                    callback: function () {
-                                        window.location.href = '/Cart';
-                                    }
-                                }
-                            }
-                        });
-                    }
-                });
-            }
-
-        </script>
-    }
-*@
 
 <!-- Leave a Review-->
 <form class="modal fade" method="post" id="leaveReview" tabindex="-1" action="/ItemAction/PushReview">

@@ -87,11 +87,6 @@ namespace DopaMarket.Controllers
             searchViewModel.Items = requestInfo.PageItems.Select(item => new SearchItemViewModel() { Item = item }).ToArray();
             searchViewModel.Brands = requestInfo.Brands;
 
-            foreach (var item in searchViewModel.Items)
-            {
-                item.Image = _context.ItemImages.Where(i => i.ItemId == item.Item.Id).FirstOrDefault();
-            }
-
             return View("Results", searchViewModel);
         }
 

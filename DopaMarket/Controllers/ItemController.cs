@@ -35,16 +35,13 @@ namespace DopaMarket.Controllers
             itemDetailModel.Reviews = _context.ItemReviews
                                               .Where(ir => ir.ItemId == item.Id)
                                               .Include(ir => ir.Customer)
+                                              .Include(ir => ir.Customer.ApplicationUser)
                                               .OrderBy(ir => ir.Date)
                                               .ToArray();
 
             itemDetailModel.Features = _context.ItemFeatures
                                                .Where(i => i.ItemId == item.Id)
                                                .ToArray();
-
-            itemDetailModel.Images = _context.ItemImages
-                                             .Where(i => i.ItemId == item.Id)
-                                             .ToArray();
 
             var starInfos = new List<StarInfo>();
             for(int i = 1;i < 6;i++)
@@ -56,6 +53,11 @@ namespace DopaMarket.Controllers
                 starInfos.Add(starInfo);
             }
             itemDetailModel.Stars = starInfos.ToArray();
+            itemDetailModel.OtherItems = _context.ItemLinks
+                                                 .Where(i => i.MainItemId == item.Id)
+                                                 .Include(i => i.OtherItem)
+                                                 .Select(i => i.OtherItem)
+                                                 .ToArray();
 
             return View("Detail", itemDetailModel);
         }
@@ -98,7 +100,7 @@ namespace DopaMarket.Controllers
         public ActionResult PushReview(int itemId, string title, int rating, string text)
         {
             var userId = User.Identity.GetUserId().ToString();
-            var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
+            var customer = _context.Customers.SingleOrDefault(c => c.ApplicationUserId == userId);
             var item = _context.Items.SingleOrDefault(i => i.Id == itemId);
 
             var itemReview = _context.ItemReviews.SingleOrDefault(ir => ir.ItemId == itemId && ir.CustomerId == customer.Id);

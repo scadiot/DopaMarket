@@ -53,7 +53,7 @@ namespace DopaMarket.Controllers
         public JsonResult RemoveItem(int id)
         {
             var userId = User.Identity.GetUserId().ToString();
-            var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
+            var customer = _context.Customers.SingleOrDefault(c => c.ApplicationUserId == userId);
 
             var itemInCart = _context.ItemCarts.SingleOrDefault(ib => ib.SessionId == Session.SessionID && ib.ItemId == id);
             if (itemInCart == null)
@@ -70,7 +70,7 @@ namespace DopaMarket.Controllers
         public JsonResult ChangeCountItem(int id, int count)
         {
                 var userId = User.Identity.GetUserId().ToString();
-                var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
+                var customer = _context.Customers.SingleOrDefault(c => c.ApplicationUserId == userId);
 
             var itemInCart = _context.ItemCarts.SingleOrDefault(ib => ib.SessionId == Session.SessionID && ib.ItemId == id);
             if (itemInCart == null)
@@ -97,7 +97,7 @@ namespace DopaMarket.Controllers
             }
 
             var userId = User.Identity.GetUserId().ToString();
-            var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
+            var customer = _context.Customers.SingleOrDefault(c => c.ApplicationUserId == userId);
 
             var items = (from i in _context.Items
                          join ib in _context.ItemCarts on i.Id equals ib.ItemId

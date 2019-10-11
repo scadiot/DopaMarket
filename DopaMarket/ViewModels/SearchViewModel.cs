@@ -9,7 +9,6 @@ namespace DopaMarket.ViewModels
     public class SearchItemViewModel
     {
         public Item Item { get; set; }
-        public ItemImage Image { get; set; }
     }
 
     public class SearchBrandViewModel

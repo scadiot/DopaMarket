@@ -48,6 +48,7 @@
 			"Height":0,
 			"Length":0,
 			"Popularity":0,
+			"ImageCount":0,
 			"Reviews" : [ {"Rate" : 1, "Title" : "", "Text" : "", "Email" : "", "InsertDate": "08/18/2018" } ],
 			"Categories" : [ "" ],
 			"Keywords" : [ "" ],
@@ -57,9 +58,7 @@
 			]
 		}
 	],
-	"ItemLink" : [
-		{ "MainItem" : "", "OtherItem" : ""}
-	],
+	"ItemLinks" : [ {"Item1" : "", "Item2" : ""}],
 	"Orders" : [
 	    "Key" : "",
 		"Customer" : "",

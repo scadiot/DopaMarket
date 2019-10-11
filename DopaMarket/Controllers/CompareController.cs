@@ -20,10 +20,10 @@ namespace DopaMarket.Controllers
         public ActionResult Index()
         {
             var items = (from i in _context.Items
-                         join sg in _context.CompareGroups on i.CompareGroupId equals sg.Id
-                         where sg.LinkName == "processeur"
-                         //join ib in _context.ItemCompares on i.Id equals ib.ItemId
-                         //where ib.SessionId == Session.SessionID
+                         //join sg in _context.CompareGroups on i.CompareGroupId equals sg.Id
+                         //where sg.LinkName == "processeur"
+                         join ib in _context.ItemCompares on i.Id equals ib.ItemId
+                         where ib.SessionId == Session.SessionID
                          select i).ToArray();
 
             CompareViewModel CompareViewModel = new CompareViewModel();
@@ -126,9 +126,9 @@ namespace DopaMarket.Controllers
             return value;
         }
 
-        public ActionResult AddItemp(int id)
+        public ActionResult AddItem(int id)
         {
-            if (_context.ItemCarts.Any(ib => ib.SessionId == Session.SessionID && ib.ItemId == id))
+            if (_context.ItemCompares.Any(ib => ib.SessionId == Session.SessionID && ib.ItemId == id))
             {
                 return Json(new { result = "error", message = "already exist" }, JsonRequestBehavior.AllowGet);
             }
@@ -140,6 +140,16 @@ namespace DopaMarket.Controllers
             _context.SaveChanges();
 
             return Json(new { result = "added" }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult RemoveItem(int id)
+        {
+            var itemCompare = _context.ItemCompares.SingleOrDefault(ib => ib.SessionId == Session.SessionID && ib.ItemId == id);
+            if(itemCompare != null)
+            {
+                _context.ItemCompares.Remove(itemCompare);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index", "Compare");
         }
     }
 }

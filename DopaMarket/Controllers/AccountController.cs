@@ -191,7 +191,7 @@ namespace DopaMarket.Controllers
 
 
                     var customer = new Customer();
-                    customer.IdentityUserId = user.Id;
+                    customer.ApplicationUserId = user.Id;
                     customer.FirstName = model.FirstName;
                     customer.LastName = model.LastName;
                     customer.AddressId = null;

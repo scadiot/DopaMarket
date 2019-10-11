@@ -205,6 +205,7 @@
 			"Height":10,
 			"Length":10,
 			"Popularity":400,
+			"ImageCount":4,
 			"Reviews" : [ 
 				{"Rate" : 5, "Title" : "Excelent produit", "Text" : "Ce processeur est une vraie bouffée d'air pour mon PC de bureau, et je n'ai pas cassé ma tirelire, parce que j'ai conservé le boitier, l'alim, le clavier, tous les disques, et que je n'ai pas acheté de carte graphique.", "Email" : "user1@outlook.fr" },
 				{"Rate" : 5, "Title" : "Bon processeur", "Text" : "AMD revient très fort avec ce Ryzen 5 3600. Ce processeur milieu de gamme est un concurrent direct au i5 9600.", "Email" : "user2@outlook.fr" },
@@ -244,6 +245,7 @@
 			"Height":10,
 			"Length":10,
 			"Popularity":200,
+			"ImageCount":4,
 			"Reviews" : [ 
 				{"Rate" : 3, "Title" : "Attention a la compatibilité", "Text" : "Un processeur plutôt puissant pour le prix, avec une carte graphique intégrée qui permet de jouer raisonnablement.", "Email" : "user7@outlook.fr" },
 				{"Rate" : 5, "Title" : "Processeur puissant rapide", "Text" : "excellent processeur puissant rapide", "Email" : "user8@outlook.fr" }
@@ -275,6 +277,7 @@
 			"Height":10,
 			"Length":10,
 			"Popularity":150,
+			"ImageCount":1,
 			"Reviews" : [ 
 				{"Rate" : 4, "Title" : "Bon processeur", "Text" : "Fait le boulot sans trop se ruiner.", "Email" : "user3@outlook.fr" },
 				{"Rate" : 5, "Title" : "CPU solide", "Text" : "Un i5, j'étais pas séduis, on me l'a conseillé, et là POUF.... L'amour charnelle ! Incroyable, aucun soucis, mon pc tourne à fond, je fais même tourner Star Citizen sans aucun soucis, ni latence !...", "Email" : "user7@outlook.fr" } 
@@ -305,6 +308,7 @@
 			"Height":10,
 			"Length":10,
 			"Popularity":100,
+			"ImageCount":1,
 			"Reviews" : [ 
 				{"Rate" : 5, "Title" : "Un processeur qui a du répondant", "Text" : "Codant des fonctions assez gourmandes, j'ai des temps de calcul vraiment améliorés avec ce proc'", "Email" : "user3@outlook.fr" },
 				{"Rate" : 5, "Title" : "Produit au top !", "Text" : "Le produit est très performant, de plus il est facile à monter, et overclockable, rien à ajouter il est très bien.", "Email" : "user7@outlook.fr" } 
@@ -321,6 +325,14 @@
 				{ "specification" : "cache_l3", "IntegerValue" : 12 }
 			]
 		}
+	],
+	"ItemLinks" : [ 
+		{"Item1" : "intel_core_i7_9700k", "Item2" : "intel_core_i5_9600k"}, 
+		{"Item1" : "intel_core_i7_9700k", "Item2" : "amd_ryzen_5_3600"}, 
+		{"Item1" : "intel_core_i7_9700k", "Item2" : "amd_ryzen_3_3200g"}, 
+		{"Item1" : "intel_core_i5_9600k", "Item2" : "amd_ryzen_5_3600"},
+		{"Item1" : "intel_core_i5_9600k", "Item2" : "amd_ryzen_3_3200g"},
+		{"Item1" : "amd_ryzen_5_3600", "Item2" : "amd_ryzen_3_3200g"}
 	],
 	"Orders" : [
 		{

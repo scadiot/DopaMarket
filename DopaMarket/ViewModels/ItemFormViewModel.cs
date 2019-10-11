@@ -15,7 +15,6 @@ namespace DopaMarket.ViewModels
         public IEnumerable<SelectListItem> Categories { get; set; }
         public string Keywords { get; set; }
         public HttpPostedFileBase[] UploadImages { get; set; }
-        public IEnumerable<ItemImage> Images { get; set; }
         public IEnumerable<SelectListItem> Brands { get; set; }
 
         [DataType(DataType.MultilineText)]

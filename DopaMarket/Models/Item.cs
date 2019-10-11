@@ -64,5 +64,7 @@ namespace DopaMarket.Models
 
         [DataType("decimal(16 ,3")]
         public decimal Length { get; set; }
+
+        public int ImageCount { get; set; }
     }
 }

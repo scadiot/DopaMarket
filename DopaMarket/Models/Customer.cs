@@ -11,7 +11,8 @@ namespace DopaMarket.Models
         public int Id { get; set; }
 
         [Required]
-        public string IdentityUserId { get; set; }
+        public string ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
 
         [Required]
         public string FirstName { get; set; }

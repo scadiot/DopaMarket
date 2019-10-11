@@ -280,6 +280,14 @@
     <Compile Include="Migrations\201910101504469_SpecificationGroups.Designer.cs">
       <DependentUpon>201910101504469_SpecificationGroups.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910111004217_RemoveImageTable.cs" />
+    <Compile Include="Migrations\201910111004217_RemoveImageTable.Designer.cs">
+      <DependentUpon>201910111004217_RemoveImageTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910111425021_ApplicationUserLink.cs" />
+    <Compile Include="Migrations\201910111425021_ApplicationUserLink.Designer.cs">
+      <DependentUpon>201910111425021_ApplicationUserLink.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -292,7 +300,6 @@
     <Compile Include="Models\ItemCompare.cs" />
     <Compile Include="Models\ItemReview.cs" />
     <Compile Include="Models\ItemFeature.cs" />
-    <Compile Include="Models\ItemImage.cs" />
     <Compile Include="Models\ItemSpecification.cs" />
     <Compile Include="Models\OrderOperation.cs" />
     <Compile Include="Models\Specification.cs" />
@@ -458,6 +465,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910101504469_SpecificationGroups.resx">
       <DependentUpon>201910101504469_SpecificationGroups.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910111004217_RemoveImageTable.resx">
+      <DependentUpon>201910111004217_RemoveImageTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910111425021_ApplicationUserLink.resx">
+      <DependentUpon>201910111425021_ApplicationUserLink.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

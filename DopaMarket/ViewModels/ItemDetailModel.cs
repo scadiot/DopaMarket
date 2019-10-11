@@ -24,9 +24,10 @@ namespace DopaMarket.ViewModels
         public Models.Item Item { get; set; }
         public IEnumerable<ItemSpecificationModel> ItemSpecifications { get; set; }
         public IEnumerable<Models.ItemReview> Reviews { get; set; }
-        public IEnumerable<Models.ItemImage> Images { get; set; }
         public IEnumerable<Models.ItemFeature> Features { get; set; }
 
         public IEnumerable<StarInfo> Stars { get; set; }
+
+        public IEnumerable<Models.Item> OtherItems { get; set; }
     }
 }

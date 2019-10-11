@@ -39,6 +39,7 @@ namespace DopaMarket.Controllers.Administration
             ImportCompareGroupSpecifications(parsedData);
             ImportBrands(parsedData);
             ImportItems(parsedData);
+            ImportItemLinks(parsedData);
             ImportOrders(parsedData);
             UpdateCategoriesItemsCount();
 
@@ -70,11 +71,11 @@ namespace DopaMarket.Controllers.Administration
                     }
                 }
 
-                var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == applicationUser.Id);
+                var customer = _context.Customers.SingleOrDefault(c => c.ApplicationUserId == applicationUser.Id);
                 if (customer == null)
                 {
                     customer = new Models.Customer();
-                    customer.IdentityUserId = applicationUser.Id;
+                    customer.ApplicationUserId = applicationUser.Id;
                     _context.Customers.Add(customer);
                 }
                 customer.FirstName = customerData.FirstName;
@@ -250,6 +251,8 @@ namespace DopaMarket.Controllers.Administration
                 item.Height = itemData.Height;
                 item.Length = itemData.Length;
                 item.SKU = "";
+                item.Popularity = itemData.Popularity;
+                item.ImageCount = itemData.ImageCount;
                 _context.SaveChanges();
 
                 ImportReview(item, itemData.Reviews);
@@ -266,7 +269,7 @@ namespace DopaMarket.Controllers.Administration
             foreach (var reviewData in reviews)
             {
                 var applicationUser = _context.Users.Single(u => u.Email == reviewData.Email);
-                var customer = _context.Customers.Single(c => c.IdentityUserId == applicationUser.Id);
+                var customer = _context.Customers.Single(c => c.ApplicationUserId == applicationUser.Id);
 
                 var review = _context.ItemReviews.SingleOrDefault(r => r.ItemId == item.Id && r.CustomerId == customer.Id);
                 if(review == null)
@@ -378,6 +381,14 @@ namespace DopaMarket.Controllers.Administration
             }
         }
 
+        void ImportOtherItems(Models.Item item, IEnumerable<string> otherItems)
+        {
+            foreach (var otherItemData in otherItems)
+            {
+                var otherItem = _context.Items.SingleOrDefault();
+            }
+        }
+
         void ImportOrders(Data parsedData)
         {
             Dictionary<string, OrderStatus> StringToOrderStatus = new Dictionary<string, OrderStatus>()
@@ -389,7 +400,7 @@ namespace DopaMarket.Controllers.Administration
             foreach (var orderData in parsedData.Orders)
             {
                 var applicationUser = _context.Users.Single(u => u.Email == orderData.Customer);
-                var customer = _context.Customers.Single(c => c.IdentityUserId == applicationUser.Id);
+                var customer = _context.Customers.Single(c => c.ApplicationUserId == applicationUser.Id);
 
                 var order = _context.Orders.SingleOrDefault(o => o.Key == orderData.Key);
                 if (order == null)
@@ -406,6 +417,33 @@ namespace DopaMarket.Controllers.Administration
                 _context.SaveChanges();
 
                 ImportOrderItems(order, orderData.Items);
+            }
+        }
+
+        void ImportItemLinks(Data data)
+        {
+            foreach(var itemLinkData in data.ItemLinks)
+            {
+                var item1 = _context.Items.Single(i => i.LinkName == itemLinkData.Item1);
+                var item2 = _context.Items.Single(i => i.LinkName == itemLinkData.Item2);
+
+                var itemLink1 = _context.ItemLinks.SingleOrDefault(il => il.MainItemId == item1.Id && il.OtherItem.Id == item2.Id);
+                if(itemLink1 == null)
+                {
+                    itemLink1 = new Models.ItemLink();
+                    itemLink1.MainItemId = item1.Id;
+                    itemLink1.OtherItemId = item2.Id;
+                    _context.ItemLinks.Add(itemLink1);
+                }
+
+                var itemLink2 = _context.ItemLinks.SingleOrDefault(il => il.MainItemId == item2.Id && il.OtherItem.Id == item1.Id);
+                if (itemLink2 == null)
+                {
+                    itemLink2 = new Models.ItemLink();
+                    itemLink2.MainItemId = item2.Id;
+                    itemLink2.OtherItemId = item1.Id;
+                    _context.ItemLinks.Add(itemLink2);
+                }
             }
         }
 
@@ -552,11 +590,20 @@ namespace DopaMarket.Controllers.Administration
 			public decimal Width { get; set; }
 			public decimal Height { get; set; }
 			public decimal Length { get; set; }
+            public int Popularity { get; set; }
+            public int ImageCount { get; set; }
             public IList<Review> Reviews { get; set; }
             public IList<string> Categories { get; set; }
             public IList<string> Keywords { get; set; }
             public IList<string> Features { get; set; }
             public IList<ItemSpecification> ItemSpecifications { get; set; }
+            public IList<string> OtherItems { get; set; }
+        }
+
+        public class ItemLink
+        {
+            public string Item1 { get; set; }
+            public string Item2 { get; set; }
         }
 
         public class Order
@@ -595,6 +642,7 @@ namespace DopaMarket.Controllers.Administration
             public IList<CompareGroupSpecification> CompareGroupSpecifications { get; set; }
             public IList<Brand> Brands { get; set; }
             public IList<Item> Items { get; set; }
+            public IList<ItemLink> ItemLinks { get; set; }
             public IList<Order> Orders { get; set; }
         }
     }

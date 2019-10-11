@@ -22,7 +22,7 @@ namespace DopaMarket.Controllers
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId().ToString();
-            var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
+            var customer = _context.Customers.SingleOrDefault(c => c.ApplicationUserId == userId);
 
             var costumerOrdersViewModel = new CostumerOrdersViewModel();
             costumerOrdersViewModel.Orders = _context.Orders.Where(o => o.CustomerId == customer.Id).OrderBy(o => o.Date).ToArray();
@@ -33,7 +33,7 @@ namespace DopaMarket.Controllers
         public ActionResult Create()
         {
             var userId = User.Identity.GetUserId().ToString();
-            var customer = _context.Customers.SingleOrDefault(c => c.IdentityUserId == userId);
+            var customer = _context.Customers.SingleOrDefault(c => c.ApplicationUserId == userId);
 
             var itemsToOrder = _context.ItemCarts
                                       .Where(ib => ib.SessionId == Session.SessionID)
