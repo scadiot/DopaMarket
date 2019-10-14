@@ -159,7 +159,8 @@
 		}
 	],
 	"Categories" : [
-		{ "Name" : "Processeurs", "LinkName" : "processeur", "Parent" : "" },
+		{ "Name" : "Composant PC", "LinkName" : "composant_pc", "Parent" : "" },
+		{ "Name" : "Processeurs", "LinkName" : "processeur", "Parent" : "composant_pc" },
 		{ "Name" : "Smartphones", "LinkName" : "smartphones", "Parent" : "" }
 	],
 	"SpecificationGroups" : [
@@ -249,6 +250,7 @@
 		{ "Name" : "Intel", "LinkName" : "intel" },
 		{ "Name" : "AMD", "LinkName" : "amd" },
 		{ "Name" : "Honor", "LinkName" : "honor" },
+		{ "Name" : "Samsung", "LinkName" : "samsung" }
 	],
 	"Items" : [
 		{
@@ -279,7 +281,7 @@
 				{"Rate" : 4, "Title" : "Très Performant", "Text" : "Difficile de passer à côté des nouveaux Ryzen tant ils ont fait parler d'eux de par leurs performances de haute volée.", "Email" : "user9@outlook.fr" },
 				{"Rate" : 5, "Title" : "Très rapide", "Text" : "Top Rapide.!", "Email" : "user10@outlook.fr" }
 			],
-			"Categories" : [ "processeur" ],
+			"Categories" : [ "processeur", "composant_pc" ],
 			"Keywords" : [ "ryzen", "5", "3600", "amd", "processeur", "ryzen5", "AM4" ],
 			"Features" : [ "AMD 3600", "Ryzen. Famille de processeur: AMD Ryzen 5", "Fréquence du processeur: 3, 6 Ghz", "Socket de processeur (réceptacle de processeur): emplacement AM4.", "Canaux de mémoire pris en charge par le processeur: Dual", "Types de mémoires pris en charge par le processeur: ddr4-sdram", "Vitesses d'horloge de mémoire prises en charge par le processeur: 3200 MHz" ],
 			"ItemSpecifications" : [	
@@ -312,7 +314,7 @@
 				{"Rate" : 3, "Title" : "Attention a la compatibilité", "Text" : "Un processeur plutôt puissant pour le prix, avec une carte graphique intégrée qui permet de jouer raisonnablement.", "Email" : "user7@outlook.fr" },
 				{"Rate" : 5, "Title" : "Processeur puissant rapide", "Text" : "excellent processeur puissant rapide", "Email" : "user8@outlook.fr" }
 			],
-			"Categories" : [ "processeur" ],
+			"Categories" : [ "processeur", "composant_pc" ],
 			"Keywords" : [ "ryzen", "3", "3200G", "3200", "amd", "processeur", "ryzen3", "AM4" ],
 			"Features" : [ "AMD 3200G. CMOS: 12nm FinFET", 	"Ryzen. Famille de processeur: AMD Ryzen 3", "Fréquence du processeur: 3, 6 Ghz", "Socket de processeur (réceptacle de processeur): emplacement AM4", "Canaux de mémoire pris en charge par le processeur: Dual", "Types de mémoires pris en charge par le processeur: ddr4-sdram", "Vitesses d'horloge de mémoire prises en charge par le processeur: 2933 MHz" ],
 			"ItemSpecifications" : [	
@@ -345,7 +347,7 @@
 				{"Rate" : 4, "Title" : "Bon processeur", "Text" : "Fait le boulot sans trop se ruiner.", "Email" : "user3@outlook.fr" },
 				{"Rate" : 5, "Title" : "CPU solide", "Text" : "Un i5, j'étais pas séduis, on me l'a conseillé, et là POUF.... L'amour charnelle ! Incroyable, aucun soucis, mon pc tourne à fond, je fais même tourner Star Citizen sans aucun soucis, ni latence !...", "Email" : "user7@outlook.fr" } 
 			],
-			"Categories" : [ "processeur" ],
+			"Categories" : [ "processeur", "composant_pc" ],
 			"Keywords" : [ "core", "i5", "5", "9600", "9600k", "intel", "processeur", "Coffee", "Lake", "1151" ],
 			"Features" : [ "Fréquence de base 3,70 GHz / Mode Turbo Boost 3.0 à 4.60 GHz", "Plateforme Intel Coffee Lake Refresh - 9ème génération de processeurs", "Socket compatible Intel LGA 1151", "Compatible avec les contrôleurs cartes mères série 300 et nouvelles Z390", "Mémoire cache 9 Mo", "Contrôleur graphique Intel HD 630", "Contrôleur mémoire Dual Channel DDR4 2666 MHz", "Enveloppe thermique maximale (TDP) : 95W" ],
 			"ItemSpecifications" : [	
@@ -377,7 +379,7 @@
 				{"Rate" : 5, "Title" : "Un processeur qui a du répondant", "Text" : "Codant des fonctions assez gourmandes, j'ai des temps de calcul vraiment améliorés avec ce proc'", "Email" : "user3@outlook.fr" },
 				{"Rate" : 5, "Title" : "Produit au top !", "Text" : "Le produit est très performant, de plus il est facile à monter, et overclockable, rien à ajouter il est très bien.", "Email" : "user7@outlook.fr" } 
 			],
-			"Categories" : [ "processeur" ],
+			"Categories" : [ "processeur", "composant_pc" ],
 			"Keywords" : [ "core", "i7", "7", "9700", "9700K", "intel", "processeur", "Coffee", "Lake", "1151" ],
 			"Features" : [ "Fréquence de base 3,60 GHz / Mode Turbo Boost 3.0 à 4.90 GHz", "Plateforme Intel Coffee Lake Refresh - 9ème génération de processeurs", "Socket compatible Intel LGA 1151", "Compatible avec les contrôleurs cartes mères série 300 et nouvelles Z390", "Mémoire cache 12 Mo", "Contrôleur graphique Intel HD 630", "Contrôleur mémoire Dual Channel DDR4 2666 MHz", "Enveloppe thermique maximale (TDP) : 95W"],
 			"ItemSpecifications" : [	
@@ -429,6 +431,54 @@
 				{ "specification" : "memoire_extensible_smartphone", "BooleanValue" : false },
 				{ "specification" : "memoire_ram_smartphone", "IntegerValue" : 6 },
 				{ "specification" : "resolution_smartphone", "IntegerValue" : 48 },
+				{ "specification" : "photo_3d_smartphone", "BooleanValue" : true },
+				{ "specification" : "video_hd_smartphone", "BooleanValue" : true },
+				{ "specification" : "gps_smartphone", "BooleanValue" : true },
+				{ "specification" : "connecteur_disponible_smartphone", "StringValue" : "Casque (Jack 3.5mm Femelle)\nUSB Type C Femelle" },
+				{ "specification" : "norme_reseau_sans_fil_smartphone", "StringValue" : "Wi-Fi A (IEEE 802.11a)\nWi-Fi AC\nWi-Fi B (IEEE 802.11b)\nWi-Fi G (IEEE 802.11g)\n" },
+				{ "specification" : "technologie_bluetooth_smartphone", "StringValue" : "Bluetooth 5.0" }
+			]
+		},
+		{
+			"Name" : "Samsung Galaxy A40 (noir) - 64 Go - 4 Go",
+			"LinkName" : "samsung_galaxy_a40_64_go_4_go",
+			"InsertDate": "28/02/2015",
+			"TinyDescriptive" : "un écran Super AMOLED de 5,9 pouces sous la barre des 260 €.",
+			"Descriptive" : "Samsung continue son offensive sur les smartphones milieu de gamme avec le Galaxy A40 ! Et il pose les bases d'entrée de jeu avec un argument massue : un écran Super AMOLED de 5,9 pouces sous la barre des 260 €. Et afin de bien asseoir son assise, le coréen nous propose également à ce prix un double capteur principal de 16 + 5 mégapixels, dont le premier objectif ouvre à f/1,7, un capteur frontal de 25 mégapixels, et une combinaison 4 Go de RAM + 64 Go de stockage qui devrait déclencher quelques sueurs froides chez la concurrence",
+			"CurrentPrice" : 259.95,
+			"Brand" : "samsung",
+			"MainCategory" : "smartphones",
+			"Weight":100,
+			"Width":10,
+			"Height":10,
+			"Length":10,
+			"Popularity":200,
+			"ImageCount":2,
+			"CompareGroup":"smartphones",
+			"Reviews" : [ 
+				{"Rate" : 4, "Title" : "Compact, endurant et performant", "Text" : "Un smartphone android conforme à l'attendu. Je remplaçais un A3 2016 à bout de souffle en mémoire et plus aussi endurant qu'auparavant, et j'étais en recherche d'une (relative) compacité.", "Email" : "user3@outlook.fr" },
+				{"Rate" : 4, "Title" : "Assez satisfait", "Text" : "Je cherchais un téléphone pour remplacer mon vieux S3. Le A40 n'est pas beaucoup plus gros, l'interface est simple et fluide et l'appareil photo est de bonne facture.", "Email" : "user7@outlook.fr" } 
+			],
+			"Categories" : [ "smartphones" ],
+			"Keywords" : [ "samsung", "galaxy", "a40", "64", "go", "smartphone","telephone" ],
+			"Features" : [ "NOUVEL ÉCRAN PANORAMIQUE 5, 9’’ FHD+", "DOUBLE CAPTEUR PHOTO Ultra Grand Angle 123°", "CAPTEUR FRONTAL 25 MP Des selfiesde qualité", "BATTERIE LONGUE DURÉE Charge rapide 3100 mAh", "Autonomie en lecture audio (heures): Jusqu'à 62" ],
+			"ItemSpecifications" : [	
+				{ "specification" : "dual_sim", "BooleanValue" : true },
+				{ "specification" : "format_sim", "StringValue" : "Nano-SIM" },
+				{ "specification" : "frequence_smartphone", "StringValue" : "4G" },
+				{ "specification" : "frequences_de_fonctionnement_smartphone", "StringValue" : "GSM 1800\nGSM 1900\nGSM 850\nGSM 900" },
+				{ "specification" : "transfert_de_donnees_smartphone", "StringValue" : "3G+ - HSPA\n4G - LTE\n4G - LTE Advanced" },
+				{ "specification" : "taille_d_ecran_smartphone", "DecimalValue" : 5.9 },
+				{ "specification" : "definition_ecran_smartphone", "StringValue" : "1080 x 2340 pixels" },
+				{ "specification" : "ecran_smartphone", "StringValue" : "Écran 5.9 pouces\nSuper AMOLED\nFull HD+ de 1080 x 2340 pixels (439 ppp)\nNorme HDR" },
+				{ "specification" : "type_de_processeur_smartphone", "StringValue" : "Exynos 7904 Octo-Core cadencé à 1.8 GHz" },
+				{ "specification" : "processeur_smartphone", "StringValue" : "	Exynos" },
+				{ "specification" : "nombre_de_core_smartphone", "IntegerValue" : 8 },
+				{ "specification" : "frequence_cpu_smartphone", "DecimalValue" : 1.8 },
+				{ "specification" : "memoire_smartphone", "IntegerValue" : 64 },
+				{ "specification" : "memoire_extensible_smartphone", "BooleanValue" : true },
+				{ "specification" : "memoire_ram_smartphone", "IntegerValue" : 4 },
+				{ "specification" : "resolution_smartphone", "IntegerValue" : 16 },
 				{ "specification" : "photo_3d_smartphone", "BooleanValue" : true },
 				{ "specification" : "video_hd_smartphone", "BooleanValue" : true },
 				{ "specification" : "gps_smartphone", "BooleanValue" : true },

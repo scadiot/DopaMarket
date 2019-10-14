@@ -35,11 +35,6 @@ namespace DopaMarket.Controllers
 
         public JsonResult AddItem(int id, int count)
         {
-            if(_context.ItemCarts.Any(ib => ib.SessionId == Session.SessionID && ib.ItemId == id))
-            {
-                return Json(new { result = "error", message = "already exist" }, JsonRequestBehavior.AllowGet);
-            }
-
             var itemCart = new ItemCart();
             itemCart.ItemId = id;
             itemCart.SessionId = Session.SessionID;
@@ -52,9 +47,6 @@ namespace DopaMarket.Controllers
 
         public JsonResult RemoveItem(int id)
         {
-            var userId = User.Identity.GetUserId().ToString();
-            var customer = _context.Customers.SingleOrDefault(c => c.ApplicationUserId == userId);
-
             var itemInCart = _context.ItemCarts.SingleOrDefault(ib => ib.SessionId == Session.SessionID && ib.ItemId == id);
             if (itemInCart == null)
             {
@@ -69,9 +61,6 @@ namespace DopaMarket.Controllers
 
         public JsonResult ChangeCountItem(int id, int count)
         {
-                var userId = User.Identity.GetUserId().ToString();
-                var customer = _context.Customers.SingleOrDefault(c => c.ApplicationUserId == userId);
-
             var itemInCart = _context.ItemCarts.SingleOrDefault(ib => ib.SessionId == Session.SessionID && ib.ItemId == id);
             if (itemInCart == null)
             {
@@ -91,14 +80,6 @@ namespace DopaMarket.Controllers
 
         public ActionResult ListItems()
         {
-            if(!User.Identity.IsAuthenticated)
-            {              
-                return Json( new { error = "authentication required" }, JsonRequestBehavior.AllowGet);
-            }
-
-            var userId = User.Identity.GetUserId().ToString();
-            var customer = _context.Customers.SingleOrDefault(c => c.ApplicationUserId == userId);
-
             var items = (from i in _context.Items
                          join ib in _context.ItemCarts on i.Id equals ib.ItemId
                          where ib.SessionId == Session.SessionID

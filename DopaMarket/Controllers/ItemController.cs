@@ -31,6 +31,7 @@ namespace DopaMarket.Controllers
             var itemDetailModel = new ItemDetailModel();
             itemDetailModel.Item = item;
             itemDetailModel.ItemSpecifications = getItemSpecificationsModel(item);
+            itemDetailModel.ItemSpecificationGroups = getItemSpecificationGroups(itemDetailModel.ItemSpecifications);
 
             itemDetailModel.Reviews = _context.ItemReviews
                                               .Where(ir => ir.ItemId == item.Id)
@@ -62,17 +63,18 @@ namespace DopaMarket.Controllers
             return View("Detail", itemDetailModel);
         }
 
-        ItemSpecificationModel[] getItemSpecificationsModel(Item item)
+        ItemSpecificationViewModel[] getItemSpecificationsModel(Item item)
         {
             var itemInfos = _context.ItemSpecifications
                                     .Where(ii => ii.ItemId == item.Id)
                                     .Include(ii => ii.Specification)
+                                    .Include(ii => ii.Specification.SpecificationGroup)
                                     .ToArray();
 
-            var result = new List<ItemSpecificationModel>();
+            var result = new List<ItemSpecificationViewModel>();
             foreach (var itemInfo in itemInfos)
             {
-                var ItemItemSpecificationModel = new ItemSpecificationModel();
+                var ItemItemSpecificationModel = new ItemSpecificationViewModel();
                 ItemItemSpecificationModel.Name = itemInfo.Specification.LongName;
                 switch (itemInfo.Specification.Type)
                 {
@@ -91,7 +93,27 @@ namespace DopaMarket.Controllers
                 }
                 
                 ItemItemSpecificationModel.Unity = itemInfo.Specification.Unity;
+                ItemItemSpecificationModel.Specification = itemInfo.Specification;
+                ItemItemSpecificationModel.ItemSpecification = itemInfo;
                 result.Add(ItemItemSpecificationModel);
+            }
+            return result.ToArray();
+        }
+
+        ItemSpecificationGroupViewModel[] getItemSpecificationGroups(IEnumerable<ItemSpecificationViewModel> itemSpecifications)
+        {
+            var result = new List<ItemSpecificationGroupViewModel>();
+            ItemSpecificationGroupViewModel groupViewModel = null;
+            foreach (var itemSpecification in itemSpecifications)
+            {
+                if(groupViewModel == null || groupViewModel.Group != itemSpecification.Specification.SpecificationGroup)
+                {
+                    groupViewModel = new ItemSpecificationGroupViewModel();
+                    groupViewModel.ItemSpecifications = new List<ItemSpecificationViewModel>();
+                    groupViewModel.Group = itemSpecification.Specification.SpecificationGroup;
+                    result.Add(groupViewModel);
+                }
+                groupViewModel.ItemSpecifications.Add(itemSpecification);
             }
             return result.ToArray();
         }

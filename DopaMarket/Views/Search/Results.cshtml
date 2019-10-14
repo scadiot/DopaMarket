@@ -217,33 +217,35 @@
                         }
                     </ul>
                 </section>
-                @if (Model.TotalCount > 1)
-                {
-                    <!-- Widget Price Range-->
-                    <section class="widget widget-categories">
-                        <h3 class="widget-title">Price Range</h3>
-                        <form class="price-range-slider" method="post" data-start-min="@Model.PriceRangeStart" data-start-max="@Model.PriceRangeEnd" data-min="@Model.PriceRangeMin" data-max="@Model.PriceRangeMax" data-step="1">
-                            <div class="ui-range-slider"></div>
-                            <footer class="ui-range-slider-footer">
-                                <div class="column">
-                                    <button class="btn btn-outline-primary btn-sm" type="submit">Filter</button>
+                @*
+        @if (Model.TotalCount > 1)
+        {
+            <!-- Widget Price Range-->
+            <section class="widget widget-categories">
+                <h3 class="widget-title">Price Range</h3>
+                <form class="price-range-slider" method="post" data-start-min="@Model.PriceRangeStart" data-start-max="@Model.PriceRangeEnd" data-min="@Model.PriceRangeMin" data-max="@Model.PriceRangeMax" data-step="1">
+                    <div class="ui-range-slider"></div>
+                    <footer class="ui-range-slider-footer">
+                        <div class="column">
+                            <button class="btn btn-outline-primary btn-sm" type="submit">Filter</button>
+                        </div>
+                        <div class="column">
+                            <div class="ui-range-values">
+                                <div class="ui-range-value-min">
+                                    $<span></span>
+                                    <input type="hidden">
+                                </div>&nbsp;-&nbsp;
+                                <div class="ui-range-value-max">
+                                    $<span></span>
+                                    <input type="hidden">
                                 </div>
-                                <div class="column">
-                                    <div class="ui-range-values">
-                                        <div class="ui-range-value-min">
-                                            $<span></span>
-                                            <input type="hidden">
-                                        </div>&nbsp;-&nbsp;
-                                        <div class="ui-range-value-max">
-                                            $<span></span>
-                                            <input type="hidden">
-                                        </div>
-                                    </div>
-                                </div>
-                            </footer>
-                        </form>
-                    </section>
-                }
+                            </div>
+                        </div>
+                    </footer>
+                </form>
+            </section>
+        }
+                *@
                 @if (Model.TotalCount > 1 && Model.PriceFilters != null)
                 {
                     <!-- Widget Size Filter-->

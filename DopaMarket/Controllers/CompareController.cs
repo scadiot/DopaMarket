@@ -151,5 +151,15 @@ namespace DopaMarket.Controllers
             }
             return RedirectToAction("Index", "Compare");
         }
+
+        public ActionResult ListItems()
+        {
+            var items = (from i in _context.Items
+                         join ib in _context.ItemCompares on i.Id equals ib.ItemId
+                         where ib.SessionId == Session.SessionID
+                         select i).ToArray();
+
+            return Json(items, JsonRequestBehavior.AllowGet);
+        }
     }
 }

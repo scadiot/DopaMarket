@@ -11,7 +11,7 @@
                         <div class="row">
                             @foreach (var category in ViewBag.categories)
                             {
-                                <div class="col-sm-3"><a class="d-block navi-link text-center mb-30" href="shop-grid-ls.html"><img class="d-block" src="img/shop/header-categories/01.jpg"><span class="text-gray-dark">@category.Name</span></a></div>
+                                <div class="col-sm-3"><a class="d-block navi-link text-center mb-30" href="/search?c=@category.LinkName"><img class="d-block" src="/img/categories/@(category.LinkName).jpg"><span class="text-gray-dark">@category.Name</span></a></div>
                             }
 
                         </div>
@@ -63,28 +63,45 @@
                 </a>
             </div>
         }
-        <div class="toolbar-item">
-            <a href="/Cart">
-                <div><span class="cart-icon"><i class="icon-shopping-cart"></i><span class="count-label" id="topbar-cart-count-label"></span></span><span class="text-label">Cart</span></div>
-            </a>
-            <div class="toolbar-dropdown cart-dropdown widget-cart hidden-on-mobile" id="cart-dropdown-items-container">
-                <!-- Entry-->
-                <div class="entry" id="cart-dropdown-item">
-                    <div class="entry-thumb"><a href="shop-single.html"><img src="img/shop/widget/04.jpg" alt="Product"></a></div>
-                    <div class="entry-content">
-                        <h4 class="entry-title"><a href="itemLink" class="cart-dropdown-item-link">Item Name</a></h4><span class="entry-meta">1 x $910.00</span>
+            <div class="toolbar-item">
+                <a href="/Compare">
+                    <div>
+                        <span class="compare-icon">
+                            <i class="icon-repeat"></i>
+                            <span class="count-label topbar-compare-count-label"></span>
+                        </span>
+                        <span class="text-label">Compare</span>
                     </div>
-                    <div class="entry-delete"><i class="icon-x"></i></div>
-                </div>
-                <div class="text-right">
-                    <p class="text-gray-dark py-2 mb-0"><span class='text-muted'>Subtotal:</span> &nbsp;$2,548.50</p>
+                </a>
+            </div>
+            <div class="toolbar-item">
+                <a href="/Cart">
+                    <div>
+                        <span class="cart-icon">
+                            <i class="icon-shopping-cart"></i>
+                            <span class="count-label topbar-cart-count-label"></span>
+                        </span>
+                        <span class="text-label">Cart</span>
+                    </div>
+                </a>
+                <div class="toolbar-dropdown cart-dropdown widget-cart hidden-on-mobile" id="cart-dropdown-items-container">
+                    <!-- Entry-->
+                    <div class="entry" id="cart-dropdown-item">
+                        <div class="entry-thumb"><a href="shop-single.html"><img src="img/shop/widget/04.jpg" alt="Product"></a></div>
+                        <div class="entry-content">
+                            <h4 class="entry-title"><a href="itemLink" class="cart-dropdown-item-link">Item Name</a></h4><span class="entry-meta">1 x $910.00</span>
+                        </div>
+                        <div class="entry-delete"><i class="icon-x"></i></div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-gray-dark py-2 mb-0"><span class='text-muted'>Subtotal:</span> &nbsp;$2,548.50</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Mobile Menu-->
-    @{
-        Html.RenderPartial("_MobileMenu");
-    }
+        <!-- Mobile Menu-->
+        @{
+            Html.RenderPartial("_MobileMenu");
+        }
 
-</div>
+    </div>

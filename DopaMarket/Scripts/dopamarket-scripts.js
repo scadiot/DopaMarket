@@ -20,7 +20,9 @@ jQuery(document).ready(function ($) {
             if (response.error) {
                 return;
             }
-            $("#topbar-cart-count-label").text(response.Items.length);
+            $(".topbar-cart-count-label").each(function (index) {
+                $(this).text(response.Items.length);
+            })
             for (var i = response.Items.length - 1; i >= 0; i--) {
                 var item = response.Items[i];
                 var newItem = cartDropdownItem.clone();
@@ -30,5 +32,19 @@ jQuery(document).ready(function ($) {
             }
         });
     }
+
+    function GetItemsCountInCompare() {
+        $.ajax({
+            url: "/Compare/ListItems",
+        }).done(function (response) {
+            if (response.error) {
+                return;
+            }
+            $(".topbar-compare-count-label").each(function (index) {
+                $(this).text(response.length);
+            })
+        });
+    }
     GetItemsInCart();
+    GetItemsCountInCompare();
 });

@@ -5,3 +5,7 @@
     height:700px;
     margin:10px;
 }
+
+.specification-table {
+    white-space: pre-line;
+}

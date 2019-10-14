@@ -284,7 +284,7 @@ namespace DopaMarket.Controllers
         PriceFilter[] SplitPriceRange(IQueryable<Item> items, decimal startPrice, decimal endPrice, int depth)
         {
             var result = new List<PriceFilter>();
-            decimal middle = startPrice + ((endPrice - startPrice) / 2);
+            decimal middle = decimal.Round(startPrice + ((endPrice - startPrice) / 2));
             int range1Count = items.Count(i => i.CurrentPrice >= startPrice && i.CurrentPrice < middle);
             int range2Count = items.Count(i => i.CurrentPrice >= middle && i.CurrentPrice <= endPrice);
 
