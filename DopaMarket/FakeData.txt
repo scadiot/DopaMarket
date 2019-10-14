@@ -159,11 +159,18 @@
 		}
 	],
 	"Categories" : [
-		{ "Name" : "processeur", "LinkName" : "processeur", "Parent" : "" }
+		{ "Name" : "Processeurs", "LinkName" : "processeur", "Parent" : "" },
+		{ "Name" : "Smartphones", "LinkName" : "smartphones", "Parent" : "" }
 	],
 	"SpecificationGroups" : [
 		{ "Name" : "principales_caracteristiques", "LongName" : "Principales caractéristiques" },
-		{ "Name" : "architecture", "LongName" : "Architecture" }
+		{ "Name" : "architecture", "LongName" : "Architecture" },
+		{ "Name" : "telephonie", "LongName" : "Téléphonie" },
+		{ "Name" : "ecran_smartphone", "LongName" : "Ecran" },
+		{ "Name" : "processeur_smartphone", "LongName" : "Processeur" },
+		{ "Name" : "memoire_smartphone", "LongName" : "Mémoire" },
+		{ "Name" : "multimedia_smartphone", "LongName" : "Multimédia" },
+		{ "Name" : "connectivite_smartphone", "LongName" : "Connectivité" }
 	],
 	"Specifications" : [
 		{ "Name" : "support_processeur", "Type" : "String", "Unity" : "", "LongName" : "Support du processeur", "Group":"principales_caracteristiques" },
@@ -172,10 +179,39 @@
 		{ "Name" : "nombre_core", "Type" : "Interger", "Unity" : "", "LongName" : "Nombre de core", "Group":"principales_caracteristiques" },
 		{ "Name" : "nombre_threads", "Type" : "Interger", "Unity" : "", "LongName" : "Nombre de Threads", "Group":"principales_caracteristiques" },
 		{ "Name" : "cache_l2", "Type" : "Interger", "Unity" : "Mo", "LongName" : "Cache L2", "Group":"architecture" },
-		{ "Name" : "cache_l3", "Type" : "Interger", "Unity" : "Mo", "LongName" : "Cache L3", "Group":"architecture" }
+		{ "Name" : "cache_l3", "Type" : "Interger", "Unity" : "Mo", "LongName" : "Cache L3", "Group":"architecture" },
+		
+		{ "Name" : "dual_sim", "Type" : "Boolean", "Unity" : "", "LongName" : "Dual SIM", "Group":"telephonie" },
+		{ "Name" : "format_sim", "Type" : "String", "Unity" : "", "LongName" : "Format(s) SIM", "Group":"telephonie" },
+		{ "Name" : "frequence_smartphone", "Type" : "String", "Unity" : "", "LongName" : "Fréquence", "Group":"telephonie" },
+		{ "Name" : "frequences_de_fonctionnement_smartphone", "Type" : "String", "Unity" : "", "LongName" : "Fréquences de fonctionnement", "Group":"telephonie" },
+		{ "Name" : "transfert_de_donnees_smartphone", "Type" : "String", "Unity" : "", "LongName" : "Transfert de données", "Group":"telephonie" },
+		
+		{ "Name" : "taille_d_ecran_smartphone", "Type" : "Decimal", "Unity" : "pouces", "LongName" : "Taille d'écran", "Group":"ecran_smartphone" },
+		{ "Name" : "definition_ecran_smartphone", "Type" : "String", "Unity" : "", "LongName" : "Définition Écran", "Group":"ecran_smartphone" },
+		{ "Name" : "ecran_smartphone", "Type" : "String", "Unity" : "", "LongName" : "Ecran", "Group":"ecran_smartphone" },
+		
+		{ "Name" : "type_de_processeur_smartphone", "Type" : "String", "Unity" : "", "LongName" : "Type de processeur", "Group":"processeur_smartphone" },
+		{ "Name" : "processeur_smartphone", "Type" : "String", "Unity" : "", "LongName" : "Processeur", "Group":"processeur_smartphone" },
+		{ "Name" : "nombre_de_core_smartphone", "Type" : "Interger", "Unity" : "", "LongName" : "Nombre de core", "Group":"processeur_smartphone" },
+		{ "Name" : "frequence_cpu_smartphone", "Type" : "Decimal", "Unity" : "Ghz", "LongName" : "Fréquence CPU", "Group":"processeur_smartphone" },
+		
+		{ "Name" : "memoire_smartphone", "Type" : "Interger", "Unity" : "Go", "LongName" : "Type de processeur", "Group":"memoire_smartphone" },
+		{ "Name" : "memoire_extensible_smartphone", "Type" : "Boolean", "Unity" : "", "LongName" : "Mémoire extensible", "Group":"memoire_smartphone" },
+		{ "Name" : "memoire_ram_smartphone", "Type" : "Interger", "Unity" : "Go", "LongName" : "Nombre de core", "Group":"memoire_smartphone" },
+		
+		{ "Name" : "resolution_smartphone", "Type" : "Interger", "Unity" : "Megapixels", "LongName" : "Résolution", "Group":"multimedia_smartphone" },
+		{ "Name" : "photo_3d_smartphone", "Type" : "Boolean", "Unity" : "", "LongName" : "Photo 3D", "Group":"multimedia_smartphone" },
+		{ "Name" : "video_hd_smartphone", "Type" : "Boolean", "Unity" : "", "LongName" : "Vidéo HD", "Group":"multimedia_smartphone" },
+		{ "Name" : "gps_smartphone", "Type" : "Boolean", "Unity" : "", "LongName" : "GPS", "Group":"multimedia_smartphone" },
+		
+		{ "Name" : "connecteur_disponible_smartphone", "Type" : "String", "Unity" : "", "LongName" : "Connecteur(s) disponible(s)", "Group":"connectivite_smartphone" },
+		{ "Name" : "norme_reseau_sans_fil_smartphone", "Type" : "String", "Unity" : "", "LongName" : "Norme(s) réseau sans-fil", "Group":"connectivite_smartphone" },
+		{ "Name" : "technologie_bluetooth_smartphone", "Type" : "String", "Unity" : "", "LongName" : "Technologie Bluetooth", "Group":"connectivite_smartphone" }
 	],
 	"CompareGroups" : [
-		{ "Name" : "Processeur", "LinkName" : "processeur" }
+		{ "Name" : "Processeur", "LinkName" : "processeur" },
+		{ "Name" : "Smartphones", "LinkName" : "smartphones" }
 	],
 	"CompareGroupSpecifications" : [
 		{ "CompareGroup" : "processeur", "Specification" : "support_processeur" },
@@ -184,11 +220,35 @@
 		{ "CompareGroup" : "processeur", "Specification" : "nombre_core" },
 		{ "CompareGroup" : "processeur", "Specification" : "nombre_threads" },
 		{ "CompareGroup" : "processeur", "Specification" : "cache_l2" },
-		{ "CompareGroup" : "processeur", "Specification" : "cache_l3" }
+		{ "CompareGroup" : "processeur", "Specification" : "cache_l3" },
+		
+		{ "CompareGroup" : "smartphones", "Specification" : "dual_sim" },
+		{ "CompareGroup" : "smartphones", "Specification" : "format_sim" },
+		{ "CompareGroup" : "smartphones", "Specification" : "frequence_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "frequences_de_fonctionnement_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "transfert_de_donnees_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "taille_d_ecran_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "definition_ecran_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "ecran_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "type_de_processeur_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "processeur_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "nombre_de_core_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "frequence_cpu_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "memoire_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "memoire_extensible_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "memoire_ram_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "resolution_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "photo_3d_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "video_hd_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "gps_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "connecteur_disponible_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "norme_reseau_sans_fil_smartphone" },
+		{ "CompareGroup" : "smartphones", "Specification" : "technologie_bluetooth_smartphone" }
 	],
 	"Brands" : [
 		{ "Name" : "Intel", "LinkName" : "intel" },
-		{ "Name" : "AMD", "LinkName" : "amd" }
+		{ "Name" : "AMD", "LinkName" : "amd" },
+		{ "Name" : "Honor", "LinkName" : "honor" },
 	],
 	"Items" : [
 		{
@@ -206,6 +266,7 @@
 			"Length":10,
 			"Popularity":400,
 			"ImageCount":4,
+			"CompareGroup":"processeur",
 			"Reviews" : [ 
 				{"Rate" : 5, "Title" : "Excelent produit", "Text" : "Ce processeur est une vraie bouffée d'air pour mon PC de bureau, et je n'ai pas cassé ma tirelire, parce que j'ai conservé le boitier, l'alim, le clavier, tous les disques, et que je n'ai pas acheté de carte graphique.", "Email" : "user1@outlook.fr" },
 				{"Rate" : 5, "Title" : "Bon processeur", "Text" : "AMD revient très fort avec ce Ryzen 5 3600. Ce processeur milieu de gamme est un concurrent direct au i5 9600.", "Email" : "user2@outlook.fr" },
@@ -246,6 +307,7 @@
 			"Length":10,
 			"Popularity":200,
 			"ImageCount":4,
+			"CompareGroup":"processeur",
 			"Reviews" : [ 
 				{"Rate" : 3, "Title" : "Attention a la compatibilité", "Text" : "Un processeur plutôt puissant pour le prix, avec une carte graphique intégrée qui permet de jouer raisonnablement.", "Email" : "user7@outlook.fr" },
 				{"Rate" : 5, "Title" : "Processeur puissant rapide", "Text" : "excellent processeur puissant rapide", "Email" : "user8@outlook.fr" }
@@ -278,6 +340,7 @@
 			"Length":10,
 			"Popularity":150,
 			"ImageCount":1,
+			"CompareGroup":"processeur",
 			"Reviews" : [ 
 				{"Rate" : 4, "Title" : "Bon processeur", "Text" : "Fait le boulot sans trop se ruiner.", "Email" : "user3@outlook.fr" },
 				{"Rate" : 5, "Title" : "CPU solide", "Text" : "Un i5, j'étais pas séduis, on me l'a conseillé, et là POUF.... L'amour charnelle ! Incroyable, aucun soucis, mon pc tourne à fond, je fais même tourner Star Citizen sans aucun soucis, ni latence !...", "Email" : "user7@outlook.fr" } 
@@ -309,6 +372,7 @@
 			"Length":10,
 			"Popularity":100,
 			"ImageCount":1,
+			"CompareGroup":"processeur",
 			"Reviews" : [ 
 				{"Rate" : 5, "Title" : "Un processeur qui a du répondant", "Text" : "Codant des fonctions assez gourmandes, j'ai des temps de calcul vraiment améliorés avec ce proc'", "Email" : "user3@outlook.fr" },
 				{"Rate" : 5, "Title" : "Produit au top !", "Text" : "Le produit est très performant, de plus il est facile à monter, et overclockable, rien à ajouter il est très bien.", "Email" : "user7@outlook.fr" } 
@@ -323,6 +387,54 @@
 				{ "specification" : "nombre_core", "IntegerValue" : 8 },
 				{ "specification" : "nombre_threads", "IntegerValue" : 8 },
 				{ "specification" : "cache_l3", "IntegerValue" : 12 }
+			]
+		},
+		{
+			"Name" : "Honor View 20 (noir) - 128 Go - 6 Go",
+			"LinkName" : "honor_view_20_noir_128_go_6_go",
+			"InsertDate": "28/02/2015",
+			"TinyDescriptive" : "Le Honor View 20 est un nouveau géant, et ce sous bien des aspects.",
+			"Descriptive" : "Le Honor View 20 est un nouveau géant, et ce sous bien des aspects. Tout d'abord, côté face, impossible de ne pas remarquer cet écran géant de 6,4 pouces, simplement percé d'un petit trou de 4 mm de diamètre, occupant la quasi intégralité de la façade pour un encombrement réduit et une vista hors normes. Les réjouissances se poursuivent avec une configuration aux petits oignons : un processeur Kirin 980, 6 Go de RAM et 128 Go de mémoire. Il faudra vous lever tôt pour espérer le faire ramer ou le remplir jusqu'à saturation. A moins que vous ne deveniez accro à son appareil photo principal de 48 mégapixels, accompagné d'un capteur TOF pour des clichés à couper le souffle.",
+			"CurrentPrice" : 549.00,
+			"Brand" : "honor",
+			"MainCategory" : "smartphones",
+			"Weight":100,
+			"Width":10,
+			"Height":10,
+			"Length":10,
+			"Popularity":100,
+			"ImageCount":2,
+			"CompareGroup":"smartphones",
+			"Reviews" : [ 
+				{"Rate" : 3, "Title" : "Déçu de la batterie", "Text" : "Elle tient une journée. Quand j a insérée ma puce. Le portable est devenu chaud. Et déchargé très vite.", "Email" : "user3@outlook.fr" },
+				{"Rate" : 5, "Title" : "Très satisfaite de ma commande", "Text" : "Je suis satisfaite de mon choix concernant le Honor View 20. J'ai profité d'une promo et je l'ai eu pour 333€HT, donc un très bon rapport qualité-prix. L'écran est très bien, le téléphone est très...", "Email" : "user7@outlook.fr" } 
+			],
+			"Categories" : [ "smartphones" ],
+			"Keywords" : [ "honor", "view", "20", "smartphone","telephone" ],
+			"Features" : [ "Caméra 48MPX avec optimisation par Intelligence Artificielle et TOF. 1/2 pouce de large taille CMOS", "Ecran 6.4 pouces FHD+ avec « punch »", "Processeur Kirin 980 avec Intelligence Artificielle", "6 Go RAM - 128 Go stockage", "Caméra avant 25MP, ouverture à F/2.0", "Batterie haute capacité 4000 mAh + SuperCharge USB Type-C", "Android 9 + Magic UI"],
+			"ItemSpecifications" : [	
+				{ "specification" : "dual_sim", "BooleanValue" : true },
+				{ "specification" : "format_sim", "StringValue" : "Nano-SIM" },
+				{ "specification" : "frequence_smartphone", "StringValue" : "4G+" },
+				{ "specification" : "frequences_de_fonctionnement_smartphone", "StringValue" : "GSM 1800\nGSM 1900\nGSM 850\nGSM 900" },
+				{ "specification" : "transfert_de_donnees_smartphone", "StringValue" : "3G+ - HSPA\n4G - LTE\n4G - LTE Advanced" },
+				{ "specification" : "taille_d_ecran_smartphone", "DecimalValue" : 6.4 },
+				{ "specification" : "definition_ecran_smartphone", "StringValue" : "1080 x 2310 pixels" },
+				{ "specification" : "ecran_smartphone", "StringValue" : "Écran 6.4” FHD+ (2310 x 1080 px) (398 PPI)\nTechnologie : IPS\nRatio : 19.5:9" },
+				{ "specification" : "type_de_processeur_smartphone", "StringValue" : "Kirin 980 Octo-Core" },
+				{ "specification" : "processeur_smartphone", "StringValue" : "HiSilicon Kirin 980" },
+				{ "specification" : "nombre_de_core_smartphone", "IntegerValue" : 8 },
+				{ "specification" : "frequence_cpu_smartphone", "DecimalValue" : 2.5 },
+				{ "specification" : "memoire_smartphone", "IntegerValue" : 128 },
+				{ "specification" : "memoire_extensible_smartphone", "BooleanValue" : false },
+				{ "specification" : "memoire_ram_smartphone", "IntegerValue" : 6 },
+				{ "specification" : "resolution_smartphone", "IntegerValue" : 48 },
+				{ "specification" : "photo_3d_smartphone", "BooleanValue" : true },
+				{ "specification" : "video_hd_smartphone", "BooleanValue" : true },
+				{ "specification" : "gps_smartphone", "BooleanValue" : true },
+				{ "specification" : "connecteur_disponible_smartphone", "StringValue" : "Casque (Jack 3.5mm Femelle)\nUSB Type C Femelle" },
+				{ "specification" : "norme_reseau_sans_fil_smartphone", "StringValue" : "Wi-Fi A (IEEE 802.11a)\nWi-Fi AC\nWi-Fi B (IEEE 802.11b)\nWi-Fi G (IEEE 802.11g)\n" },
+				{ "specification" : "technologie_bluetooth_smartphone", "StringValue" : "Bluetooth 5.0" }
 			]
 		}
 	],

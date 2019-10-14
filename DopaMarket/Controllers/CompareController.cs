@@ -36,7 +36,7 @@ namespace DopaMarket.Controllers
                                       where cs.CompareGroupId == compareGroup.Id
                                       select s).ToArray();
 
-                var groupIds = specifications.Select(s => s.Id).Distinct().ToArray();
+                var groupIds = specifications.Select(s => s.SpecificationGroupId).Distinct().ToArray();
                 var specificationGroups = (from g in _context.SpecificationGroups
                                            where groupIds.Contains(g.Id)
                                            select g).ToArray();

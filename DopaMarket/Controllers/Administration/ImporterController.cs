@@ -253,6 +253,7 @@ namespace DopaMarket.Controllers.Administration
                 item.SKU = "";
                 item.Popularity = itemData.Popularity;
                 item.ImageCount = itemData.ImageCount;
+                item.CompareGroup = _context.CompareGroups.Single(cg => cg.LinkName == itemData.CompareGroup);
                 _context.SaveChanges();
 
                 ImportReview(item, itemData.Reviews);
@@ -592,6 +593,7 @@ namespace DopaMarket.Controllers.Administration
 			public decimal Length { get; set; }
             public int Popularity { get; set; }
             public int ImageCount { get; set; }
+            public string CompareGroup { get; set; }
             public IList<Review> Reviews { get; set; }
             public IList<string> Categories { get; set; }
             public IList<string> Keywords { get; set; }
