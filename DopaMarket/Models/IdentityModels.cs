@@ -44,6 +44,8 @@ namespace DopaMarket.Models
         public DbSet<OrderNotification> OrderNotifications { get; set; }
         public DbSet<ItemCompare> ItemCompares { get; set; }
         public DbSet<SpecificationGroup> SpecificationGroups { get; set; }
+        public DbSet<OrderAddress> OrderAddresses { get; set; }
+
         
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

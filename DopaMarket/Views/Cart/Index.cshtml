@@ -41,18 +41,18 @@
                     <tr>
                         <td>
                             <div class="product-item">
-                                <a class="product-thumb" href="shop-single.html"><img src="img/shop/cart/01.jpg" alt="Product"></a>
+                                <a class="product-thumb" href="shop-single.html"><img src="img/items/@(item.Item.LinkName)_0.jpg" alt="Product"></a>
                                 <div class="product-info">
                                     <h4 class="product-title"><a href="/Item/@item.Item.LinkName">@item.Item.Name</a></h4>
                                 </div>
                             </div>
                         </td>
                         <td class="text-center">
-                            <span class="item-quantity" data-item-id='@item.Item.Id'>@item.Quantity</span>
                             <button class="btn btn-default btn-change-increment" onClick="changeCount(this)" data-item-id='@item.Item.Id' data-item-count='1' type="button">+</button>
+                            <span class="item-quantity" data-item-id='@item.Item.Id'>@item.Quantity</span>
                             <button class="btn btn-default btn-change-decrement" onClick="changeCount(this)" data-item-id='@item.Item.Id' data-item-count='-1' type="button">-</button>
                         </td>
-                        <td class="text-center text-lg">@(item.Item.CurrentPrice)€</td>
+                        <td class="text-center text-lg item-price" data-item-id='@item.Item.Id'>@(item.Item.CurrentPrice)€</td>
                         <td class="text-center text-lg"></td>
                         <td class="text-center"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="Remove item"><i class="icon-x"></i></a></td>
                     </tr>
@@ -64,11 +64,11 @@
         <div class="column">
 
         </div>
-        <div class="column text-lg"><span class="text-muted">Subtotal:&nbsp; </span><span class="text-gray-dark">@Model.SubTotal</span></div>
+        <div class="column text-lg"><span class="text-muted">Subtotal:&nbsp; </span><span class="text-gray-dark" id="total-price-label">@Model.SubTotal</span></div>
     </div>
     <div class="shopping-cart-footer">
         <div class="column"><a class="btn btn-outline-secondary" href="/"><i class="icon-arrow-left"></i>&nbsp;Back to Shopping</a></div>
-        <div class="column"><a class="btn btn-secondary" href="#" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-check-circle" data-toast-title="Your cart" data-toast-message="is updated successfully!">Update Cart</a><a class="btn btn-primary" href="/Orders/Create">Checkout</a></div>
+        <div class="column"><a class="btn btn-secondary" href="#" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-check-circle" data-toast-title="Your cart" data-toast-message="is updated successfully!">Update Cart</a><a class="btn btn-primary" href="/Checkout/Address">Checkout</a></div>
     </div>
 </div>
 
@@ -83,6 +83,8 @@
         }).done(function (response) {
             if (response.result === "count_changed") {
                 $(".item-quantity[data-item-id='" + itemId + "']").text(response.count);
+                $(".item-price[data-item-id='" + itemId + "']").text(response.itemPrice);
+                $("#total-price-label").text(response.totalPrice);
                 if (response.count == 1) {
                     $(".btn-change-decrement[data-item-id='" + itemId + "']").attr("disabled", true);
                 } else {

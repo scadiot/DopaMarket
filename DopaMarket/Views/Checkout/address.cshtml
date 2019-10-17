@@ -1,0 +1,231 @@
+﻿@model DopaMarket.ViewModels.CheckoutViewModel
+
+@{
+    ViewBag.Title = "address";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Page Title-->
+<div class="page-title">
+    <div class="container">
+        <div class="column">
+            <h1>Checkout</h1>
+        </div>
+        <div class="column">
+            <ul class="breadcrumbs">
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li class="separator">&nbsp;</li>
+                <li>Checkout</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Page Content-->
+<div class="container padding-bottom-3x mb-2">
+    <div class="row">
+        <!-- Checkout Adress-->
+        <div class="col-xl-9 col-lg-8">
+            <div class="steps flex-sm-nowrap mb-5">
+                <a class="step active" href="#">
+                    <h4 class="step-title">1. Address</h4>
+                </a><a class="step" href="#">
+                    <h4 class="step-title">2. Shipping</h4>
+                </a><a class="step" href="#">
+                    <h4 class="step-title">3. Payment</h4>
+                </a><a class="step" href="#">
+                    <h4 class="step-title">4. Review</h4>
+                </a>
+            </div>
+            <h4>Billing Address</h4>
+            <hr class="padding-bottom-1x">
+            <form id="AddressForm" action="/Checkout/AddressSave" method="post">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="checkout-fn">First Name</label>
+                            <input class="form-control" type="text" id="checkout-fn" name="BillingAddress.FirstName" value="@Model.BillingAddress.FirstName">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="checkout-ln">Last Name</label>
+                            <input class="form-control" type="text" id="checkout-ln" name="BillingAddress.LastName" value="@Model.BillingAddress.LastName">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="checkout-email">E-mail Address</label>
+                            <input class="form-control" type="email" id="checkout-email" name="BillingAddress.Email" value="@Model.BillingAddress.Email">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="checkout-phone">Phone Number</label>
+                            <input class="form-control" type="text" id="checkout-phone" name="BillingAddress.Phone" value="@Model.BillingAddress.Phone">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="checkout-company">Company</label>
+                            <input class="form-control" type="text" id="checkout-company" name="BillingAddress.Company" value="@Model.BillingAddress.Company">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="checkout-country">Country</label>
+                            <input class="form-control" type="text" id="checkout-country" name="BillingAddress.Country" value="@Model.BillingAddress.Country">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="checkout-city">City</label>
+                            <input class="form-control" type="text" id="checkout-city" name="BillingAddress.City" value="@Model.BillingAddress.City">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="checkout-zip">ZIP Code</label>
+                            <input class="form-control" type="text" id="checkout-zip" name="BillingAddress.PostalCode" value="@Model.BillingAddress.PostalCode">
+                        </div>
+                    </div>
+                </div>
+                <div class="row padding-bottom-1x">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="checkout-address1">Address 1</label>
+                            <input class="form-control" type="text" id="checkout-address1" name="BillingAddress.Street" value="@Model.BillingAddress.Street">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="checkout-address2">Address 2</label>
+                            <input class="form-control" type="text" id="checkout-address2" name="BillingAddress.Street2" value="@Model.BillingAddress.Street2">
+                        </div>
+                    </div>
+                </div>
+                <h4>Shipping Address</h4>
+                <hr class="padding-bottom-1x">
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="same_address" onchange="ShippingAddressFormToggle()" checked>
+                        <label class="custom-control-label" for="same_address">Same as billing address</label>
+                    </div>
+
+                    <div id="shipping-address-form" style="display:none">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="checkout-fn">First Name</label>
+                                    <input class="form-control" type="text" id="checkout-fn" name="ShippingAddress.FirstName" value="@Model.ShippingAddress.FirstName">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="checkout-ln">Last Name</label>
+                                    <input class="form-control" type="text" id="checkout-ln" name="ShippingAddress.LastName" value="@Model.ShippingAddress.LastName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="checkout-email">E-mail Address</label>
+                                    <input class="form-control" type="email" id="checkout-email" name="ShippingAddress.Email" value="@Model.ShippingAddress.Email">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="checkout-phone">Phone Number</label>
+                                    <input class="form-control" type="text" id="checkout-phone" name="ShippingAddress.Phone" value="@Model.ShippingAddress.Phone">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="checkout-company">Company</label>
+                                    <input class="form-control" type="text" id="checkout-company" name="ShippingAddress.Company" value="@Model.ShippingAddress.Company">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="checkout-country">Country</label>
+                                    <input class="form-control" type="text" id="checkout-country" name="ShippingAddress.Country" value="@Model.ShippingAddress.Country">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="checkout-city">City</label>
+                                    <input class="form-control" type="text" id="checkout-city" name="ShippingAddress.City" value="@Model.ShippingAddress.City">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="checkout-zip">ZIP Code</label>
+                                    <input class="form-control" type="text" id="checkout-zip" name="ShippingAddress.PostalCode" value="@Model.ShippingAddress.PostalCode">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-bottom-1x">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="checkout-address1">Address 1</label>
+                                    <input class="form-control" type="text" id="checkout-address1" name="ShippingAddress.Street" value="@Model.ShippingAddress.Street">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="checkout-address2">Address 2</label>
+                                    <input class="form-control" type="text" id="checkout-address2" name="ShippingAddress.Street2" value="@Model.ShippingAddress.Street2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between paddin-top-1x mt-4">
+                    <a class="btn btn-outline-secondary" href="/Cart"><i class="icon-arrow-left"></i><span class="hidden-xs-down">&nbsp;Back To Cart</span></a>
+                    <a class="btn btn-primary" href="#" onclick="document.getElementById('AddressForm').submit();"><span class="hidden-xs-down">Continue&nbsp;</span><i class="icon-arrow-right"></i></a>
+                </div>
+            </form>
+        </div>
+        <!-- Sidebar          -->
+        <div class="col-xl-3 col-lg-4">
+            <aside class="sidebar">
+                <div class="padding-top-2x hidden-lg-up"></div>
+                <!-- Order Summary Widget-->
+                <section class="widget widget-order-summary">
+                    <h3 class="widget-title">Order Summary</h3>
+                    <table class="table">
+                        <tr>
+                            <td>Cart Subtotal:</td>
+                            <td class="text-gray-dark">$2,548.50</td>
+                        </tr>
+                        <tr>
+                            <td>Shipping:</td>
+                            <td class="text-gray-dark">$26.50</td>
+                        </tr>
+                        <tr>
+                            <td>Estimated tax:</td>
+                            <td class="text-gray-dark">$9.72</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="text-lg text-gray-dark">$2,584.72</td>
+                        </tr>
+                    </table>
+                </section>
+            </aside>
+        </div>
+    </div>
+</div>

@@ -216,6 +216,7 @@
     <Compile Include="Controllers\Administration\BrandsController.cs" />
     <Compile Include="Controllers\Administration\ImporterController.cs" />
     <Compile Include="Controllers\Administration\ItemInfoTypesController.cs" />
+    <Compile Include="Controllers\Api\SearchController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
@@ -226,8 +227,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\SearchTool.cs" />
+    <Compile Include="Dto\SearchResult.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -288,6 +291,14 @@
     <Compile Include="Migrations\201910111425021_ApplicationUserLink.Designer.cs">
       <DependentUpon>201910111425021_ApplicationUserLink.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910160722045_CreateOrderAddress.cs" />
+    <Compile Include="Migrations\201910160722045_CreateOrderAddress.Designer.cs">
+      <DependentUpon>201910160722045_CreateOrderAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910161122261_AddDataToOrderAddress.cs" />
+    <Compile Include="Migrations\201910161122261_AddDataToOrderAddress.Designer.cs">
+      <DependentUpon>201910161122261_AddDataToOrderAddress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -301,6 +312,7 @@
     <Compile Include="Models\ItemReview.cs" />
     <Compile Include="Models\ItemFeature.cs" />
     <Compile Include="Models\ItemSpecification.cs" />
+    <Compile Include="Models\OrderAddress.cs" />
     <Compile Include="Models\OrderOperation.cs" />
     <Compile Include="Models\Specification.cs" />
     <Compile Include="Models\ItemKeyword.cs" />
@@ -322,6 +334,7 @@
     <Compile Include="ViewModels\BasketViewModel.cs" />
     <Compile Include="ViewModels\BrandFormViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\CheckoutViewModel.cs" />
     <Compile Include="ViewModels\CompareViewModel.cs" />
     <Compile Include="ViewModels\CustomerAddressViewModel.cs" />
     <Compile Include="ViewModels\CustomerProfileViewModel.cs" />
@@ -405,7 +418,7 @@
     <Content Include="Views\Shared\_HeaderNavBar.cshtml" />
     <Content Include="Views\ItemInfoTypes\Index.cshtml" />
     <Content Include="Views\ItemInfoTypes\ItemInfoTypeForm.cshtml" />
-    <Content Include="Views\Orders\Confirmation.cshtml" />
+    <Content Include="Views\Checkout\Confirmation.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Topbar.cshtml" />
     <Content Include="Views\Shared\_MobileMenu.cshtml" />
@@ -417,6 +430,9 @@
     <Content Include="Views\Brands\Index.cshtml" />
     <Content Include="Views\Importer\Index.cshtml" />
     <Content Include="Views\Compare\Index.cshtml" />
+    <Content Include="Views\Checkout\Address.cshtml" />
+    <Content Include="Views\Checkout\Shipping.cshtml" />
+    <Content Include="Views\Checkout\Payment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -471,6 +487,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910111425021_ApplicationUserLink.resx">
       <DependentUpon>201910111425021_ApplicationUserLink.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910160722045_CreateOrderAddress.resx">
+      <DependentUpon>201910160722045_CreateOrderAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910161122261_AddDataToOrderAddress.resx">
+      <DependentUpon>201910161122261_AddDataToOrderAddress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

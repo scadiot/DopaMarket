@@ -43,5 +43,13 @@ namespace DopaMarket.Models
         public decimal TotalPrice { get; set; }
 
         public OrderStatus Status { get; set; }
+
+        public int BillingAddressId { get; set; }
+
+        public OrderAddress BillingAddress { get; set; }
+
+        public int ShippingAddressId { get; set; }
+
+        public OrderAddress ShippingAddress { get; set; }
     }
 }

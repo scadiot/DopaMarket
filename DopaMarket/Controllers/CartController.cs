@@ -75,7 +75,15 @@ namespace DopaMarket.Controllers
             itemInCart.Count = count;
             _context.SaveChanges();
 
-            return Json(new { result = "count_changed", count = count }, JsonRequestBehavior.AllowGet);
+            var items = (from i in _context.Items
+                         join ib in _context.ItemCarts on i.Id equals ib.ItemId
+                         where ib.SessionId == Session.SessionID
+                         select new CartItemViewModel() { Item = i, Quantity = ib.Count }).ToArray();
+
+            var item = items.Single(i => i.Item.Id == itemInCart.ItemId).Item;
+            var total = items.Select(i => i.Item.CurrentPrice * i.Quantity).Sum();
+
+            return Json(new { result = "count_changed", count = count, itemPrice = (decimal)(item.CurrentPrice * count), totalPrice = total }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult ListItems()

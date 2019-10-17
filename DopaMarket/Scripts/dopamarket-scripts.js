@@ -45,6 +45,11 @@ jQuery(document).ready(function ($) {
             })
         });
     }
+
     GetItemsInCart();
     GetItemsCountInCompare();
 });
+
+function ShippingAddressFormToggle() {
+    $("#shipping-address-form").toggle();
+}
