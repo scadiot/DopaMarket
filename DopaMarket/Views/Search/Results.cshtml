@@ -9,33 +9,9 @@
 @functions {
     public static string SearchUrlChangePage(DopaMarket.ViewModels.SearchViewModel model, int page)
     {
-        return SearchUrl(model.Query, model.Category, generatePriceFiltersData(model), model.PriceRangeStart, model.PriceRangeEnd, generateBrandFiltersData(model), model.Sort, page);
+        return SearchUrl(model.Query, model.Category, model.PriceFilterMin, model.PriceFilterMax, generateBrandFiltersData(model), model.Sort, page);
     }
 
-    public static string SearchUrlPriceFilter(DopaMarket.ViewModels.SearchViewModel model, string filter)
-    {
-        var priceFilter = generatePriceFiltersData(model);
-        if(priceFilter == string.Empty)
-        {
-            priceFilter = filter;
-        }
-        else if(priceFilter.Contains(filter))
-        {
-            priceFilter = priceFilter.Replace("_" + filter, "");
-            priceFilter = priceFilter.Replace(filter + "_", "");
-            priceFilter = priceFilter.Replace(filter, "");
-        }
-        else
-        {
-            priceFilter += "_" + filter;
-        }
-        return SearchUrl(model.Query, model.Category, priceFilter, model.PriceRangeStart, model.PriceRangeEnd, generateBrandFiltersData(model), model.Sort, 0);
-    }
-
-    public static string generatePriceFiltersData(DopaMarket.ViewModels.SearchViewModel model)
-    {
-        return string.Join("_",(model.PriceFilters.Where(pf => pf.Selected).Select(pf => pf.PriceStart + "-" + pf.PriceEnd)));
-    }
 
     public static string SearchUrlBrandFilter(DopaMarket.ViewModels.SearchViewModel model, string brand)
     {
@@ -54,7 +30,7 @@
         {
             brandFilter += "_" + brand;
         }
-        return SearchUrl(model.Query, model.Category, generatePriceFiltersData(model), model.PriceRangeStart, model.PriceRangeEnd, brandFilter, model.Sort, 0);
+        return SearchUrl(model.Query, model.Category, model.PriceFilterMax, model.PriceFilterMax, brandFilter, model.Sort, 0);
     }
 
     public static string generateBrandFiltersData(DopaMarket.ViewModels.SearchViewModel model)
@@ -64,15 +40,14 @@
 
     public static string SearchUrlChangeSorting(DopaMarket.ViewModels.SearchViewModel model, string sort)
     {
-        return SearchUrl(model.Query, model.Category, generatePriceFiltersData(model), model.PriceRangeStart, model.PriceRangeEnd, generateBrandFiltersData(model), sort, 0);
+        return SearchUrl(model.Query, model.Category, model.PriceFilterMax, model.PriceFilterMax, generateBrandFiltersData(model), sort, 0);
     }
 
-    public static string SearchUrl(string query, string category, string priceFilters, decimal? minPrice, decimal? maxPrice, string brands, string order, int page)
+    public static string SearchUrl(string query, string category, decimal? minPrice, decimal? maxPrice, string brands, string order, int page)
     {
         string result = "/Search?";
         result += (query != "" && query != null) ? "q=" + System.Net.WebUtility.UrlEncode(query) + "&" : "";
         result += (category != "" && category != null) ? "c=" + category + "&": "";
-        result += (priceFilters != "" && priceFilters != null) ? "pf=" + priceFilters + "&" : "";
         result += (minPrice != null) ? "minp=" + minPrice + "&" : "";
         result += (maxPrice != null) ? "maxp=" + maxPrice + "&" : "";
         result += (brands != "" && brands != null) ? "b=" + brands + "&" : "";
@@ -153,12 +128,12 @@
                 {
                     <div class="col-md-4 col-sm-6">
                         <div class="product-card mb-30">
-                            <a class="product-thumb" href="/Item/@item.Item.LinkName"><img src="/img/items/@(item.Item.LinkName)_0.jpg" alt="Product"></a>
+                            <a class="product-thumb" href="/Item/@item.LinkName"><img src="/img/items/@(item.LinkName)_0.jpg" alt="Product"></a>
                             <div class="product-card-body">
                                 <div class="product-category"><a href="#">Smart home</a></div>
-                                <h3 class="product-title"><a href="/Item/@item.Item.LinkName">@item.Item.Name</a></h3>
+                                <h3 class="product-title"><a href="/Item/@item.LinkName">@item.Name</a></h3>
                                 <h4 class="product-price">
-                                    @item.Item.CurrentPrice
+                                    @item.CurrentPrice
                                 </h4>
                             </div>
                             @*
@@ -246,20 +221,6 @@
             </section>
         }
                 *@
-                @if (Model.TotalCount > 1 && Model.PriceFilters != null)
-                {
-                    <!-- Widget Size Filter-->
-                    <section class="widget">
-                        <h3 class="widget-title">Filter by Price</h3>
-                        @foreach (var priceFilter in Model.PriceFilters)
-                        {
-                            <div class="custom-control custom-checkbox" onClick="window.location.href='@SearchUrlPriceFilter(Model, priceFilter.PriceStart + "-" + priceFilter.PriceEnd)';">
-                                <input class="custom-control-input" type="checkbox" id="@(priceFilter.PriceStart)_@(priceFilter.PriceEnd)" @( priceFilter.Selected ? "checked" : "" )>
-                                <label class="custom-control-label" for="low">@priceFilter.PriceStart€ - @priceFilter.PriceEnd€&nbsp;<span class="text-muted">(@priceFilter.Count)</span></label>
-                            </div>
-                        }
-                    </section>
-                }
 
                 @if (Model.TotalCount > 1 && Model.Brands != null)
                 {

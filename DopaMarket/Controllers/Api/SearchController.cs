@@ -59,6 +59,8 @@ namespace DopaMarket.Controllers.Api
             dtoSearchResult.PageCount = searchResult.PageCount;
             dtoSearchResult.ItemCount = searchResult.ItemCount;
             dtoSearchResult.ItemCountAfterFilter = searchResult.ItemCountAfterFilter;
+            dtoSearchResult.PriceMin = searchResult.PriceMin;
+            dtoSearchResult.PriceMax = searchResult.PriceMax;
             dtoSearchResult.Brands = searchResult.Brands;
 
             return dtoSearchResult;

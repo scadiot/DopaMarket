@@ -66,6 +66,7 @@ namespace DopaMarket.Controllers
             CreateRequestByKeywords();
             CreateRequestByCategory();
             _result.ItemCount = _itemsRequest.Count();
+            GetBrands();
             _itemsRequestAfterFilter = _itemsRequest;
 
             FilterByPrice();
@@ -107,6 +108,15 @@ namespace DopaMarket.Controllers
                             select item;
         }
 
+        void GetBrands()
+        {
+            _result.Brands = (from brand in _context.Brands
+                              join item in _itemsRequest on brand.Id equals item.BrandId
+                              group brand by brand into g
+                              select g.Key).ToArray();
+
+        }
+
         void FilterByPrice()
         {
             if(_searchRequest.FilterPriceMin != 0)
@@ -126,7 +136,7 @@ namespace DopaMarket.Controllers
 
         void FilterByBrand()
         {
-            if (_searchRequest.Brands == null || _searchRequest.Brands == new string[0])
+            if (_searchRequest.Brands == null || _searchRequest.Brands.Count() == 0)
             {
                 return;
             }
@@ -173,6 +183,8 @@ namespace DopaMarket.Controllers
             _result.Items = _itemsRequestAfterFilter.Skip(_searchRequest.ItemPerPage * _searchRequest.Page).Take(_searchRequest.ItemPerPage).ToArray();
             _result.ItemCountAfterFilter = _itemsRequestAfterFilter.Count();
             _result.PageCount = (_result.ItemCountAfterFilter / _searchRequest.ItemPerPage) + (_result.ItemCountAfterFilter % _searchRequest.ItemPerPage != 0 ? 1 : 0);
+            _result.PriceMin = _itemsRequest.Min(i => i.CurrentPrice);
+            _result.PriceMax = _itemsRequest.Max(i => i.CurrentPrice);
         }
     }
 }

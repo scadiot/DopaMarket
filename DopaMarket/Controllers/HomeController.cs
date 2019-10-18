@@ -24,25 +24,21 @@ namespace DopaMarket.Controllers
             homeViewModel.Items = _context.Items
                                           .OrderByDescending(d => d.InsertDate)
                                           .Take(20)
-                                          .Select(i => new SearchItemViewModel() { Item = i })
                                           .ToArray();
 
             homeViewModel.BestSellers = _context.Items
                               .OrderByDescending(d => d.InsertDate)
                               .Take(5)
-                              .Select(i => new SearchItemViewModel() { Item = i })
                               .ToArray();
 
             homeViewModel.TopRated = _context.Items
                               .OrderByDescending(d => d.AverageRating)
                               .Take(5)
-                              .Select(i => new SearchItemViewModel() { Item = i })
                               .ToArray();
 
             homeViewModel.NewArrivals = _context.Items
                               .OrderByDescending(d => d.InsertDate)
                               .Take(5)
-                              .Select(i => new SearchItemViewModel() { Item = i })
                               .ToArray();
 
             homeViewModel.Brands = _context.Brands.Take(20).ToArray();

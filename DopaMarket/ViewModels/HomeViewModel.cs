@@ -9,10 +9,10 @@ namespace DopaMarket.ViewModels
     public class HomeViewModel
     {
         public IEnumerable<Category> Categories { get; set; }
-        public IEnumerable<SearchItemViewModel> Items { get; set; }
-        public IEnumerable<SearchItemViewModel> NewArrivals { get; set; }
-        public IEnumerable<SearchItemViewModel> BestSellers { get; set; }
-        public IEnumerable<SearchItemViewModel> TopRated { get; set; }
+        public IEnumerable<Item> Items { get; set; }
+        public IEnumerable<Item> NewArrivals { get; set; }
+        public IEnumerable<Item> BestSellers { get; set; }
+        public IEnumerable<Item> TopRated { get; set; }
         public IEnumerable<Brand> Brands { get; set; }
 
         public IEnumerable<ItemPromotion> ItemPromotions { get; set; }
