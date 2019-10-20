@@ -26,15 +26,16 @@ namespace DopaMarket.Dto
 
     public class SearchResult
     {
-        public int ItemCount { get; set; }
-        public int ItemCountAfterFilter { get; set; }
+        public int ItemsCount { get; set; }
+        public int ItemsCountAfterFilter { get; set; }
         public int PageCount { get; set; }
         public int Page { get; set; }
+        public int ItemsPerPage { get; set; }
 
         public decimal PriceMin { get; set; }
         public decimal PriceMax { get; set; }
 
-        public IEnumerable<Brand> Brands { get; set; }
+        public IEnumerable<SearchBrand> Brands { get; set; }
         public IEnumerable<Item> Items { get; set; }
         public IEnumerable<Category> Categories { get; set; }
     }

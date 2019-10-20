@@ -22,8 +22,8 @@ namespace DopaMarket.Controllers
 
         public class SearchResult
         {
-            public int ItemCount { get; set; }
-            public int ItemCountAfterFilter { get; set; }
+            public int ItemsCount { get; set; }
+            public int ItemsCountAfterFilter { get; set; }
             public int PageCount { get; set; }
 
             public decimal PriceMin { get; set; }
@@ -65,8 +65,9 @@ namespace DopaMarket.Controllers
             _itemsRequest = _context.Items;
             CreateRequestByKeywords();
             CreateRequestByCategory();
-            _result.ItemCount = _itemsRequest.Count();
             GetBrands();
+
+            _result.ItemsCount = _itemsRequest.Count();
             _itemsRequestAfterFilter = _itemsRequest;
 
             FilterByPrice();
@@ -181,10 +182,12 @@ namespace DopaMarket.Controllers
         void FinalizeRequest()
         {
             _result.Items = _itemsRequestAfterFilter.Skip(_searchRequest.ItemPerPage * _searchRequest.Page).Take(_searchRequest.ItemPerPage).ToArray();
-            _result.ItemCountAfterFilter = _itemsRequestAfterFilter.Count();
-            _result.PageCount = (_result.ItemCountAfterFilter / _searchRequest.ItemPerPage) + (_result.ItemCountAfterFilter % _searchRequest.ItemPerPage != 0 ? 1 : 0);
-            _result.PriceMin = _itemsRequest.Min(i => i.CurrentPrice);
-            _result.PriceMax = _itemsRequest.Max(i => i.CurrentPrice);
+            _result.ItemsCountAfterFilter = _itemsRequestAfterFilter.Count();
+            _result.PageCount = (_result.ItemsCountAfterFilter / _searchRequest.ItemPerPage) + (_result.ItemsCountAfterFilter % _searchRequest.ItemPerPage != 0 ? 1 : 0);
+            decimal? priceMin = _itemsRequest.Min(i => i.CurrentPrice);
+            decimal? priceMax = _itemsRequest.Max(i => i.CurrentPrice);
+            _result.PriceMin = priceMin != null ? (decimal)priceMin : (decimal)0.0;
+            _result.PriceMax = priceMax != null ? (decimal)priceMax : (decimal)0.0;
         }
     }
 }

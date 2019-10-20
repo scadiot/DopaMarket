@@ -433,6 +433,7 @@
     <Content Include="Views\Checkout\Address.cshtml" />
     <Content Include="Views\Checkout\Shipping.cshtml" />
     <Content Include="Views\Checkout\Payment.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

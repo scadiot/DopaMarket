@@ -58,7 +58,7 @@ namespace DopaMarket.Controllers
             searchViewModel.Category = categoryLinkName != null ? categoryLinkName : "";
             searchViewModel.Sort = sort;
             searchViewModel.PageNumber = page;
-            searchViewModel.TotalCount = searchResult.ItemCount;
+            searchViewModel.TotalCount = searchResult.ItemsCount;
             searchViewModel.PageCount = searchResult.PageCount;
             searchViewModel.Categories = GetCategories();
             searchViewModel.PriceMin = searchResult.PriceMin;
@@ -76,7 +76,6 @@ namespace DopaMarket.Controllers
         //
         //}
 
-
         CategoryViewModel[] GetCategories()
         {
             var categories = _context.Categories.Where(c => c.ParentCategoryId == null).ToArray();
@@ -90,13 +89,19 @@ namespace DopaMarket.Controllers
                 categoryViewModel.Category = category;
 
                 categoryViewModel.Children = children.Where(c => c.ParentCategoryId == category.Id)
-                                                     .Select(c => new CategoryViewModel() { Category = c})
+                                                     .Select(c => new CategoryViewModel() { Category = c })
                                                      .ToArray();
 
                 CategoryViewModels.Add(categoryViewModel);
             }
 
             return CategoryViewModels.ToArray();
+        }
+
+
+        public ActionResult Index2()
+        {
+            return View("Index");
         }
     }
 }

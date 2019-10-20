@@ -11,6 +11,8 @@ namespace DopaMarket.Controllers.Api
 {
     public class SearchController : ApiController
     {
+        const int ItemPerPage = 3;
+
         ApplicationDbContext _context;
 
         public SearchController()
@@ -46,22 +48,22 @@ namespace DopaMarket.Controllers.Api
             searchRequest.Page = dtoSearchRequest.Page;
             searchRequest.FilterPriceMin = dtoSearchRequest.FilterPriceMin;
             searchRequest.FilterPriceMax = dtoSearchRequest.FilterPriceMax;
-            searchRequest.ItemPerPage = 3;
+            searchRequest.ItemPerPage = ItemPerPage;
 
             var searchTool = new SearchTool(_context);
             var searchResult = searchTool.Execute(searchRequest);
 
             var dtoSearchResult = new Dto.SearchResult();
             dtoSearchResult.Items = searchResult.Items;
-            dtoSearchResult.Brands = searchResult.Brands;
+            dtoSearchResult.Brands = searchResult.Brands.Select(b => new SearchBrand() { Brand = b, Selected = searchRequest.Brands != null ? searchRequest.Brands.Contains(b.LinkName) : false });
             dtoSearchResult.Categories = searchResult.Categories;
             dtoSearchResult.Page = searchRequest.Page;
             dtoSearchResult.PageCount = searchResult.PageCount;
-            dtoSearchResult.ItemCount = searchResult.ItemCount;
-            dtoSearchResult.ItemCountAfterFilter = searchResult.ItemCountAfterFilter;
+            dtoSearchResult.ItemsCount = searchResult.ItemsCount;
+            dtoSearchResult.ItemsCountAfterFilter = searchResult.ItemsCountAfterFilter;
+            dtoSearchResult.ItemsPerPage = ItemPerPage;
             dtoSearchResult.PriceMin = searchResult.PriceMin;
             dtoSearchResult.PriceMax = searchResult.PriceMax;
-            dtoSearchResult.Brands = searchResult.Brands;
 
             return dtoSearchResult;
         }
