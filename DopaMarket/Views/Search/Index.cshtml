@@ -1,20 +1,22 @@
-﻿
+﻿@model DopaMarket.ViewModels.SearchViewModel
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<link href="~/Content/vue-range-slider.css " rel="stylesheet">
+
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="~/Scripts/vue-range-slider.js"></script>
 
 <div id="app">
     <!-- Page Title-->
     <div class="page-title">
         <div class="container">
             <div class="column">
-                <h1>
-                    
-                </h1>
+                <h1></h1>
             </div>
             <div class="column">
                 <ul class="breadcrumbs">
@@ -91,7 +93,7 @@
                 <nav class="pagination">
                     <div class="column">
                         <ul class="pages">
-                            <li v-for="i in this.pageCount" v-bind:class="[ i === page + 1 ? 'active' : '' ]" ><a v-on:click="changePage(i)">{{ i }}</a></li>
+                            <li v-for="i in this.pageCount" v-bind:class="[ i === page + 1 ? 'active' : '' ]"><a v-on:click="changePage(i)">{{ i }}</a></li>
                         </ul>
                     </div>
                     <div v-if="page < pageCount - 1" class="column text-right hidden-xs-down"><a class="btn btn-outline-secondary btn-sm" v-on:click="incrementPage()">Next&nbsp;<i class="icon-chevron-right"></i></a></div>
@@ -103,48 +105,26 @@
                 <aside class="sidebar sidebar-offcanvas position-left">
                     <span class="sidebar-close"><i class="icon-x"></i></span>
                     <!-- Widget Categories-->
-                    @*
-        <section class="widget widget-categories">
-            <h3 class="widget-title">Shop Categories</h3>
-            <ul>
-                @foreach (var category in Model.Categories)
-                {
-                    <li class="has-children expanded">
-                        <a href="/search?c=@category.Category.LinkName">@category.Category.Name</a><span>(@category.Category.ItemsCount)</span>
-                        @if (category.Children != null && category.Children.Count() > 0)
-                        {
-                            <ul>
-                                @foreach (var child in category.Children)
-                                {
-                                    <li><a href="/search?c=@child.Category.LinkName">@child.Category.Name</a></li>
-                                }
-                            </ul>
-                        }
-                    </li>
-                }
-            </ul>
-        </section>
-                        *@
-
-                <!-- Widget Price Range-->
-                <section class="widget widget-categories">
-                    <h3 class="widget-title">Price Range</h3>
-                    <div class="price-range-slider" v-on:click="priceRangeSliderCkicked">
-                        <div class="ui-range-slider noUi-target noUi-ltr noUi-horizontal noUi-background">
-                            <div class="noUi-base">
-                                <div class="noUi-origin noUi-connect" v-bind:style="{ left: priceRangeSliderPosition1 + '%' }">
-                                    <div class="noUi-handle noUi-handle-lower">
-                                    </div>
-                                </div>
-                                <div class="noUi-origin noUi-background" v-bind:style="{ left: priceRangeSliderPosition2 + '%' }">
-                                    <div class="noUi-handle noUi-handle-upper">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            
+                    <section class="widget widget-categories">
+                        <h3 class="widget-title">Shop Categories</h3>
+                        <ul>
+                            @foreach (var category in Model.Categories)
+                            {
+                                <li class="has-children expanded">
+                                    <a href="/search?Category=@category.Category.LinkName">@category.Category.Name</a><span>(@category.Category.ItemsCount)</span>
+                                    @if (category.Children != null && category.Children.Count() > 0)
+                                    {
+                                        <ul>
+                                            @foreach (var child in category.Children)
+                                            {
+                                                <li><a href="/search?Category=@child.Category.LinkName">@child.Category.Name</a></li>
+                                            }
+                                        </ul>
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    </section>
 
                     <!-- Widget Brand Filter-->
                     <section class="widget">
@@ -154,6 +134,13 @@
                             <label class="custom-control-label" for="apple">{{ brand.brand.name }} &nbsp;<span class="text-muted">20</span></label>
                         </div>
                     </section>
+
+                    <!-- Widget Price Filter-->
+                    <section class="widget">
+                        <h3 class="widget-title">Filter by Price</h3>
+                        <vue-range-slider v-model="filterPrice" :min="priceMin" :max="priceMax" ref="priceFilter" v-on:drag-end="priceRangeSliderChanged()" style="margin-top:40px"></vue-range-slider>
+                    </section>
+
                 </aside>
             </div>
         </div>
@@ -163,18 +150,15 @@
     new Vue({
         el: '#app',
         data: {
+            firstLoading: true,
             items: [],
             page: 0,
             pageCount: 0,
             sort: 'a-z',
-            minPrice: 0,
-            priceMin:0,
-            priceMax: 0,
-            filterPriceMin: 0,
-            filterPriceMax: 0,
-            brands:[],
-            priceRangeSliderPosition1: 0,
-            priceRangeSliderPosition2: 100,
+            priceMin: 0,
+            priceMax: 10,
+            filterPrice: [0, 10],
+            brands: [],
             viewMode: 'grid',
             itemIndexStart: 0,
             itemIndexEnd: 0,
@@ -195,12 +179,7 @@
                 this.page++;
                 this.loadItems();
             },
-            priceRangeSliderCkicked: function (event) {
-                let ratio = event.offsetX / event.currentTarget.clientWidth;
-                ratio = ratio < 0.90 ? ratio : 1;
-                this.priceRangeSliderPosition2 = ratio * 100;
-                this.filterPriceMax = this.priceMin + (ratio * (this.priceMax - this.priceMin));
-                this.page = 0;
+            priceRangeSliderChanged: function () {
                 this.loadItems();
             },
             brandClicked: function (brand) {
@@ -212,37 +191,43 @@
                 let uri = window.location.search.substring(1);
                 let params = new URLSearchParams(uri);
                 let keywords = params.get("keywords");
+                let category = params.get("category");
 
-                axios
-                    .get('/api/search?' + 
-                    'Keywords=' + keywords + '&' +
-                    'Page=' + this.page + '&' +
-                    'Sort=' + this.sort + '&' +
-                    'FilterPriceMin=' + this.filterPriceMin + '&' +
-                    'FilterPriceMax=' + this.filterPriceMax + '&' +
-                    'Brands=' + this.generateBrandsParameter())
+                let request = '/api/search?';
+                if (keywords !== null) {
+                    request += 'Keywords=' + keywords + '&';
+                } else if (category !== null) {
+                    request += 'Category=' + category + '&';
+                } else {
+                    return;
+                }
+                request += 'Page=' + this.page + '&';
+                request += 'Sort=' + this.sort;
 
-                        .then(response => {
-                            this.items = response.data.items;
-                            this.pageCount = response.data.pageCount;
-                            this.priceMin = response.data.priceMin;
-                            this.priceMax = response.data.priceMax;
-                            this.brands = response.data.brands;
+                if (!this.firstLoading) {
+                    request += '&' +
+                        'FilterPriceMin=' + this.filterPrice[0] + '&' +
+                        'FilterPriceMax=' + this.filterPrice[1] + '&' +
+                        'Brands=' + this.generateBrandsParameter()
+                }
 
-                            if (this.filterPriceMin < this.priceMin || this.filterPriceMin > this.priceMax) {
-                                this.filterPriceMin = this.priceMin;
-                                this.priceRangeSliderPosition1 = 0;
-                            }
-                                
+                axios.get(request)
+                    .then(response => {
+                        this.items = response.data.items;
+                        this.pageCount = response.data.pageCount;
 
-                            if (this.filterPriceMax > this.priceMax || this.filterPriceMax < this.priceMin) {
-                                this.filterPriceMax = this.priceMax;
-                                this.priceRangeSliderPosition2 = 100;
-                            }
+                        if (this.firstLoading) {
+                            var minMax = [response.data.priceMin, response.data.priceMax];
+                            this.filterPrice = minMax;
+                        }
+                        this.priceMin = response.data.priceMin;
+                        this.priceMax = response.data.priceMax;
+                        this.brands = response.data.brands;
+                        this.itemIndexStart = (this.page * response.data.itemsPerPage) + 1;
+                        this.itemIndexEnd = (this.itemIndexStart + this.items.length) - 1;
 
-                            this.itemIndexStart = (this.page * response.data.itemsPerPage) + 1;
-                            this.itemIndexEnd = (this.itemIndexStart + this.items.length) - 1;
-                        })
+                        this.firstLoading = false;
+                    })
             },
             generateBrandsParameter: function () {
                 let result = '';

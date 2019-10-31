@@ -11,7 +11,7 @@
                         <div class="row">
                             @foreach (var category in ViewBag.categories)
                             {
-                                <div class="col-sm-3"><a class="d-block navi-link text-center mb-30" href="/search?c=@category.LinkName"><img class="d-block" src="/img/categories/@(category.LinkName).jpg"><span class="text-gray-dark">@category.Name</span></a></div>
+                                <div class="col-sm-3"><a class="d-block navi-link text-center mb-30" href="/search?category=@category.LinkName"><img class="d-block" src="/img/categories/@(category.LinkName).jpg"><span class="text-gray-dark">@category.Name</span></a></div>
                             }
 
                         </div>
@@ -35,7 +35,7 @@
                     <span class="input-group-btn">
                         <button type="submit"><i class="icon-search"></i></button>
                     </span>
-                    <input class="form-control" type="search" name="q" placeholder="Search for anything">
+                    <input class="form-control" type="search" name="keywords" placeholder="Search for anything">
                 </form>
             </div>
         </div>
