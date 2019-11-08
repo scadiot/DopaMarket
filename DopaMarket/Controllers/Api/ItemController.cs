@@ -8,6 +8,7 @@ using System.Web.Http;
 
 namespace DopaMarket.Controllers.Api
 {
+    [AllowCrossSiteJson]
     public class ItemController : ApiController
     {
         ApplicationDbContext _context;

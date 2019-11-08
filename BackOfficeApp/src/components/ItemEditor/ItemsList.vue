@@ -1,27 +1,16 @@
 <template>
   <div>
-    Items
+    <div v-for="item in items" :key="item.id" v-on:click="itemClicked(item)">{{ item.name }}</div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
-    created() {
-        axios.get('http://localhost:60037/Api/Item/GetAllItems')
-        .then(function (response) {
-            // handle success
-            console.log(response);
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-        .finally(function () {
-            // always executed
-            return;
-        });
+    props: ['items'],
+    methods: {
+        itemClicked: function(item) {
+            this.$emit('itemClicked', item)
+        }
     }
 }
 </script>

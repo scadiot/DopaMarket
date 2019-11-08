@@ -216,6 +216,7 @@
     <Compile Include="Controllers\Administration\BrandsController.cs" />
     <Compile Include="Controllers\Administration\ImporterController.cs" />
     <Compile Include="Controllers\Administration\ItemInfoTypesController.cs" />
+    <Compile Include="Controllers\Api\AllowCrossSiteJsonAttribute .cs" />
     <Compile Include="Controllers\Api\ItemController.cs" />
     <Compile Include="Controllers\Api\SearchController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
