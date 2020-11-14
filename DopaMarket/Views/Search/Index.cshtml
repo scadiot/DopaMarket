@@ -84,7 +84,11 @@
                                     </h4>
                                     <p class="text-sm text-muted hidden-xs-down my-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore odit officiis illo perferendis deserunt, ipsam dolor ad dolorem eaque veritatis.</p>
                                 </div>
-                                <div class="product-button-group"><a class="product-button btn-wishlist" href="#"><i class="icon-heart"></i><span>Wishlist</span></a><a class="product-button btn-compare" href="#"><i class="icon-repeat"></i><span>Compare</span></a><a class="product-button" href="#" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-check-circle" data-toast-title="Product" data-toast-message="successfuly added to cart!"><i class="icon-shopping-cart"></i><span>To Cart</span></a></div>
+                                <div class="product-button-group">
+                                    <a class="product-button btn-wishlist" href="#"><i class="icon-heart"></i><span>Wishlist</span></a>
+                                    <span class="product-button btn-compare"><i class="icon-repeat" v-on:click="addToCompare(item.id)"></i><span>Compare</span></span>
+                                    <span class="product-button btn-compare"><i class="icon-shopping-cart" v-on:click="addToCart(item.id)"></i><span>To Cart</span></span>
+                                </div>
                             </div>
                         </div>
                     </template>
@@ -247,6 +251,32 @@
             },
             showList: function () {
                 this.viewMode = 'list'
+            },
+
+            addToCompare: function(itemId) {
+                axios.get("/Compare/AddItem/" + itemId)
+                     .then(function (response) {
+                    if (response.data.result === "added") {
+                        iziToast.show({
+                            title: 'OK',
+                            message: 'Successfully inserted record!',
+                            position: 'topRight'
+                        });
+                    }
+                });
+            },
+
+            addToCart: function (itemId) {
+                axios.get("/Cart/AddItem/" + itemId + "?count=1")
+                     .then(function (response) {
+                         if (response.data.result === "added") {
+                             iziToast.show({
+                                 title: 'OK',
+                                 message: 'Successfully inserted record!',
+                                 position: 'topRight'
+                             });
+                         }
+                     });
             }
         }
     })

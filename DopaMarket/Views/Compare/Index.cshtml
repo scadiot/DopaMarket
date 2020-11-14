@@ -25,55 +25,62 @@
 <!-- Page Content-->
 <div class="container padding-bottom-2x mb-2">
     <div class="comparison-table">
-        <table class="table table-bordered">
-            <thead class="bg-secondary">
-                <tr>
-                    <td class="align-middle"></td>
-                    @foreach (var column in Model.Columns)
+        @if (Model.Lines != null && Model.Lines.Count() > 0) 
+        {
+            <table class="table table-bordered">
+                <thead class="bg-secondary">
+                    <tr>
+                        <td class="align-middle"></td>
+                        @foreach (var column in Model.Columns)
+                        {
+                            <td>
+                                <div class="comparison-item">
+                                    <a href="/Compare/RemoveItem/@column.Item.Id"><span class="remove-item"><i class="icon-x"></i></span></a><a class="comparison-item-thumb" href="/item/@column.Item.LinkName">
+                                        <img src="/img/items/@(column.Item.LinkName)_0.jpg" alt="@(column.Item.Name)">
+                                    </a><a class="comparison-item-title" href="/Item/@(column.Item.LinkName)">@column.Item.Name</a>
+                                    <a class="btn btn-outline-primary btn-sm" href="#" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-check-circle" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</a>
+                                </div>
+                            </td>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var line in Model.Lines)
                     {
-                        <td>
-                            <div class="comparison-item">
-                                <a href="/Compare/RemoveItem/@column.Item.Id"><span class="remove-item"><i class="icon-x"></i></span></a><a class="comparison-item-thumb" href="/item/@column.Item.LinkName">
-                                    <img src="img/items/@(column.Item.LinkName)_0.jpg" alt="@(column.Item.Name)">
-                                </a><a class="comparison-item-title" href="/Item/@(column.Item.LinkName)">@column.Item.Name</a>
-                                <a class="btn btn-outline-primary btn-sm" href="#" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-check-circle" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</a>
-                            </div>
-                        </td>
+                        if (line.Type == DopaMarket.ViewModels.LineCompareViewModelType.Group)
+                        {
+                            <tr class="bg-secondary">
+                                <th class="text-uppercase">@line.CompareGroup.LongName</th>
+                                @foreach (var cell in line.Cells)
+                                {
+                                    <td><span class="text-medium">&nbsp;@(cell.Value)&nbsp;</span></td>
+                                }
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr class="bg-secondary">
+                                <th>@line.Specification.LongName</th>
+                                @foreach (var cell in line.Cells)
+                                {
+                                    <td style="white-space: pre;">@(cell.Value)</td>
+                                }
+                            </tr>
+                        }
                     }
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var line in Model.Lines)
-                {
-                    if (line.Type == DopaMarket.ViewModels.LineCompareViewModelType.Group)
-                    {
-                        <tr class="bg-secondary">
-                            <th class="text-uppercase">@line.CompareGroup.LongName</th>
-                            @foreach (var cell in line.Cells)
-                            {
-                                <td><span class="text-medium">&nbsp;@(cell.Value)&nbsp;</span></td>
-                            }
-                        </tr>
-                    }
-                    else
-                    {
-                        <tr class="bg-secondary">
-                            <th>@line.Specification.LongName</th>
-                            @foreach (var cell in line.Cells)
-                            {
-                                <td style="white-space: pre;">@(cell.Value)</td>
-                            }
-                        </tr>
-                    }
-                }
-                <tr class="bg-secondary">
-                    <th class="text-uppercase"></th>
-                    @foreach (var column in Model.Columns)
-                    {
-                        <td><a class="btn btn-outline-primary btn-sm btn-block" href="#" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-check-circle" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</a></td>
-                    }
-                </tr>
-            </tbody>
-        </table>
+                    <tr class="bg-secondary">
+                        <th class="text-uppercase"></th>
+                        @foreach (var column in Model.Columns)
+                        {
+                            <td><a class="btn btn-outline-primary btn-sm btn-block" href="#" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-check-circle" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</a></td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div>No product to compare</div>
+        }
     </div>
 </div>

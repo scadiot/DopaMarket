@@ -38,10 +38,10 @@
             <tbody>
                 @foreach (var item in Model.Items)
                 {
-                    <tr>
+                    <tr data-item-id='@item.Item.Id'>
                         <td>
                             <div class="product-item">
-                                <a class="product-thumb" href="shop-single.html"><img src="img/items/@(item.Item.LinkName)_0.jpg" alt="Product"></a>
+                                <a class="product-thumb" href="shop-single.html"><img src="/img/items/@(item.Item.LinkName)_0.jpg" alt="Product"></a>
                                 <div class="product-info">
                                     <h4 class="product-title"><a href="/Item/@item.Item.LinkName">@item.Item.Name</a></h4>
                                 </div>
@@ -54,7 +54,7 @@
                         </td>
                         <td class="text-center text-lg item-price" data-item-id='@item.Item.Id'>@(item.Item.CurrentPrice)€</td>
                         <td class="text-center text-lg"></td>
-                        <td class="text-center"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="Remove item"><i class="icon-x"></i></a></td>
+                        <td class="text-center"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="Remove item" data-item-id='@item.Item.Id' onClick="removeItem(this)"><i class="icon-x"></i></a></td>
                     </tr>
                 }
             </tbody>
@@ -94,12 +94,23 @@
         });
     }
 
+    function removeItem(button) {
+        let itemId = button.getAttribute('data-item-id');
+        $.ajax({
+            url: "/Cart/RemoveItem/" + itemId,
+        }).done(function (response) {
+            if (response.result === "removed") {
+                $("tr[data-item-id='" + itemId + "']").remove();
+            }
+        });
+    }
+
     window.onload = function () {
-        if (response.count == 1) {
-            $(".btn-change-decrement[data-item-id='" + itemId + "']").attr("disabled", true);
-        } else {
-            $(".btn-change-decrement[data-item-id='" + itemId + "']").attr("disabled", false);
-        }
+        //if (response.count == 1) {
+        //    $(".btn-change-decrement[data-item-id='" + itemId + "']").attr("disabled", true);
+        //} else {
+        //    $(".btn-change-decrement[data-item-id='" + itemId + "']").attr("disabled", false);
+        //}
     };
 
 </script>
